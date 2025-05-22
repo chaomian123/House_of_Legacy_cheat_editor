@@ -1,0 +1,28 @@
+{
+  "name": "es3-editor",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
+    "@chakra-ui/react": "^2.4.5",
+    "@emotion/react": "11",
+    "@emotion/styled": "11",
+    "crypto-browserify": "^3.12.0",
+    "framer-motion": "6",
+    "jsoneditor": "^10.1.0",
+    "next": "13.0.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.7.1"
+  },
+  "devDependencies": {
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.0.7"
+  }
+}
