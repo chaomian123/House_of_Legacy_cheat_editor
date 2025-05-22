@@ -77,14 +77,15 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         const memberIndex = rawData[type].value.findIndex(member => member[0] === key);
         if (memberIndex > -1) {
           if (type === 'MenKe_Now') {
+
             rawData[type].value[memberIndex][3] = row.age;
-            rawData[type].value[memberIndex][4] = row.talent;
-            rawData[type].value[memberIndex][5] = row.wen;
+            rawData[type].value[memberIndex][4] = row.wen;
             rawData[type].value[memberIndex][6] = row.wu;
             rawData[type].value[memberIndex][7] = row.shang;
             rawData[type].value[memberIndex][8] = row.yi;
             rawData[type].value[memberIndex][15] = row.mou;
-            setData({ ...data, data: Buffer.from(rawData)});
+            console.log(rawData, 'rawData menke') // TODO: Remove this debug info
+            setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
             // let newData = JSON.stringify(rawData)
           } else if (type === 'Member_now') {
             const info = rawData[type].value[memberIndex][4].split('|')
@@ -369,52 +370,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       key: 'mou',
       editable: true,
     },
-    // {
-    //   title: '天赋',
-    //   dataIndex: 'talent',
-    //   key: 'talent', 
-    //   // editable: true,
-    //   render: (text, record, index) => {
-    //     const talentMap = {
-    //       '1': '文',
-    //       '2': '武', 
-    //       '3': '商',
-    //       '4': '艺'
-    //     };
-    //     const talent_dict = [
-    //         { key: '1', value: '文', label: '文' },
-    //         { key: '2', value: '武', label: '武' },
-    //         { key: '3', value: '商', label: '商' },
-    //         { key: '4', value: '艺', label: '艺' }
-         
-    //     ]
-    //     return isEditing(record) ? (
-    //       <Form.Item
-    //         name="talent"
-    //         style={{ margin: 0 }}
-    //         // rules={[{ required: true, message: '请选择天赋!' }]}
-    //       >
-    //          <Radio.Group value={text}>
-    //         <Radio value={'1'}>文</Radio>
-    //         <Radio value={'2'}>武</Radio>
-    //         <Radio value={'3'}>商</Radio>
-    //         <Radio value={'4'}>艺</Radio>
-    //       </Radio.Group>
-    //         {/* <Select>
-    //           {talent_dict.map(({key, value, label}) => (
-    //             <Select.Option key={key} value={key}>
-    //               {label}
-    //             </Select.Option>
-    //           ))}
-    //         </Select> */}
-    //         {/* {console.log(Object.entries(talentMap))} */}
-    //       </Form.Item>
-    //     ) : (
-    //       talentMap[text] || text
-    //     );
-    //   }
-    // },
-   
+
     {
       title: '操作',
       dataIndex: 'operation',
