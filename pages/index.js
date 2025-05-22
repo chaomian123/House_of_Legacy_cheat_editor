@@ -48,23 +48,17 @@ export default function Home() {
       <Flex alignItems='center' justifyContent='center' mt='24' mb='14'>
         <Box
           direction='column'
-          background='gray.700'
+          background='Blue.100'
           rounded='6'
           p='12'
           position='relative'
         >
-          <Heading mb='6'>Easy cheat Editor</Heading>
-
+          <Heading mb='6'>吾今有世家  在线存档修改器</Heading>
           <Divider mt='8' mb='3' />
-          <Heading size='md' mb='3'>Decryption</Heading>
+          <Heading size='md' mb='3'>存档在线编辑</Heading>
+          <Text>存档路径示例<Code>:　C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0</Code></Text>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
-          <Text mt='5'>Some games might not encrypt their save files and</Text>
-          <Text>only compress them using GZip. In this case, you</Text>
-          <Text>don&apos;t have to provide a password.</Text>
-
           <Divider mt='5' mb='3' />
-          <Heading size='md' mb='3'>Encryption</Heading>
-          <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} isEncryption />
         </Box>
       </Flex>
     </>

@@ -12,7 +12,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure
+  useDisclosure,
+  Divider
 } from '@chakra-ui/react';
 import { FaDownload, FaEdit } from 'react-icons/fa';
 import { useRef, useState } from 'react';
@@ -130,7 +131,9 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
 
   return (
     <>
-      <Box display='flex' flexDirection='row' justifyContent='space-between'>
+    {/* <Divider orientation='horizontal' /> */}
+      <Box display='flex' flexDirection='row' justifyContent='space-between' style={{marginTop: 10}}>
+        
         <input
           type='file'
           ref={saveFileRef}
@@ -154,8 +157,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             fileReader.onerror = e => {
               console.error(e);
               toast({
-                title: 'Failed processing the save file',
-                description: 'Please try choosing the save file again',
+                title: '解析存档文件失败',
+                description: '请重新上传',
                 status: 'error',
                 duration: 2500,
                 isClosable: true,
@@ -183,9 +186,9 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
           </Checkbox>
         )}
       </Box>
-      <div width='100%'></div>
+      <Divider orientation='horizontal' />
 
-      {!isEncryption && (
+      {/* {!isEncryption && (
         <Button
           leftIcon={<FaEdit />}
           colorScheme='orange'
@@ -217,8 +220,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             } catch (e) {
               console.error(e);
               toast({
-                title: 'Failed decrypting the save file',
-                description: 'Wrong decryption password? Try leaving the password field empty.',
+                title: '解析失败',
+                description: '文件类型错误',
                 status: 'error',
                 duration: 3500,
                 isClosable: true,
@@ -261,9 +264,70 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
         >
           EXPERIMENTAL! Open editor
         </Button>
-      )}
+      )} */}
+        <Button
+          leftIcon={<FaEdit />}
+          colorScheme='blue'
+          width='100%' mt='2'
+          display='block'
+          onClick={async () => {
+            if (typeof gtag != 'undefined')
+              gtag('event', 'char_editor_open');
+            
+            if (!data || (!password && !isGzip(data) && !isJSON(data))) {
+              toast({
+                title: `失败`,
+                description: !data ? '没有选择文件' : '',
+                status: 'error',
+                duration: 2000,
+                isClosable: true,
+                position: 'bottom-left'
+              });
+  
+              return;
+            }
 
-      <Button
+            setIsLoading(true);
+
+            let decryptedData;
+            try {
+              decryptedData = await cryptData(data, password, false);
+              console.log(decryptedData, 'decryptedData')
+            } catch (e) {
+              console.error(e);
+              toast({
+                title: '解析失败',
+                description: '请重试',
+                status: 'error',
+                duration: 3500,
+                isClosable: true,
+                position: 'bottom-left'
+              });
+              
+              setIsLoading(false);
+              return;
+            }
+
+            if (!isJSON(decryptedData.cryptedData)) {
+              if (typeof gtag != 'undefined')
+                gtag('event', 'editor_malformed_data', {
+                  'decrypted_data': decryptedData.cryptedData.toString().slice(0, 75),
+                  'parse_error': getJSONParseError(decryptedData.cryptedData).message
+                });
+
+            
+              setIsLoading(false);
+              return;
+            }
+
+            setEditorData({ wasGunzipped: decryptedData.wasGunzipped, data: decryptedData.cryptedData });
+            onEditorOpen();
+            setIsLoading(false);
+          }}
+        >
+          打开修改器
+        </Button>
+      {/* <Button
         leftIcon={<FaDownload />}
         colorScheme='teal'
         width='100%'
@@ -322,7 +386,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
         }}
       >
         Download {isEncryption ? 'encrypted' : 'decrypted'} save file
-      </Button>
+      </Button> */}
 
       <Modal
         blockScrollOnMount={false}
@@ -334,7 +398,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
           <ModalHeader color='orange'>Warning!</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {isEncryptionWarning ? (
+            {/* {isEncryptionWarning ? (
               <Text>
                 You should only check this box if you were warned that the save file was GUnZipped too when you decrypted it.
                 If you GZip a save file that isn&apos;t supposed to be GZipped, the game might not recognize it and might delete it.
@@ -345,7 +409,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
                 and want to re-encrypt it, you will have to check the GZip checkbox before so the file can also be re-compressed.
                 Unless you check the box, the save file might not be recognized by the game and might be deleted.
               </Text>
-            )}
+            )} */}
           </ModalBody>
 
           <ModalFooter>
@@ -385,8 +449,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             } catch (e) {
               console.error(e);
               toast({
-                title: `Failed encrypting the edited save file`,
-                description: 'Internal error',
+                title: `解析失败`,
+                description: 'error',
                 status: 'error',
                 duration: 3500,
                 isClosable: true,
