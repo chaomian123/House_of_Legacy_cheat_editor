@@ -84,7 +84,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][7] = row.shang;
             rawData[type].value[memberIndex][8] = row.yi;
             rawData[type].value[memberIndex][15] = row.mou;
-            console.log(rawData, 'rawData menke') // TODO: Remove this debug info
+            rawData[type].value[memberIndex][18] = row.payment;
+            // console.log(rawData, 'rawData menke') // TODO: Remove this debug info
             setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
             // let newData = JSON.stringify(rawData)
           } else if (type === 'Member_now') {
@@ -167,7 +168,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       };
     });
     const menke_now = rawData?.MenKe_Now?.value || []
-    // console.log(menke_now, 'menke_now')
+    // 门客
     const menke = menke_now.map(fields => {
       console.log(fields, 'fields')
       return {
@@ -179,6 +180,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         shang: fields[6],
         yi: fields[7],
         mou: fields[15],
+        payment: fields[18],
       };
     });
     console.log(members, 'members') // TODO: Remove this debug inf
@@ -370,7 +372,16 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       key: 'mou',
       editable: true,
     },
-
+    {
+      title: '每月薪酬',
+      dataIndex: 'payment',
+      key: 'payment',
+      editable: true,
+      render: (text, record) => {
+        const editable = isEditing(record);
+        return !editable && `￥${text}`
+      }
+    },
     {
       title: '操作',
       dataIndex: 'operation',
