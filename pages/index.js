@@ -15,7 +15,8 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  IconButton
+  IconButton,
+  Link
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
@@ -60,11 +61,12 @@ export default function Home() {
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           <Divider mt='5' mb='3' />
           <Text>功能更新日志 2025/5/23</Text>
-          
             <ul>
               <li>家族成员属性编辑: 文,武,商,艺,谋,幸运,魅力,天赋</li>
               <li>门客属性编辑: 年龄,文,武,商,艺,谋</li>
             </ul>
+
+            <Link href="/expedition33">33号远征队全符文收集</Link>
         </Box>
       </Flex>
     </>
