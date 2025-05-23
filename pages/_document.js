@@ -11,6 +11,7 @@ export default class Document extends NextDocument {
             <Script key='google-analytics-script' strategy='beforeInteractive'
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}`}
             />,
+            <Script src="https://analytics.ahrefs.com/analytics.js" data-key="KIhjCyEc3LpDR/QIvFuOKQ" async></Script>,
             <Script key='google-analytics-initialize' id='google-analytics-initializer' strategy='beforeInteractive'>
               {`
                 window.dataLayer = window.dataLayer || [];
