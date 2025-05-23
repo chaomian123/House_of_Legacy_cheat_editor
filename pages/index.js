@@ -66,7 +66,7 @@ export default function Home() {
               <li>门客属性编辑: 年龄,文,武,商,艺,谋</li>
             </ul>
 
-            <Link href="/expedition33">33号远征队全符文收集</Link>
+            <Link href="https://gamertool.space/blog/expediton33-pictos">33号远征队全符文收集</Link>
         </Box>
       </Flex>
     </>
