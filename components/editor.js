@@ -6,9 +6,10 @@ import {
   ModalHeader,
   ModalFooter,
   ModalBody,
-  ModalCloseButton
+  ModalCloseButton,
+  Heading
 } from '@chakra-ui/react';
-import { Table, Input, Form, Button, Radio  } from 'antd';
+import { Table, Input, Form, Button, Radio } from 'antd';
 import JSONEditor from 'jsoneditor';
 import { useRef, useEffect, useCallback, useState } from 'react';
 import 'jsoneditor/dist/jsoneditor.min.css';
@@ -441,28 +442,34 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     <Modal isOpen={isOpen} onClose={onClose} size='full' mt='20'>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>编辑修改后右下角保存文档</ModalHeader>
+        {/* <ModalHeader>Editor</ModalHeader> */}
         <ModalBody mt='5'>
-          {/* 主容器 */}
-          <Box display="flex" flexDirection="column" gap={4}>
-              <Box as="h3" fontSize="lg" mb={2}>族内</Box>
-              <Form form={form} component={false}>
-                <Table
-                  components={{
-                    body: {
-                      cell: EditableCell,
-                    },
-                  }}
-                  dataSource={tableData_member}
-                  columns={mergedColumns_member}
-                  rowKey="id"
-                  bordered
-                  size="middle"
-                  rowClassName="editable-row"
-                  pagination={false}
-                />
-              </Form>
-              <Box as="h3" fontSize="lg" mb={2}>门客</Box>
+         
+            <Box display="flex" flexDirection="column" gap={4}>
+              <Box>
+                  <Heading size="md" mb="3">
+                  家族成员列表
+                    </Heading>
+                    <Form form={form} component={false}>
+                      <Table
+                        components={{
+                          body: {
+                            cell: EditableCell,
+                          },
+                        }}
+                        dataSource={tableData_member}
+                        columns={mergedColumns_member}
+                        rowKey="id"
+                        bordered
+                        size="middle"
+                        rowClassName="editable-row"
+                        pagination={false}
+                      />
+                    </Form>
+              </Box>
+              <Heading size="md" mb="3">
+                  门客列表
+                    </Heading>
               <Form form={form} component={false}>
                 <Table
                   components={{
@@ -482,7 +489,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           </Box>
     
         </ModalBody>
-        <ModalFooter>
+        <ModalFooter style={{position: 'fixed', top: 0, right: 0}} >
           <Button
             colorScheme='orange'
             isDisabled={isLoading}
