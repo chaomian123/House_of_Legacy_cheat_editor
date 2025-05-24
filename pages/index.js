@@ -65,10 +65,9 @@ export default function Home() {
               <li>家族成员属性编辑: 文,武,商,艺,谋,幸运,魅力,天赋</li>
               <li>门客属性编辑: 年龄,文,武,商,艺,谋</li>
             </ul>
-
-            <Link href="https://gamertool.space/blog/expediton33-pictos">33号远征队全符文收集</Link>
         </Box>
       </Flex>
     </>
   );
 }
+
