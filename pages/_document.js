@@ -1,5 +1,6 @@
 import { ColorModeScript } from '@chakra-ui/react';
 import NextDocument, { Html, Main, Head, NextScript } from 'next/document';
+import { Analytics } from "@vercel/analytics/next"
 import Script from 'next/script';
 
 export default class Document extends NextDocument {
@@ -26,6 +27,7 @@ export default class Document extends NextDocument {
           <ColorModeScript initialColorMode='light' />
           <Main />
           <NextScript />
+          <Analytics />
         </body>
       </Html>
     );
