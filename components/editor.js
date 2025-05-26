@@ -12,6 +12,7 @@ import {
 import { Table, Input, Form, Button, Radio } from 'antd';
 import JSONEditor from 'jsoneditor';
 import { useRef, useEffect, useCallback, useState } from 'react';
+import { useLocale } from '../lib/useLocale';
 import 'jsoneditor/dist/jsoneditor.min.css';
 
 export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data, setData, saveData }) {
@@ -22,6 +23,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   const [tableData_member, setTableDataMember] = useState([]);
   const [tableData_menke, setTableDataMenke] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const { locale, t } = useLocale();
 
   const isEditing = (record) => record.id === editingKey;
 
@@ -203,74 +205,84 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
 
   const columns_member = [
     {
-      title: '名字',
+      title: locale === 'zh' ? '名字' : 'Name',
       dataIndex: 'name',
       key: 'name',
       editable: false,
     },
     {
-      title: '文',
+      title: t.attributes.literature,
       dataIndex: 'wen',
       key: 'wen',
       editable: true,
     },
     {
-      title: '武',
+      title: t.attributes.martial,
       dataIndex: 'wu',
       key: 'wu',
       editable: true,
     },
     {
-      title: '商',
+      title: t.attributes.commerce,
       dataIndex: 'shang',
       key: 'shang',
       editable: true,
     },
    
     {
-      title: '艺',
+      title: t.attributes.art,
       dataIndex: 'yi',
       key: 'yi',
       editable: true,
     },
     {
-      title: '谋',
+      title: t.attributes.strategy,
       dataIndex: 'mou',
       key: 'mou',
       editable: true,
     },
     {
-      title: '幸运',
+      title: t.attributes.luck,
       dataIndex: 'lucky',
       key: 'lucky',
       editable: true,
     },
     {
-      title: '魅力',
+      title: t.attributes.charm,
       dataIndex: 'beauty',
       key: 'beauty',
       editable: true,
     },
     {
-      title: '天赋',
+      title: t.attributes.talent,
       dataIndex: 'talent',
       key: 'talent', 
       // editable: true,
       render: (text, record, index) => {
-        const talentMap = {
+        const talentMap = locale === 'zh' ? {
           '1': '文',
           '2': '武', 
           '3': '商',
           '4': '艺',
           '0': '无'
+        } : {
+          '1': 'Literature',
+          '2': 'Martial', 
+          '3': 'Commerce',
+          '4': 'Art',
+          '0': 'None'
         };
-        const talent_dict = [
+        const talent_dict = locale === 'zh' ? [
             { key: '1', value: '文', label: '文' },
             { key: '2', value: '武', label: '武' },
             { key: '3', value: '商', label: '商' },
             { key: '4', value: '艺', label: '艺' }
-         
-        ]
+        ] : [
+            { key: '1', value: 'Literature', label: 'Literature' },
+            { key: '2', value: 'Martial', label: 'Martial' },
+            { key: '3', value: 'Commerce', label: 'Commerce' },
+            { key: '4', value: 'Art', label: 'Art' }
+        ];
         return isEditing(record) ? (
           <Form.Item
             name="talent"
@@ -278,10 +290,10 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             // rules={[{ required: true, message: '请选择天赋!' }]}
           >
              <Radio.Group value={text}>
-            <Radio value={'1'}>文</Radio>
-            <Radio value={'2'}>武</Radio>
-            <Radio value={'3'}>商</Radio>
-            <Radio value={'4'}>艺</Radio>
+            <Radio value={'1'}>{locale === 'zh' ? '文' : 'Literature'}</Radio>
+            <Radio value={'2'}>{locale === 'zh' ? '武' : 'Martial'}</Radio>
+            <Radio value={'3'}>{locale === 'zh' ? '商' : 'Commerce'}</Radio>
+            <Radio value={'4'}>{locale === 'zh' ? '艺' : 'Art'}</Radio>
           </Radio.Group>
             {/* <Select>
               {talent_dict.map(({key, value, label}) => (
@@ -298,13 +310,13 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       }
     },
     {
-      title: '天赋数值',
+      title: locale === 'zh' ? '天赋数值' : 'Talent Value',
       dataIndex: 'talent_num',
       key: 'talent_num',
       editable: true,
     },
     {
-      title: '操作',
+      title: locale === 'zh' ? '操作' : 'Actions',
       dataIndex: 'operation',
       render: (_, record) => {
         const editable = isEditing(record);
@@ -315,15 +327,15 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
               style={{ marginRight: 8 }}
               size="small"
             >
-              保存
+              {t.save}
             </Button>
             <Button onClick={cancel} size="small">
-              取消
+              {t.cancel}
             </Button>
           </span>
         ) : (
           <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
-            编辑
+            {t.edit}
           </Button>
         );
       },
@@ -331,60 +343,60 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   ];
   const columns_menke = [
     {
-      title: '名字',
+      title: locale === 'zh' ? '名字' : 'Name',
       dataIndex: 'name',
       key: 'name',
       editable: false,
     },
     {
-      title: '年龄',
+      title: t.attributes.age,
       dataIndex: 'age',
       key: 'age',
       editable: true,
     },
     {
-      title: '文',
+      title: t.attributes.literature,
       dataIndex: 'wen',
       key: 'wen',
       editable: true,
     },
     {
-      title: '武',
+      title: t.attributes.martial,
       dataIndex: 'wu',
       key: 'wu',
       editable: true,
     },
     {
-      title: '商',
+      title: t.attributes.commerce,
       dataIndex: 'shang',
       key: 'shang',
       editable: true,
     },
   
     {
-      title: '艺',
+      title: t.attributes.art,
       dataIndex: 'yi',
       key: 'yi',
       editable: true,
     },
     {
-      title: '谋',
+      title: t.attributes.strategy,
       dataIndex: 'mou',
       key: 'mou',
       editable: true,
     },
     {
-      title: '每月薪酬',
+      title: locale === 'zh' ? '每月薪酬' : 'Monthly Salary',
       dataIndex: 'payment',
       key: 'payment',
       editable: true,
       render: (text, record) => {
         const editable = isEditing(record);
-        return !editable && `￥${text}`
+        return !editable && `${locale === 'zh' ? '￥' : '$'}${text}`
       }
     },
     {
-      title: '操作',
+      title: locale === 'zh' ? '操作' : 'Actions',
       dataIndex: 'operation',
       render: (_, record) => {
         const editable = isEditing(record);
@@ -395,15 +407,15 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
               style={{ marginRight: 8 }}
               size="small"
             >
-              保存
+              {t.save}
             </Button>
             <Button onClick={cancel} size="small">
-              取消
+              {t.cancel}
             </Button>
           </span>
         ) : (
           <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
-            编辑
+            {t.edit}
           </Button>
         );
       },
@@ -448,7 +460,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             <Box display="flex" flexDirection="column" gap={4}>
               <Box>
                   <Heading size="md" mb="3">
-                  家族成员列表
+                  {t.familyMembers}
                     </Heading>
                     <Form form={form} component={false}>
                       <Table
@@ -468,7 +480,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                     </Form>
               </Box>
               <Heading size="md" mb="3">
-                  门客列表
+                  {t.guests}
                     </Heading>
               <Form form={form} component={false}>
                 <Table
@@ -503,7 +515,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                 onClose();
             }}
           >
-            保存到存档文件
+            {locale === 'zh' ? '保存到存档文件' : 'Save to File'}
           </Button>
           <Button
             ml='3'
@@ -513,7 +525,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             }}
             isDisabled={isLoading}
           >
-            关闭
+            {locale === 'zh' ? '关闭' : 'Close'}
           </Button>
         </ModalFooter>
       </ModalContent>

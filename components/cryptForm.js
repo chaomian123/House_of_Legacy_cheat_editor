@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react';
 import { FaDownload, FaEdit } from 'react-icons/fa';
 import { useRef, useState } from 'react';
+import { useLocale } from '../lib/useLocale';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import crypto from 'crypto';
@@ -100,6 +101,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
   const [isEncryptionWarning, setIsEncryptionWarning] = useState(false);
   const { isOpen, onOpen: _onOpen, onClose: _onClose } = useDisclosure();
   const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
+  const { locale, t } = useLocale();
 
   const onOpen = (encryption) => {
     if (encryption)
@@ -157,8 +159,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             fileReader.onerror = e => {
               console.error(e);
               toast({
-                title: '解析存档文件失败',
-                description: '请重新上传',
+                title: t.error,
+                description: locale === 'zh' ? '请重新上传' : 'Please re-upload',
                 status: 'error',
                 duration: 2500,
                 isClosable: true,
@@ -276,8 +278,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             
             if (!data || (!password && !isGzip(data) && !isJSON(data))) {
               toast({
-                title: `失败`,
-                description: !data ? '没有选择文件' : '',
+                title: t.error,
+                description: !data ? (locale === 'zh' ? '没有选择文件' : 'No file selected') : '',
                 status: 'error',
                 duration: 2000,
                 isClosable: true,
@@ -296,8 +298,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             } catch (e) {
               console.error(e);
               toast({
-                title: '解析失败',
-                description: '请重试',
+                title: locale === 'zh' ? '解析失败' : 'Parse Failed',
+                description: locale === 'zh' ? '请重试' : 'Please try again',
                 status: 'error',
                 duration: 3500,
                 isClosable: true,
@@ -325,7 +327,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             setIsLoading(false);
           }}
         >
-          打开修改器
+          {locale === 'zh' ? '打开修改器' : 'Open Editor'}
         </Button>
       {/* <Button
         leftIcon={<FaDownload />}
@@ -449,8 +451,8 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             } catch (e) {
               console.error(e);
               toast({
-                title: `解析失败`,
-                description: 'error',
+                title: locale === 'zh' ? '解析失败' : 'Parse Failed',
+                description: t.error,
                 status: 'error',
                 duration: 3500,
                 isClosable: true,
