@@ -22,6 +22,7 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState } from 'react';
 import { useLocale } from '../lib/useLocale';
 import SEOHead from '../components/SEOHead';
+import { inject } from "@vercel/analytics"
 
 import CryptForm from '../components/cryptForm';
 // import passwords from '../passwords';
@@ -31,7 +32,7 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { locale, t } = useLocale();
-
+  inject()
   return (
     <>
       <SEOHead />
