@@ -22,6 +22,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   const [editorMode, setEditorMode] = useState('tree');
   const [tableData_member, setTableDataMember] = useState([]);
   const [tableData_menke, setTableDataMenke] = useState([]);
+  const [tableData_qu, setTableDataQu] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const { locale, t } = useLocale();
 
@@ -73,6 +74,19 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           setTableDataMember(newData);
           setEditingKey('');
       }
+    } else if (type === 'Member_qu') {
+      tableData = tableData_qu
+      const newData = [...tableData];
+      const index = newData.findIndex((item) => key === item.id);
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        setTableDataQu(newData);
+        setEditingKey('');
+      }
     }
       
         // 更新原始数据
@@ -108,6 +122,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             let newData = JSON.stringify(rawData)
             setData({ ...data, data: Buffer.from(newData)});
             // }
+          } else if (type === 'Member_qu') {
+            const info = rawData[type].value[memberIndex][2].split('|')
+            info[2] = row.talent;
+            info[3] = row.talent_num;
+            info[7] = row.lucky;
+            rawData[type].value[memberIndex][2] = info.join('|');
+            rawData[type].value[memberIndex][5] = row.age;
+            rawData[type].value[memberIndex][6] = row.wen;
+            rawData[type].value[memberIndex][7] = row.wu;
+            rawData[type].value[memberIndex][8] = row.shang;
+            rawData[type].value[memberIndex][9] = row.yi;
+            rawData[type].value[memberIndex][19] = row.mou;
+            rawData[type].value[memberIndex][15] = row.beauty;
+            let newData = JSON.stringify(rawData)
+            setData({ ...data, data: Buffer.from(newData)});
           }
         
           
@@ -155,7 +184,6 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     const member_now = rawData?.Member_now?.value || []
     // console.log(rawData, 'tableData')
     const members = member_now.map(fields => {
-      console.log(fields, 'fields')
       return {
         name: fields[4].split('|')[0], // 获取名字
         id: fields[0], // 成员ID
@@ -170,10 +198,28 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         beauty: fields[20],
       };
     });
+    const qu_now = rawData?.Member_qu?.value || []
+    // console.log(rawData, 'tableData')
+    const qu = qu_now.map(fields => {
+      // console.log(fields, 'fields')
+      return {
+        name: fields[2].split('|')[0], // 获取名字
+        id: fields[0], // 成员ID
+        age: fields[5],
+        wen: fields[6],
+        wu: fields[7],
+        shang: fields[8],
+        yi: fields[9],
+        mou: fields[19],
+        talent: fields[2].split('|')[2],
+        talent_num: fields[2].split('|')[3],
+        lucky: fields[2].split('|')[7],
+        beauty: fields[15],
+      };
+    });
     const menke_now = rawData?.MenKe_Now?.value || []
     // 门客
     const menke = menke_now.map(fields => {
-      console.log(fields, 'fields')
       return {
         name: fields[2].split('|')[0], // 获取名字
         id: fields[0], // 成员ID
@@ -186,9 +232,10 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         payment: fields[18],
       };
     });
-    console.log(members, 'members') // TODO: Remove this debug inf
+    // console.log(members, 'members') // TODO: Remove this debug inf
     setTableDataMember(members);
     setTableDataMenke(menke);
+    setTableDataQu(qu);
 
     return () => {
       setEditor(null);
@@ -341,6 +388,150 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       },
     },
   ];
+  const columns_qu = [
+    {
+      title: locale === 'zh' ? '名字' : 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      editable: false,
+    },
+    {
+      title: t.attributes.age,
+      dataIndex: 'age',
+      key: 'age',
+      editable: true,
+    },
+    {
+      title: t.attributes.literature,
+      dataIndex: 'wen',
+      key: 'wen',
+      editable: true,
+    },
+    {
+      title: t.attributes.martial,
+      dataIndex: 'wu',
+      key: 'wu',
+      editable: true,
+    },
+    {
+      title: t.attributes.commerce,
+      dataIndex: 'shang',
+      key: 'shang',
+      editable: true,
+    },
+   
+    {
+      title: t.attributes.art,
+      dataIndex: 'yi',
+      key: 'yi',
+      editable: true,
+    },
+    {
+      title: t.attributes.strategy,
+      dataIndex: 'mou',
+      key: 'mou',
+      editable: true,
+    },
+    {
+      title: t.attributes.luck,
+      dataIndex: 'lucky',
+      key: 'lucky',
+      editable: true,
+    },
+    {
+      title: t.attributes.charm,
+      dataIndex: 'beauty',
+      key: 'beauty',
+      editable: true,
+    },
+    {
+      title: t.attributes.talent,
+      dataIndex: 'talent',
+      key: 'talent', 
+      // editable: true,
+      render: (text, record, index) => {
+        const talentMap = locale === 'zh' ? {
+          '1': '文',
+          '2': '武', 
+          '3': '商',
+          '4': '艺',
+          '0': '无'
+        } : {
+          '1': 'Literature',
+          '2': 'Martial', 
+          '3': 'Commerce',
+          '4': 'Art',
+          '0': 'None'
+        };
+        const talent_dict = locale === 'zh' ? [
+            { key: '1', value: '文', label: '文' },
+            { key: '2', value: '武', label: '武' },
+            { key: '3', value: '商', label: '商' },
+            { key: '4', value: '艺', label: '艺' }
+        ] : [
+            { key: '1', value: 'Literature', label: 'Literature' },
+            { key: '2', value: 'Martial', label: 'Martial' },
+            { key: '3', value: 'Commerce', label: 'Commerce' },
+            { key: '4', value: 'Art', label: 'Art' }
+        ];
+        return isEditing(record) ? (
+          <Form.Item
+            name="talent"
+            style={{ margin: 0 }}
+            // rules={[{ required: true, message: '请选择天赋!' }]}
+          >
+             <Radio.Group value={text}>
+            <Radio value={'1'}>{locale === 'zh' ? '文' : 'Literature'}</Radio>
+            <Radio value={'2'}>{locale === 'zh' ? '武' : 'Martial'}</Radio>
+            <Radio value={'3'}>{locale === 'zh' ? '商' : 'Commerce'}</Radio>
+            <Radio value={'4'}>{locale === 'zh' ? '艺' : 'Art'}</Radio>
+          </Radio.Group>
+            {/* <Select>
+              {talent_dict.map(({key, value, label}) => (
+                <Select.Option key={key} value={key}>
+                  {label}
+                </Select.Option>
+              ))}
+            </Select> */}
+            {/* {console.log(Object.entries(talentMap))} */}
+          </Form.Item>
+        ) : (
+          talentMap[text] || text
+        );
+      }
+    },
+    {
+      title: locale === 'zh' ? '天赋数值' : 'Talent Value',
+      dataIndex: 'talent_num',
+      key: 'talent_num',
+      editable: true,
+    },
+    {
+      title: locale === 'zh' ? '操作' : 'Actions',
+      dataIndex: 'operation',
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Button
+              onClick={() => save(record.id, 'Member_qu')}
+              style={{ marginRight: 8 }}
+              size="small"
+            >
+              {t.save}
+            </Button>
+            <Button onClick={cancel} size="small">
+              {t.cancel}
+            </Button>
+          </span>
+        ) : (
+          <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
+            {t.edit}
+          </Button>
+        );
+      },
+    },
+  ];
   const columns_menke = [
     {
       title: locale === 'zh' ? '名字' : 'Name',
@@ -436,6 +627,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       }),
     };
   });
+
+  const mergedColumns_qu = columns_qu.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        editing: isEditing(record),
+      }),
+    };
+  });
   const mergedColumns_menke = columns_menke.map((col) => {
     if (!col.editable) {
       return col;
@@ -471,6 +677,25 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                         }}
                         dataSource={tableData_member}
                         columns={mergedColumns_member}
+                        rowKey="id"
+                        bordered
+                        size="middle"
+                        rowClassName="editable-row"
+                        pagination={false}
+                      />
+                    </Form>
+                    <Heading size="md" mb="3">
+                  {t.familyqu}
+                    </Heading>
+                    <Form form={form} component={false}>
+                      <Table
+                        components={{
+                          body: {
+                            cell: EditableCell,
+                          },
+                        }}
+                        dataSource={tableData_qu}
+                        columns={mergedColumns_qu}
                         rowKey="id"
                         bordered
                         size="middle"
