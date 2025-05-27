@@ -155,7 +155,7 @@ export default function PrivacyPolicy() {
           </Text>
 
           <Heading as="h2" size="lg" mt={8}>
-            Children's Privacy
+            Children&apos;s Privacy
           </Heading>
           <Text>
             Our Service does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from anyone under the age of 13.
