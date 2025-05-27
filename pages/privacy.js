@@ -66,7 +66,7 @@ export default function PrivacyPolicy() {
               <Text><strong>Account</strong> means a unique account created for You to access our Service or parts of our Service.</Text>
             </ListItem>
             <ListItem>
-              <Text><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to house of legacy cheat editor.</Text>
+              <Text><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to house of legacy cheat editor.</Text>
             </ListItem>
             <ListItem>
               <Text><strong>Cookies</strong> are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.</Text>
@@ -121,7 +121,7 @@ export default function PrivacyPolicy() {
           </Heading>
           <Text>Usage Data is collected automatically when using the Service.</Text>
           <Text>
-            Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.
+            Usage Data may include information such as Your Device&apos;s Internet Protocol address (e.g. IP address), browser type, browser version, the pages of our Service that You visit, the time and date of Your visit, the time spent on those pages, unique device identifiers and other diagnostic data.
           </Text>
 
           <Heading as="h3" size="md" mt={6}>

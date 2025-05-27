@@ -56,13 +56,13 @@ export default function TermsAndConditions() {
 
           <UnorderedList spacing={3} pl={4}>
             <ListItem>
-              <Text><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where "control" means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</Text>
+              <Text><strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party, where &quot;control&quot; means ownership of 50% or more of the shares, equity interest or other securities entitled to vote for election of directors or other managing authority.</Text>
             </ListItem>
             <ListItem>
               <Text><strong>Country</strong> refers to: China</Text>
             </ListItem>
             <ListItem>
-              <Text><strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to house of legacy cheat editor.</Text>
+              <Text><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to house of legacy cheat editor.</Text>
             </ListItem>
             <ListItem>
               <Text><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</Text>
@@ -71,7 +71,7 @@ export default function TermsAndConditions() {
               <Text><strong>Service</strong> refers to the Website.</Text>
             </ListItem>
             <ListItem>
-              <Text><strong>Terms and Conditions</strong> (also referred as "Terms") mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service. This Terms and Conditions agreement has been created with the help of the{' '}
+              <Text><strong>Terms and Conditions</strong> (also referred as &quot;Terms&quot;) mean these Terms and Conditions that form the entire agreement between You and the Company regarding the use of the Service. This Terms and Conditions agreement has been created with the help of the{' '}
                 <Link href="https://www.termsfeed.com/terms-conditions-generator/" isExternal color="blue.500">
                   Terms and Conditions Generator
                 </Link>.
@@ -148,10 +148,10 @@ export default function TermsAndConditions() {
           </Text>
 
           <Heading as="h2" size="lg" mt={8}>
-            "AS IS" and "AS AVAILABLE" Disclaimer
+            &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; Disclaimer
           </Heading>
           <Text>
-            The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice.
+            The Service is provided to You &quot;AS IS&quot; and &quot;AS AVAILABLE&quot; and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice.
           </Text>
           <Text>
             Without limiting the foregoing, neither the Company nor any of the company's provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service; or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.
@@ -185,7 +185,7 @@ export default function TermsAndConditions() {
             United States Legal Compliance
           </Heading>
           <Text>
-            You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.
+            You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a &quot;terrorist supporting&quot; country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.
           </Text>
 
           <Heading as="h2" size="lg" mt={8}>
