@@ -97,9 +97,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
 
             rawData[type].value[memberIndex][3] = row.age;
             rawData[type].value[memberIndex][4] = row.wen;
-            rawData[type].value[memberIndex][6] = row.wu;
-            rawData[type].value[memberIndex][7] = row.shang;
-            rawData[type].value[memberIndex][8] = row.yi;
+            rawData[type].value[memberIndex][5] = row.wu;
+            rawData[type].value[memberIndex][6] = row.shang;
+            rawData[type].value[memberIndex][7] = row.yi;
             rawData[type].value[memberIndex][15] = row.mou;
             rawData[type].value[memberIndex][18] = row.payment;
             // console.log(rawData, 'rawData menke') // TODO: Remove this debug info
