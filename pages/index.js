@@ -38,7 +38,7 @@ export default function Home() {
       <SEOHead />
 
       <a id='downloader' style={{ display: 'none' }}></a>
-      <Flex alignItems='center' justifyContent='center' mt='24' mb='14'>
+      <Flex alignItems='center' justifyContent='center' mt='24' mb='20'>
         <Box
           direction='column'
           background='Blue.100'
