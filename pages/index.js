@@ -86,13 +86,25 @@ export default function Home() {
           </Box>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           <Divider mt='5' mb='3' />
-          <Text>{t.updateLog}</Text>
-            <ul>
+          <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>{t.updateLog}</Link>
+            {/* <ul>
               {t.features.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
-            </ul>
+            </ul> */}
+            <Flex alignItems='center' justifyContent='center'>
+            <a href='https://ko-fi.com/U7U01FMWB3' target='_blank'>
+              <img 
+                height='36' 
+                style={{border: '0px', height: '36px'}} 
+                src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' 
+                border='0' 
+                alt='Buy Me a Coffee at ko-fi.com' 
+              />
+            </a>  
+            </Flex>            
         </Box>
+      
       </Flex>
     </>
   );
