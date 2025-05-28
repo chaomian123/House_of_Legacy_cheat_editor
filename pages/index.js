@@ -19,7 +19,7 @@ import {
   Link
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useLocale } from '../lib/useLocale';
 import SEOHead from '../components/SEOHead';
 import { inject } from "@vercel/analytics"
@@ -32,6 +32,16 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { locale, t } = useLocale();
+  const pathRef = useRef(null);
+  
+  // 动态插入路径，避免SEO索引
+  useEffect(() => {
+    if (pathRef.current) {
+      const pathText = 'C:\\Users\\用户名\\AppData\\LocalLow\\S3Studio\\House of Legacy\\FW\\0\\GameData.es3';
+      pathRef.current.textContent = pathText;
+    }
+  }, []);
+  
   inject()
   return (
     <>
@@ -49,7 +59,31 @@ export default function Home() {
           <Heading mb='6'>{t.mainTitle}</Heading>
           <Divider mt='8' mb='3' />
           <Heading size='md' mb='3'>{t.onlineEditor}</Heading>
-          <Text>{t.savePathExample}<Code>C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3</Code></Text>
+          <Text>{t.savePathExample}</Text>
+          <Box 
+            as="pre"
+            p={2} 
+            bg="gray.100" 
+            fontSize="sm"
+            borderRadius="md"
+            overflow="auto"
+            style={{ userSelect: 'all' }}
+          >
+            <p  
+              data-nosnippet="true"
+              role="presentation"
+              aria-hidden="true"
+              style={{ 
+                fontFamily: 'monospace',
+                margin: 0,
+                padding: 0,
+                color: '#666'
+              }}
+              ref={pathRef}
+            >
+              {/* 路径将通过JavaScript动态插入，避免SEO索引 */}
+            </p>
+          </Box>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           <Divider mt='5' mb='3' />
           <Text>{t.updateLog}</Text>
