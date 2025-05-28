@@ -49,7 +49,7 @@ export default function Home() {
           <Heading mb='6'>{t.mainTitle}</Heading>
           <Divider mt='8' mb='3' />
           <Heading size='md' mb='3'>{t.onlineEditor}</Heading>
-          <Text>{t.savePathExample}<Code>C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0</Code></Text>
+          <Text>{t.savePathExample}<Code>C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3</Code></Text>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           <Divider mt='5' mb='3' />
           <Text>{t.updateLog}</Text>

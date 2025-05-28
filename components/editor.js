@@ -106,6 +106,13 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
             // let newData = JSON.stringify(rawData)
           } else if (type === 'Member_now') {
+            const zuzhangInfo = rawData['Member_First'].value[0]
+            const zuzhangAge = zuzhangInfo[6]
+            const zuzhangId = zuzhangInfo[0]
+            const ID = rawData[type].value[memberIndex][0]
+            if (ID === zuzhangId) {
+              rawData['Member_First'].value[0][6] = row.age
+            }
             const info = rawData[type].value[memberIndex][4].split('|')
             info[2] = row.talent;
             info[3] = row.talent_num;
@@ -114,6 +121,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             // const old_name = info[0];
             rawData[type].value[memberIndex][4] = info.join('|');
             rawData[type].value[memberIndex][7] = row.wen;
+            rawData[type].value[memberIndex][6] = row.age;
             rawData[type].value[memberIndex][8] = row.wu;
             rawData[type].value[memberIndex][9] = row.shang;
             rawData[type].value[memberIndex][10] = row.yi;
@@ -187,6 +195,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       return {
         name: fields[4].split('|')[0], // 获取名字
         id: fields[0], // 成员ID
+        age: fields[6],
         wen: fields[7],
         wu: fields[8],
         shang: fields[9],
@@ -256,6 +265,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       dataIndex: 'name',
       key: 'name',
       editable: false,
+    },
+    {
+      title: t.attributes.age,
+      dataIndex: 'age',
+      key: 'age',
+      editable: true,
     },
     {
       title: t.attributes.literature,
