@@ -91,6 +91,12 @@ export default function Changelog() {
 
   const changelogData = locale === 'zh' ? [
     {
+      date: '2025-05-28',
+      type: 'family',
+      title: '支持修改家族成员年龄',
+      description: '新增家族成员年龄编辑功能。'
+    },
+    {
       date: '2025-05-27',
       type: 'fix',
       title: '修复门客属性修改bug',
@@ -121,6 +127,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-28',
+      type: 'family',
+      title: 'Support for Editing Family Member Age',
+      description: 'Added family member age editing functionality.'
+    },
     {
       date: '2025-05-27',
       type: 'fix',
