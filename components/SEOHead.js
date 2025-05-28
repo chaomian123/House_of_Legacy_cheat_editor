@@ -15,7 +15,7 @@ export default function SEOHead({
   const siteTitle = title || t.siteTitle;
   const siteDescription = description || t.siteDescription;
   const siteKeywords = keywords || t.keywords;
-  const siteUrl = `https://es3.lol${router.asPath}`;
+  const siteUrl = `https://savefile.space${router.asPath}`;
   const canonicalUrl = canonical || siteUrl;
 
   return (
@@ -31,16 +31,16 @@ export default function SEOHead({
       {/* 语言和地区 */}
       <meta httpEquiv="content-language" content={locale} />
       <link rel="canonical" href={canonicalUrl} />
-      <link rel="alternate" hrefLang="zh" href={`https://es3.lol/zh${router.asPath}`} />
-      <link rel="alternate" hrefLang="en" href={`https://es3.lol/en${router.asPath}`} />
-      <link rel="alternate" hrefLang="x-default" href={`https://es3.lol${router.asPath}`} />
+      <link rel="alternate" hrefLang="zh" href={`https://savefile.space/zh${router.asPath}`} />
+      <link rel="alternate" hrefLang="en" href={`https://savefile.space/en${router.asPath}`} />
+      <link rel="alternate" hrefLang="x-default" href={`https://savefile.space${router.asPath}`} />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={siteUrl} />
       <meta property="og:title" content={siteTitle} />
       <meta property="og:description" content={siteDescription} />
-      <meta property="og:image" content={`https://es3.lol${ogImage}`} />
+      <meta property="og:image" content={`https://savefile.space${ogImage}`} />
       <meta property="og:site_name" content={locale === 'en' ? 'House of Legacy Editor' : '吾今有世家修改器'} />
       <meta property="og:locale" content={locale === 'en' ? 'en_US' : 'zh_CN'} />
       
@@ -49,7 +49,7 @@ export default function SEOHead({
       <meta property="twitter:url" content={siteUrl} />
       <meta property="twitter:title" content={siteTitle} />
       <meta property="twitter:description" content={siteDescription} />
-      <meta property="twitter:image" content={`https://es3.lol${ogImage}`} />
+      <meta property="twitter:image" content={`https://savefile.space${ogImage}`} />
       
       {/* 结构化数据 */}
       <script
