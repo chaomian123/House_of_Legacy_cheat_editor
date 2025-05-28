@@ -40,8 +40,10 @@ export default function LanguageSwitcher() {
         size="sm"
         bg="white"
         _hover={{ bg: "blue.50" }}
+        aria-label={locale === 'zh' ? '切换到英文' : 'Switch to Chinese'}
+        title={locale === 'zh' ? '切换到英文' : 'Switch to Chinese'}
       >
-        {t.languageSwitch}
+        🌐
       </Button>
     </Box>
   );
