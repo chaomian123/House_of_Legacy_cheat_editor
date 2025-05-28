@@ -32,14 +32,11 @@ export default function SEOHead({
       {/* 语言和地区 */}
       <meta httpEquiv="content-language" content={locale} />
       <link rel="canonical" href={canonicalUrl} />
-      <link rel="alternate" hrefLang="zh" href={`https://savefile.space/zh${router.asPath}`} />
-      <link rel="alternate" hrefLang="en" href={`https://savefile.space/en${router.asPath}`} />
-      <link rel="alternate" hrefLang="x-default" href={`https://savefile.space${router.asPath}`} />
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
       <meta property="og:url" content={siteUrl} />
-      <meta property="og:title" content={siteTitle} />
+      <meta property="og:title" content={siteTitle} /> 
       <meta property="og:description" content={siteDescription} />
       <meta property="og:image" content={`https://savefile.space${ogImage}`} />
       <meta property="og:site_name" content={locale === 'en' ? 'House of Legacy Editor' : '吾今有世家修改器'} />
@@ -79,11 +76,13 @@ export default function SEOHead({
       />
       
       {/* Favicon */}
-      <link rel="icon" href="https://savefile.space/favicon.ico" />
-      <link rel="apple-touch-icon" sizes="180x180" href="https://savefile.space/apple-touch-icon.png" />
-      <link rel="icon" type="image/png" sizes="32x32" href="https://savefile.space/favicon-32x32.png" />
-      <link rel="icon" type="image/png" sizes="16x16" href="https://savefile.space/favicon-16x16.png" />
-      <link rel="manifest" href="https://savefile.space/site.webmanifest" />
+      <link rel="icon" href="/favicon.ico" />
+      <link rel="shortcut icon" href="/favicon.ico" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="manifest" href="/site.webmanifest" />
+      <meta name="theme-color" content="#ffffff" />
       
       {/* Google Ads */}
       <meta name="google-adsense-account" content="ca-pub-1056917899569324" />
