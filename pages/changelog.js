@@ -93,6 +93,12 @@ export default function Changelog() {
     {
       date: '2025-05-29',
       type: 'feature',
+      title: '升满属性功能',
+      description: '新增单个成员和全员升满属性功能：为每个成员添加独立的"升满属性"按钮，可单独提升某个成员的所有属性到满值；在列表标题旁添加"升满全属性"按钮，一键将该列表所有成员的属性提升到满值'
+    },
+    {
+      date: '2025-05-29',
+      type: 'feature',
       title: '货币管理功能',
       description: '新增金钱和元宝编辑功能，支持直接修改游戏货币数量'
     },
@@ -151,6 +157,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-29',
+      type: 'feature',
+      title: 'Max Attributes Feature',
+      description: 'Added individual and batch max attributes functionality: Added independent "Max Attributes" button for each member to boost individual member attributes to maximum; Added "Max All Attributes" button next to list titles for one-click attribute maximization of all members in the list'
+    },
     {
       date: '2025-05-29',
       type: 'feature',
