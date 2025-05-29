@@ -114,6 +114,235 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     setIsEditingCurrency(true);
   };
 
+  const maxAllAttributes = (type) => {
+    const rawData = JSON.parse(data.data.toString());
+    
+    if (type === 'Member_now') {
+      rawData[type].value.forEach((member, index) => {
+        // 更新基础属性
+        rawData[type].value[index][7] = '100';  // wen
+        rawData[type].value[index][8] = '100';  // wu
+        rawData[type].value[index][9] = '100';  // shang
+        rawData[type].value[index][10] = '100'; // yi
+        rawData[type].value[index][27] = '100'; // mou
+        rawData[type].value[index][20] = '100'; // beauty
+        
+        // 更新info字符串中的属性
+        const info = rawData[type].value[index][4].split('|');
+        info[3] = '100'; // talent_num
+        info[7] = '100'; // lucky
+        rawData[type].value[index][4] = info.join('|');
+      });
+    } else if (type === 'Member_qu') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][6] = '100';  // wen
+        rawData[type].value[index][7] = '100';  // wu
+        rawData[type].value[index][8] = '100';  // shang
+        rawData[type].value[index][9] = '100';  // yi
+        rawData[type].value[index][19] = '100'; // mou
+        rawData[type].value[index][15] = '100'; // beauty
+        
+        // 更新info字符串中的属性
+        const info = rawData[type].value[index][2].split('|');
+        info[3] = '100'; // talent_num
+        info[7] = '100'; // lucky
+        rawData[type].value[index][2] = info.join('|');
+      });
+    } else if (type === 'MenKe_Now') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][4] = '100';  // wen
+        rawData[type].value[index][5] = '100';  // wu
+        rawData[type].value[index][6] = '100';  // shang
+        rawData[type].value[index][7] = '100';  // yi
+        rawData[type].value[index][15] = '100'; // mou
+      });
+    }
+    
+    setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+    
+    // 重新加载数据到表格
+    const member_now = rawData?.Member_now?.value || [];
+    const members = member_now.map(fields => {
+      const info = fields[4].split('|');
+      return {
+        gender: info[4],
+        name: info[0],
+        id: fields[0],
+        age: fields[6],
+        wen: fields[7],
+        wu: fields[8],
+        shang: fields[9],
+        yi: fields[10],
+        mou: fields[27],
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0',
+        skill_num: fields[33] || '0',
+        lucky: info[7],
+        beauty: fields[20],
+      };
+    });
+    
+    const qu_now = rawData?.Member_qu?.value || [];
+    const qu = qu_now.map(fields => {
+      const info = fields[2].split('|');
+      return {
+        name: info[0],
+        gender: info[4],
+        id: fields[0],
+        age: fields[5],
+        wen: fields[6],
+        wu: fields[7],
+        shang: fields[8],
+        yi: fields[9],
+        mou: fields[19],
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0',
+        skill_num: fields[23],
+        lucky: info[7],
+        beauty: fields[15],
+      };
+    });
+    
+    const menke_now = rawData?.MenKe_Now?.value || [];
+    const menke = menke_now.map(fields => {
+      return {
+        name: fields[2].split('|')[0],
+        id: fields[0],
+        age: fields[3],
+        wen: fields[4],
+        wu: fields[5],
+        shang: fields[6],
+        yi: fields[7],
+        mou: fields[15],
+        payment: fields[18],
+      };
+    });
+    
+    setTableDataMember(members);
+    setTableDataQu(qu);
+    setTableDataMenke(menke);
+    
+    message.success({
+      content: locale === 'zh' ? '全属性已升满！不要忘记保存到存档文件！' : 'All attributes maxed! Don\'t forget to save to file!',
+      duration: 3
+    });
+  };
+
+  const maxSingleMemberAttributes = (record, type) => {
+    const rawData = JSON.parse(data.data.toString());
+    const memberIndex = rawData[type].value.findIndex(member => member[0] === record.id);
+    
+    if (memberIndex > -1) {
+      if (type === 'Member_now') {
+        // 更新基础属性
+        rawData[type].value[memberIndex][7] = '100';  // wen
+        rawData[type].value[memberIndex][8] = '100';  // wu
+        rawData[type].value[memberIndex][9] = '100';  // shang
+        rawData[type].value[memberIndex][10] = '100'; // yi
+        rawData[type].value[memberIndex][27] = '100'; // mou
+        rawData[type].value[memberIndex][20] = '100'; // beauty
+        
+        // 更新info字符串中的属性
+        const info = rawData[type].value[memberIndex][4].split('|');
+        info[3] = '100'; // talent_num
+        info[7] = '100'; // lucky
+        rawData[type].value[memberIndex][4] = info.join('|');
+      } else if (type === 'Member_qu') {
+        rawData[type].value[memberIndex][6] = '100';  // wen
+        rawData[type].value[memberIndex][7] = '100';  // wu
+        rawData[type].value[memberIndex][8] = '100';  // shang
+        rawData[type].value[memberIndex][9] = '100';  // yi
+        rawData[type].value[memberIndex][19] = '100'; // mou
+        rawData[type].value[memberIndex][15] = '100'; // beauty
+        
+        // 更新info字符串中的属性
+        const info = rawData[type].value[memberIndex][2].split('|');
+        info[3] = '100'; // talent_num
+        info[7] = '100'; // lucky
+        rawData[type].value[memberIndex][2] = info.join('|');
+      } else if (type === 'MenKe_Now') {
+        rawData[type].value[memberIndex][4] = '100';  // wen
+        rawData[type].value[memberIndex][5] = '100';  // wu
+        rawData[type].value[memberIndex][6] = '100';  // shang
+        rawData[type].value[memberIndex][7] = '100';  // yi
+        rawData[type].value[memberIndex][15] = '100'; // mou
+      }
+      
+      setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+      
+      // 重新加载数据到表格
+      const member_now = rawData?.Member_now?.value || [];
+      const members = member_now.map(fields => {
+        const info = fields[4].split('|');
+        return {
+          gender: info[4],
+          name: info[0],
+          id: fields[0],
+          age: fields[6],
+          wen: fields[7],
+          wu: fields[8],
+          shang: fields[9],
+          yi: fields[10],
+          mou: fields[27],
+          talent: info[2],
+          talent_num: info[3],
+          skill: info[6] || '0',
+          skill_num: fields[33] || '0',
+          lucky: info[7],
+          beauty: fields[20],
+        };
+      });
+      
+      const qu_now = rawData?.Member_qu?.value || [];
+      const qu = qu_now.map(fields => {
+        const info = fields[2].split('|');
+        return {
+          name: info[0],
+          gender: info[4],
+          id: fields[0],
+          age: fields[5],
+          wen: fields[6],
+          wu: fields[7],
+          shang: fields[8],
+          yi: fields[9],
+          mou: fields[19],
+          talent: info[2],
+          talent_num: info[3],
+          skill: info[6] || '0',
+          skill_num: fields[23],
+          lucky: info[7],
+          beauty: fields[15],
+        };
+      });
+      
+      const menke_now = rawData?.MenKe_Now?.value || [];
+      const menke = menke_now.map(fields => {
+        return {
+          name: fields[2].split('|')[0],
+          id: fields[0],
+          age: fields[3],
+          wen: fields[4],
+          wu: fields[5],
+          shang: fields[6],
+          yi: fields[7],
+          mou: fields[15],
+          payment: fields[18],
+        };
+      });
+      
+      setTableDataMember(members);
+      setTableDataQu(qu);
+      setTableDataMenke(menke);
+      
+      message.success({
+        content: locale === 'zh' ? `${record.name} 属性已升满！` : `${record.name} attributes maxed!`,
+        duration: 2
+      });
+    }
+  };
+
   const handleMoneyChange = useCallback((e) => {
     setTempMoney(e.target.value);
   }, []);
@@ -542,6 +771,14 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small" style={{ marginRight: 8 }}>
               {t.edit}
             </Button>
+            <Button 
+              size="small" 
+              onClick={() => maxSingleMemberAttributes(record, 'Member_now')}
+              disabled={editingKey !== ''}
+              style={{ marginRight: 8 }}
+            >
+              {locale === 'zh' ? '升满属性' : 'Max Attributes'}
+            </Button>
             {record.age >= 18 && record.age <= 30 && record.gender === '0' && (
               <Button 
                 danger 
@@ -733,6 +970,14 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small" style={{ marginRight: 8 }}>
               {t.edit}
             </Button>
+            <Button 
+              size="small" 
+              onClick={() => maxSingleMemberAttributes(record, 'Member_qu')}
+              disabled={editingKey !== ''}
+              style={{ marginRight: 8 }}
+            >
+              {locale === 'zh' ? '升满属性' : 'Max Attributes'}
+            </Button>
             {record.age >= 18 && record.age <= 30 && record.gender === '0' && (
               <Button 
                 danger 
@@ -890,7 +1135,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                   <Heading size="sm" mb={3}>
                     {locale === 'zh' ? '货币管理' : 'Currency Management'}
                   </Heading>
-                  <Box display="flex" gap={4} alignItems="end">
+                  <Box display="flex" gap={4} alignItems="flex-start">
                     <Box>
                       <Text fontSize="sm" mb={1}>
                         {locale === 'zh' ? '金钱' : 'Money'}
@@ -924,15 +1169,17 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                         {locale === 'zh' ? '最多一亿' : 'Max 100 million'}
                       </Text>
                     </Box>
-                    {isEditingCurrency ? (
-                      <Button type="primary" onClick={saveCurrency}>
-                        {locale === 'zh' ? '保存货币' : 'Save Currency'}
-                      </Button>
-                    ) : (
-                      <Button onClick={editCurrency}>
-                        {locale === 'zh' ? '编辑货币' : 'Edit Currency'}
-                      </Button>
-                    )}
+                    <Box mt="25px">
+                      {isEditingCurrency ? (
+                        <Button type="primary" onClick={saveCurrency}>
+                          {locale === 'zh' ? '保存货币' : 'Save Currency'}
+                        </Button>
+                      ) : (
+                        <Button onClick={editCurrency}>
+                          {locale === 'zh' ? '编辑货币' : 'Edit Currency'}
+                        </Button>
+                      )}
+                    </Box>
                   </Box>
                 </Box>
               ), [locale, isEditingCurrency, tempMoney, money, tempYuanbao, yuanbao, handleMoneyChange, handleYuanbaoChange, saveCurrency, editCurrency])}
@@ -950,6 +1197,13 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                         {t.familyMembers}
                       </Heading>
                     </Box>
+                    <Button 
+                      type="primary" 
+                      size="small" 
+                      onClick={() => maxAllAttributes('Member_now')}
+                    >
+                      {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+                    </Button>
                   </Box>
                   <Collapse in={collapseStates.member}>
                     <Form form={form} component={false}>
@@ -982,6 +1236,13 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                           {t.familyqu}
                         </Heading>
                       </Box>
+                      <Button 
+                        type="primary" 
+                        size="small" 
+                        onClick={() => maxAllAttributes('Member_qu')}
+                      >
+                        {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+                      </Button>
                     </Box>
                     <Collapse in={collapseStates.qu}>
                       <Form form={form} component={false}>
@@ -1015,6 +1276,13 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                     {t.guests}
                   </Heading>
                 </Box>
+                <Button 
+                  type="primary" 
+                  size="small" 
+                  onClick={() => maxAllAttributes('MenKe_Now')}
+                >
+                  {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+                </Button>
               </Box>
               <Collapse in={collapseStates.menke}>
                 <Form form={form} component={false}>
