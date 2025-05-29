@@ -16,7 +16,15 @@ import {
   ModalCloseButton,
   useDisclosure,
   IconButton,
-  Link
+  Link,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverHeader,
+  PopoverBody,
+  Image
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState, useRef } from 'react';
@@ -90,12 +98,35 @@ export default function Home() {
             {t.updateLog}
             {locale === 'zh' ? '(上次更新时间: 2025-05-29)' : '(Last updated: 2025-05-29)'}
           </Link>
+          <br />
+          <Popover >
+            <PopoverTrigger>
+              <Link style={{textDecoration: 'underline', color: 'inherit', cursor: 'pointer'}}>
+                {locale === 'zh' ? '吾今有世家在线存档修改器问题反馈群' : 'House of Legacy Save Editor Feedback Group'}
+              </Link>
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>
+                {locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
+              </PopoverHeader>
+              <PopoverBody>
+                <Image 
+                  src="https://i.postimg.cc/t4cfrFHN/wechatgroup.jpg" 
+                  alt={locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
+                  maxW="200px"
+                  mx="auto"
+                />
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
             {/* <ul>
               {t.features.map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
             </ul> */}
-            <Flex alignItems='center' justifyContent='center'>
+            <Flex alignItems='center' justifyContent='center' mt='5'>
               <a href='https://ko-fi.com/U7U01FMWB3' target='_blank' rel='noreferrer'>
                 <img 
                   height='36' 
