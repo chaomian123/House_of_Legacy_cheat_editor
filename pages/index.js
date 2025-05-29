@@ -24,12 +24,14 @@ import {
   PopoverCloseButton,
   PopoverHeader,
   PopoverBody,
-  Image
+  Image,
+  VStack
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState, useRef } from 'react';
 import { useLocale } from '../lib/useLocale';
 import SEOHead from '../components/SEOHead';
+import JianbingSupport from '../components/JianbingSupport';
 import { inject } from "@vercel/analytics"
 
 import CryptForm from '../components/cryptForm';
@@ -126,8 +128,8 @@ export default function Home() {
                 <li key={index}>{feature}</li>
               ))}
             </ul> */}
-            <Flex alignItems='center' justifyContent='center' mt='5'>
-              <a href='https://ko-fi.com/U7U01FMWB3' target='_blank' rel='noreferrer'>
+            <VStack spacing={3} alignItems='center' justifyContent='center' mt='5'>
+              {locale === 'en' && <a href='https://ko-fi.com/U7U01FMWB3' target='_blank' rel='noreferrer'>
                 <img 
                   height='36' 
                   style={{border: '0px', height: '36px'}} 
@@ -135,8 +137,9 @@ export default function Home() {
                   border='0' 
                   alt='Buy Me a Coffee at ko-fi.com' 
                 />
-              </a>  
-            </Flex>            
+              </a>}
+              {locale === 'zh' && <JianbingSupport />}
+            </VStack>            
         </Box>
       
       </Flex>
