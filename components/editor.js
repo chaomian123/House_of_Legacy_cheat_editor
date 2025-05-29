@@ -116,6 +116,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             const info = rawData[type].value[memberIndex][4].split('|')
             info[2] = row.talent;
             info[3] = row.talent_num;
+            info[6] = row.skill || '0';
             info[7] = row.lucky;
   
             // const old_name = info[0];
@@ -127,6 +128,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][10] = row.yi;
             rawData[type].value[memberIndex][27] = row.mou;
             rawData[type].value[memberIndex][20] = row.beauty;
+            rawData[type].value[memberIndex][33] = row.skill_num;
             let newData = JSON.stringify(rawData)
             setData({ ...data, data: Buffer.from(newData)});
             // }
@@ -134,6 +136,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             const info = rawData[type].value[memberIndex][2].split('|')
             info[2] = row.talent;
             info[3] = row.talent_num;
+            info[6] = row.skill || '0';
             info[7] = row.lucky;
             rawData[type].value[memberIndex][2] = info.join('|');
             rawData[type].value[memberIndex][5] = row.age;
@@ -143,6 +146,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][9] = row.yi;
             rawData[type].value[memberIndex][19] = row.mou;
             rawData[type].value[memberIndex][15] = row.beauty;
+            rawData[type].value[memberIndex][23] = row.skill_num;
             let newData = JSON.stringify(rawData)
             setData({ ...data, data: Buffer.from(newData)});
           }
@@ -203,6 +207,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         mou: fields[27],
         talent: fields[4].split('|')[2],
         talent_num: fields[4].split('|')[3],
+        skill: fields[4].split('|')[6] || '0', // 技能，默认为0
+        skill_num: fields[33] || '0', // 技能数值，默认为0
         lucky: fields[4].split('|')[7],
         beauty: fields[20],
       };
@@ -222,6 +228,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         mou: fields[19],
         talent: fields[2].split('|')[2],
         talent_num: fields[2].split('|')[3],
+        skill: fields[2].split('|')[6] || '0', // 技能，默认为0
+        skill_num: fields[23], // 技能数值，默认为0
         lucky: fields[2].split('|')[7],
         beauty: fields[15],
       };
@@ -238,6 +246,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         shang: fields[6],
         yi: fields[7],
         mou: fields[15],
+        // skill: fields[2].split('|')[4] || '0', // 技能，默认为0
+        // skill_num: fields[2].split('|')[5] || '0', // 技能数值，默认为0
         payment: fields[18],
       };
     });
@@ -375,6 +385,40 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       title: locale === 'zh' ? '天赋数值' : 'Talent Value',
       dataIndex: 'talent_num',
       key: 'talent_num',
+      editable: true,
+    },
+    {
+      title: t.attributes.skill,
+      dataIndex: 'skill',
+      key: 'skill',
+      render: (text, record, index) => {
+        const skillMap = locale === 'zh' ? {
+          '0': '无',
+          '2': '医'
+        } : {
+          '0': 'None',
+          '2': 'Medical'
+        };
+        
+        return isEditing(record) ? (
+          <Form.Item
+            name="skill"
+            style={{ margin: 0 }}
+          >
+            <Radio.Group value={text}>
+              <Radio value={'0'}>{locale === 'zh' ? '无' : 'None'}</Radio>
+              <Radio value={'2'}>{locale === 'zh' ? '医' : 'Medical'}</Radio>
+            </Radio.Group>
+          </Form.Item>
+        ) : (
+          skillMap[text] || text
+        );
+      }
+    },
+    {
+      title: t.attributes.skillValue,
+      dataIndex: 'skill_num',
+      key: 'skill_num',
       editable: true,
     },
     {
@@ -519,6 +563,40 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       title: locale === 'zh' ? '天赋数值' : 'Talent Value',
       dataIndex: 'talent_num',
       key: 'talent_num',
+      editable: true,
+    },
+    {
+      title: t.attributes.skill,
+      dataIndex: 'skill',
+      key: 'skill',
+      render: (text, record, index) => {
+        const skillMap = locale === 'zh' ? {
+          '0': '无',
+          '2': '医'
+        } : {
+          '0': 'None',
+          '2': 'Medical'
+        };
+        
+        return isEditing(record) ? (
+          <Form.Item
+            name="skill"
+            style={{ margin: 0 }}
+          >
+            <Radio.Group value={text}>
+              <Radio value={'0'}>{locale === 'zh' ? '无' : 'None'}</Radio>
+              <Radio value={'2'}>{locale === 'zh' ? '医' : 'Medical'}</Radio>
+            </Radio.Group>
+          </Form.Item>
+        ) : (
+          skillMap[text] || text
+        );
+      }
+    },
+    {
+      title: t.attributes.skillValue,
+      dataIndex: 'skill_num',
+      key: 'skill_num',
       editable: true,
     },
     {
