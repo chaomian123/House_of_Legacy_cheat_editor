@@ -91,6 +91,24 @@ export default function Changelog() {
 
   const changelogData = locale === 'zh' ? [
     {
+      date: '2025-05-29',
+      type: 'feature',
+      title: '立即怀孕功能',
+      description: '为符合游戏怀孕条件的成员添加立即怀孕功能'
+    },
+    {
+      date: '2025-05-29',
+      type: 'family',
+      title: '家族成员技能编辑',
+      description: '支持修改技能(无/医)和技能数值'
+    },
+    {
+      date: '2025-05-29',
+      type: 'spouse',
+      title: '嫁娶成员技能编辑',
+      description: '支持修改技能(无/医)和技能数值'
+    },
+    {
       date: '2025-05-28',
       type: 'family',
       title: '支持修改家族成员年龄',
@@ -127,6 +145,24 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-29',
+      type: 'feature',
+      title: 'Immediate Pregnancy Feature',
+      description: 'Added immediate pregnancy function for members who meet game pregnancy conditions'
+    },
+    {
+      date: '2025-05-29',
+      type: 'family',
+      title: 'Family Member Skill Editing',
+      description: 'Support editing skills (None/Medical) and skill values'
+    },
+    {
+      date: '2025-05-29',
+      type: 'spouse',
+      title: 'Spouse Skill Editing',
+      description: 'Support editing skills (None/Medical) and skill values'
+    },
     {
       date: '2025-05-28',
       type: 'family',

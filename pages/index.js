@@ -86,7 +86,10 @@ export default function Home() {
           </Box>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           <Divider mt='5' mb='3' />
-          <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>{t.updateLog}</Link>
+          <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
+            {t.updateLog}
+            {locale === 'zh' ? '(上次更新时间: 2025-05-29)' : '(Last updated: 2025-05-29)'}
+          </Link>
             {/* <ul>
               {t.features.map((feature, index) => (
                 <li key={index}>{feature}</li>

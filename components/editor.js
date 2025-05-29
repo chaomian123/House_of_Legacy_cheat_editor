@@ -7,7 +7,12 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Heading
+  Heading,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Text
 } from '@chakra-ui/react';
 import { Table, Input, Form, Button, Radio } from 'antd';
 import JSONEditor from 'jsoneditor';
@@ -24,6 +29,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   const [tableData_menke, setTableDataMenke] = useState([]);
   const [tableData_qu, setTableDataQu] = useState([]);
   const [editingKey, setEditingKey] = useState('');
+  const [pregnancyModal, setPregnancyModal] = useState({ isOpen: false, record: null, type: null });
   const { locale, t } = useLocale();
 
   const isEditing = (record) => record.id === editingKey;
@@ -42,6 +48,31 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
 
   const cancel = () => {
     setEditingKey('');
+  };
+
+  const handlePregnancy = (record, type) => {
+    setPregnancyModal({ isOpen: true, record, type });
+  };
+
+  const confirmPregnancy = () => {
+    const { record, type } = pregnancyModal;
+    const rawData = JSON.parse(data.data.toString());
+    const memberIndex = rawData[type].value.findIndex(member => member[0] === record.id);
+    
+    if (memberIndex > -1) {
+      if (type === 'Member_qu') {
+        rawData[type].value[memberIndex][18] = '1';
+      } else if (type === 'Member_now') {
+        rawData[type].value[memberIndex][25] = '1';
+      }
+      setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+    }
+    
+    setPregnancyModal({ isOpen: false, record: null, type: null });
+  };
+
+  const cancelPregnancy = () => {
+    setPregnancyModal({ isOpen: false, record: null, type: null });
   };
 
   const save = async (key, type='Member_now') => {
@@ -196,8 +227,10 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     const member_now = rawData?.Member_now?.value || []
     // console.log(rawData, 'tableData')
     const members = member_now.map(fields => {
+    const info = fields[4].split('|')
       return {
-        name: fields[4].split('|')[0], // 获取名字
+        gender: info[4],
+        name: info[0], // 获取名字
         id: fields[0], // 成员ID
         age: fields[6],
         wen: fields[7],
@@ -205,11 +238,11 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         shang: fields[9],
         yi: fields[10],
         mou: fields[27],
-        talent: fields[4].split('|')[2],
-        talent_num: fields[4].split('|')[3],
-        skill: fields[4].split('|')[6] || '0', // 技能，默认为0
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0', // 技能，默认为0
         skill_num: fields[33] || '0', // 技能数值，默认为0
-        lucky: fields[4].split('|')[7],
+        lucky: info[7],
         beauty: fields[20],
       };
     });
@@ -217,8 +250,10 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     // console.log(rawData, 'tableData')
     const qu = qu_now.map(fields => {
       // console.log(fields, 'fields')
+      const info = fields[2].split('|')
       return {
-        name: fields[2].split('|')[0], // 获取名字
+        name: info[0], // 获取名字
+        gender: info[4],
         id: fields[0], // 成员ID
         age: fields[5],
         wen: fields[6],
@@ -226,11 +261,11 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         shang: fields[8],
         yi: fields[9],
         mou: fields[19],
-        talent: fields[2].split('|')[2],
-        talent_num: fields[2].split('|')[3],
-        skill: fields[2].split('|')[6] || '0', // 技能，默认为0
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0', // 技能，默认为0
         skill_num: fields[23], // 技能数值，默认为0
-        lucky: fields[2].split('|')[7],
+        lucky: info[7],
         beauty: fields[15],
       };
     });
@@ -440,9 +475,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             </Button>
           </span>
         ) : (
-          <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
-            {t.edit}
-          </Button>
+          <span>
+            <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small" style={{ marginRight: 8 }}>
+              {t.edit}
+            </Button>
+            {record.age >= 18 && record.age <= 30 && record.gender === '0' && (
+              <Button 
+                danger 
+                size="small" 
+                onClick={() => handlePregnancy(record, 'Member_now')}
+                disabled={editingKey !== ''}
+              >
+                {locale === 'zh' ? '立即怀孕' : 'Immediate Pregnancy'}
+              </Button>
+            )}
+          </span>
         );
       },
     },
@@ -618,9 +665,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             </Button>
           </span>
         ) : (
-          <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
-            {t.edit}
-          </Button>
+          <span>
+            <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small" style={{ marginRight: 8 }}>
+              {t.edit}
+            </Button>
+            {record.age >= 18 && record.age <= 30 && record.gender === '0' && (
+              <Button 
+                danger 
+                size="small" 
+                onClick={() => handlePregnancy(record, 'Member_qu')}
+                disabled={editingKey !== ''}
+              >
+                {locale === 'zh' ? '立即怀孕' : 'Immediate Pregnancy'}
+              </Button>
+            )}
+          </span>
         );
       },
     },
@@ -750,6 +809,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     };
   })
   return (
+    <>
     <Modal isOpen={isOpen} onClose={onClose} size='full' mt='20'>
       <ModalOverlay />
       <ModalContent>
@@ -848,5 +908,51 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         </ModalFooter>
       </ModalContent>
     </Modal>
+
+    {/* 立即受孕确认对话框 */}
+    <Modal isOpen={pregnancyModal.isOpen} onClose={cancelPregnancy} size="md">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          {locale === 'zh' ? '立即怀孕确认' : 'Immediate Pregnancy Confirmation'}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Alert status="warning" mb={4}>
+            <AlertIcon />
+            <Box>
+              <AlertTitle>
+                {locale === 'zh' ? '警告！' : 'Warning!'}
+              </AlertTitle>
+              <AlertDescription>
+                {locale === 'zh' 
+                  ? '请使用前先备份存档，以防造成无法挽回的影响！' 
+                  : 'Please backup your save file before use to prevent irreversible effects!'
+                }
+              </AlertDescription>
+            </Box>
+          </Alert>
+          <Text>
+            {locale === 'zh' 
+              ? `确定要让 "${pregnancyModal.record?.name}" 立即怀孕吗？` 
+              : `Are you sure you want "${pregnancyModal.record?.name}" to become pregnant immediately?`
+            }
+          </Text>
+        </ModalBody>
+        <ModalFooter>
+          <Button 
+            colorScheme="red" 
+            mr={3} 
+            onClick={confirmPregnancy}
+          >
+            {locale === 'zh' ? '确认' : 'Confirm'}
+          </Button>
+          <Button onClick={cancelPregnancy}>
+            {locale === 'zh' ? '取消' : 'Cancel'}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+    </>
   );
 }
