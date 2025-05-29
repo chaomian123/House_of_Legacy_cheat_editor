@@ -12,13 +12,15 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  Text
+  Text,
+  Collapse
 } from '@chakra-ui/react';
-import { Table, Input, Form, Button, Radio } from 'antd';
+import { Table, Input, Form, Button, Radio, message } from 'antd';
 import JSONEditor from 'jsoneditor';
-import { useRef, useEffect, useCallback, useState } from 'react';
+import { useRef, useEffect, useCallback, useState, useMemo } from 'react';
 import { useLocale } from '../lib/useLocale';
 import 'jsoneditor/dist/jsoneditor.min.css';
+import { UpOutlined, DownOutlined } from '@ant-design/icons';
 
 export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data, setData, saveData }) {
   const [form] = Form.useForm();
@@ -30,6 +32,16 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   const [tableData_qu, setTableDataQu] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const [pregnancyModal, setPregnancyModal] = useState({ isOpen: false, record: null, type: null });
+  const [collapseStates, setCollapseStates] = useState({
+    member: true,
+    qu: true,
+    menke: true
+  });
+  const [money, setMoney] = useState('');
+  const [yuanbao, setYuanbao] = useState('');
+  const [isEditingCurrency, setIsEditingCurrency] = useState(false);
+  const [tempMoney, setTempMoney] = useState('');
+  const [tempYuanbao, setTempYuanbao] = useState('');
   const { locale, t } = useLocale();
 
   const isEditing = (record) => record.id === editingKey;
@@ -73,6 +85,52 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
 
   const cancelPregnancy = () => {
     setPregnancyModal({ isOpen: false, record: null, type: null });
+  };
+
+  const saveCurrency = () => {
+    const rawData = JSON.parse(data.data.toString());
+    if (!rawData.CGNum) {
+      rawData.CGNum = { value: ['0', '0'] };
+    }
+    console.log(tempMoney, tempYuanbao, 'tempMoney, tempYuanbao')
+    rawData.CGNum.value[0] = tempMoney;
+    rawData.CGNum.value[1] = tempYuanbao;
+    setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+    
+    // 更新显示的值
+    setMoney(tempMoney);
+    setYuanbao(tempYuanbao);
+    setIsEditingCurrency(false);
+    
+    message.success({
+      content: locale === 'zh' ? '货币已保存，不要忘记保存到存档文件！' : 'Currency saved, don\'t forget to save to file!',
+      duration: 3
+    });
+  };
+
+  const editCurrency = () => {
+    setTempMoney(money);
+    setTempYuanbao(yuanbao);
+    setIsEditingCurrency(true);
+  };
+
+  const handleMoneyChange = useCallback((e) => {
+    setTempMoney(e.target.value);
+  }, []);
+
+  const handleYuanbaoChange = useCallback((e) => {
+    const value = e.target.value;
+    // 限制元宝最大值为100000000
+    if (value === '' || (Number(value) >= 0 && Number(value) <= 100000000)) {
+      setTempYuanbao(value);
+    }
+  }, []);
+
+  const toggleCollapse = (section) => {
+    setCollapseStates(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   const save = async (key, type='Member_now') => {
@@ -189,7 +247,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     }
   };
 
-  const EditableCell = ({
+  const EditableCell = useCallback(({
     editing,
     dataIndex,
     title,
@@ -218,7 +276,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         )}
       </td>
     );
-  };
+  }, []);
 
   useEffect(() => {
     // if (!editorContainer || !data)
@@ -291,6 +349,11 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     setTableDataMenke(menke);
     setTableDataQu(qu);
 
+    // 读取金钱和元宝数据
+    const cgNum = rawData?.CGNum?.value || [];
+    setMoney(cgNum[0] || '0');
+    setYuanbao(cgNum[1] || '0');
+
     return () => {
       setEditor(null);
     };
@@ -304,7 +367,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       setEditorContainer(node);
   }, []);
 
-  const columns_member = [
+  const columns_member = useMemo(() => [
     {
       title: locale === 'zh' ? '名字' : 'Name',
       dataIndex: 'name',
@@ -493,8 +556,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         );
       },
     },
-  ];
-  const columns_qu = [
+  ], [locale, t, isEditing, edit, cancel, save, handlePregnancy]);
+
+  const columns_qu = useMemo(() => [
     {
       title: locale === 'zh' ? '名字' : 'Name',
       dataIndex: 'name',
@@ -683,8 +747,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         );
       },
     },
-  ];
-  const columns_menke = [
+  ], [locale, t, isEditing, edit, cancel, save, handlePregnancy]);
+
+  const columns_menke = useMemo(() => [
     {
       title: locale === 'zh' ? '名字' : 'Name',
       dataIndex: 'name',
@@ -763,9 +828,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         );
       },
     },
-  ];
+  ], [locale, t, isEditing, edit, cancel, save]);
 
-  const mergedColumns_member = columns_member.map((col) => {
+  const mergedColumns_member = useMemo(() => columns_member.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -778,9 +843,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         editing: isEditing(record),
       }),
     };
-  });
+  }), [columns_member, isEditing]);
 
-  const mergedColumns_qu = columns_qu.map((col) => {
+  const mergedColumns_qu = useMemo(() => columns_qu.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -793,8 +858,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         editing: isEditing(record),
       }),
     };
-  });
-  const mergedColumns_menke = columns_menke.map((col) => {
+  }), [columns_qu, isEditing]);
+
+  const mergedColumns_menke = useMemo(() => columns_menke.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -807,7 +873,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         editing: isEditing(record),
       }),
     };
-  })
+  }), [columns_menke, isEditing]);
+
   return (
     <>
     <Modal isOpen={isOpen} onClose={onClose} size='full' mt='20'>
@@ -817,10 +884,74 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         <ModalBody mt='5'>
          
             <Box display="flex" flexDirection="column" gap={4}>
+              {/* 金钱和元宝输入框 */}
+              {useMemo(() => (
+                <Box p={4} border="1px" borderColor="gray.200" borderRadius="md">
+                  <Heading size="sm" mb={3}>
+                    {locale === 'zh' ? '货币管理' : 'Currency Management'}
+                  </Heading>
+                  <Box display="flex" gap={4} alignItems="end">
+                    <Box>
+                      <Text fontSize="sm" mb={1}>
+                        {locale === 'zh' ? '金钱' : 'Money'}
+                      </Text>
+                      <Input
+                        value={isEditingCurrency ? tempMoney : money}
+                        onChange={handleMoneyChange}
+                        placeholder={locale === 'zh' ? '输入金钱数量' : 'Enter money amount'}
+                        style={{ width: '150px' }}
+                        disabled={!isEditingCurrency}
+                      />
+                      <Text fontSize="xs" color="transparent" mt={1}>
+                        {/* 占位文本，保持高度一致 */}
+                        &nbsp;
+                      </Text>
+                    </Box>
+                    <Box>
+                      <Text fontSize="sm" mb={1}>
+                        {locale === 'zh' ? '元宝' : 'Yuanbao'}
+                      </Text>
+                      <Input
+                        value={isEditingCurrency ? tempYuanbao : yuanbao}
+                        onChange={handleYuanbaoChange}
+                        placeholder={locale === 'zh' ? '输入元宝数量(最大100000000)' : 'Enter yuanbao amount(max 100000000)'}
+                        style={{ width: '150px' }}
+                        disabled={!isEditingCurrency}
+                        max={100000000}
+                        type="number"
+                      />
+                      <Text fontSize="xs" color="gray.500" mt={1}>
+                        {locale === 'zh' ? '最多一亿' : 'Max 100 million'}
+                      </Text>
+                    </Box>
+                    {isEditingCurrency ? (
+                      <Button type="primary" onClick={saveCurrency}>
+                        {locale === 'zh' ? '保存货币' : 'Save Currency'}
+                      </Button>
+                    ) : (
+                      <Button onClick={editCurrency}>
+                        {locale === 'zh' ? '编辑货币' : 'Edit Currency'}
+                      </Button>
+                    )}
+                  </Box>
+                </Box>
+              ), [locale, isEditingCurrency, tempMoney, money, tempYuanbao, yuanbao, handleMoneyChange, handleYuanbaoChange, saveCurrency, editCurrency])}
+
               <Box>
-                  <Heading size="md" mb="3">
-                  {t.familyMembers}
-                    </Heading>
+                  <Box display="flex" alignItems="center" justifyContent="space-between" mb="3">
+                    <Box display="flex" alignItems="center" gap="2">
+                      <Button
+                        size="small"
+                        icon={collapseStates.member ? <UpOutlined /> : <DownOutlined />}
+                        onClick={() => toggleCollapse('member')}
+                        aria-label="Toggle family members"
+                      />
+                      <Heading size="md">
+                        {t.familyMembers}
+                      </Heading>
+                    </Box>
+                  </Box>
+                  <Collapse in={collapseStates.member}>
                     <Form form={form} component={false}>
                       <Table
                         components={{
@@ -835,47 +966,75 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                         size="middle"
                         rowClassName="editable-row"
                         pagination={false}
+                        scroll={{ y: 400 }}
                       />
                     </Form>
-                    <Heading size="md" mb="3">
-                  {t.familyqu}
-                    </Heading>
-                    <Form form={form} component={false}>
-                      <Table
-                        components={{
-                          body: {
-                            cell: EditableCell,
-                          },
-                        }}
-                        dataSource={tableData_qu}
-                        columns={mergedColumns_qu}
-                        rowKey="id"
-                        bordered
-                        size="middle"
-                        rowClassName="editable-row"
-                        pagination={false}
-                      />
-                    </Form>
+                  </Collapse>
+                    <Box display="flex" alignItems="center" justifyContent="space-between" mb="3" mt="4">
+                      <Box display="flex" alignItems="center" gap="2">
+                        <Button
+                          size="small"
+                          icon={collapseStates.qu ? <UpOutlined /> : <DownOutlined />}
+                          onClick={() => toggleCollapse('qu')}
+                          aria-label="Toggle family qu members"
+                        />
+                        <Heading size="md">
+                          {t.familyqu}
+                        </Heading>
+                      </Box>
+                    </Box>
+                    <Collapse in={collapseStates.qu}>
+                      <Form form={form} component={false}>
+                        <Table
+                          components={{
+                            body: {
+                              cell: EditableCell,
+                            },
+                          }}
+                          dataSource={tableData_qu}
+                          columns={mergedColumns_qu}
+                          rowKey="id"
+                          bordered
+                          size="middle"
+                          rowClassName="editable-row"
+                          pagination={false}
+                          scroll={{ y: 400 }}
+                        />
+                      </Form>
+                    </Collapse>
               </Box>
-              <Heading size="md" mb="3">
-                  {t.guests}
-                    </Heading>
-              <Form form={form} component={false}>
-                <Table
-                  components={{
-                    body: {
-                      cell: EditableCell,
-                    },
-                  }}
-                  dataSource={tableData_menke}
-                  columns={mergedColumns_menke}
-                  rowKey="id"
-                  bordered
-                  size="middle"
-                  rowClassName="editable-row"
-                  pagination={false}
-                />
-              </Form>
+              <Box display="flex" alignItems="center" justifyContent="space-between" mb="3">
+                <Box display="flex" alignItems="center" gap="2">
+                  <Button
+                    size="small"
+                    icon={collapseStates.menke ? <UpOutlined /> : <DownOutlined />}
+                    onClick={() => toggleCollapse('menke')}
+                    aria-label="Toggle guests"
+                  />
+                  <Heading size="md">
+                    {t.guests}
+                  </Heading>
+                </Box>
+              </Box>
+              <Collapse in={collapseStates.menke}>
+                <Form form={form} component={false}>
+                  <Table
+                    components={{
+                      body: {
+                        cell: EditableCell,
+                      },
+                    }}
+                    dataSource={tableData_menke}
+                    columns={mergedColumns_menke}
+                    rowKey="id"
+                    bordered
+                    size="middle"
+                    rowClassName="editable-row"
+                    pagination={false}
+                    scroll={{ y: 400 }}
+                  />
+                </Form>
+              </Collapse>
           </Box>
     
         </ModalBody>

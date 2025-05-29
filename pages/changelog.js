@@ -93,6 +93,12 @@ export default function Changelog() {
     {
       date: '2025-05-29',
       type: 'feature',
+      title: '货币管理功能',
+      description: '新增金钱和元宝编辑功能，支持直接修改游戏货币数量'
+    },
+    {
+      date: '2025-05-29',
+      type: 'feature',
       title: '立即怀孕功能',
       description: '为符合游戏怀孕条件的成员添加立即怀孕功能'
     },
@@ -145,6 +151,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-29',
+      type: 'feature',
+      title: 'Currency Management',
+      description: 'Added money and yuanbao editing functionality for direct game currency modification'
+    },
     {
       date: '2025-05-29',
       type: 'feature',
