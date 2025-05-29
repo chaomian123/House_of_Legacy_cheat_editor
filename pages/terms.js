@@ -62,7 +62,7 @@ export default function TermsAndConditions() {
               <Text><strong>Country</strong> refers to: China</Text>
             </ListItem>
             <ListItem>
-              <Text><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to house of legacy cheat editor.</Text>
+              <Text><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to house of legacy save editor.</Text>
             </ListItem>
             <ListItem>
               <Text><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</Text>
@@ -81,7 +81,7 @@ export default function TermsAndConditions() {
               <Text><strong>Third-party Social Media Service</strong> means any services or content (including data, information, products or services) provided by a third-party that may be displayed, included or made available by the Service.</Text>
             </ListItem>
             <ListItem>
-              <Text><strong>Website</strong> refers to house of legacy cheat editor, accessible from{' '}
+              <Text><strong>Website</strong> refers to house of legacy save editor, accessible from{' '}
                 <Link href="https://savefile.space" isExternal color="blue.500">
                   https://savefile.space
                 </Link>
