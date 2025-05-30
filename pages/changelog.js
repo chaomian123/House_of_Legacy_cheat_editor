@@ -89,12 +89,18 @@ const TimelineItem = ({ date, type, title, description, isLast }) => {
 export default function Changelog() {
   const { locale, t } = useLocale();
 
-  const changelogData = locale === 'zh' ? [
+  const updates = locale === 'zh' ? [
+    {
+      date: '2025-05-30',
+      type: 'feature',
+      title: '一键18岁功能',
+      description: '新增一键18岁按钮，可快速将家族成员、嫁娶成员或门客的年龄统一设置为18岁，方便玩家快速调整角色年龄'
+    },
     {
       date: '2025-05-29',
       type: 'feature',
       title: '升满属性功能',
-      description: '新增单个成员和全员升满属性功能：为每个成员添加独立的"升满属性"按钮，可单独提升某个成员的所有属性到满值；在列表标题旁添加"升满全属性"按钮，一键将该列表所有成员的属性提升到满值'
+      description: '新增个人和批量升满属性功能：为每个成员添加独立的"升满属性"按钮，可提升单个成员属性至满值；在列表标题旁添加"升满全属性"按钮，可一键将列表中所有成员属性升至满值'
     },
     {
       date: '2025-05-29',
@@ -157,6 +163,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-30',
+      type: 'feature',
+      title: 'Set All Age 18 Feature',
+      description: 'Added "Set All Age 18" button to quickly set the age of all family members, spouses, or guests to 18 years old, making it convenient for players to quickly adjust character ages'
+    },
     {
       date: '2025-05-29',
       type: 'feature',
@@ -251,14 +263,14 @@ export default function Changelog() {
 
           {/* Timeline */}
           <VStack spacing={6} align="stretch">
-            {changelogData.map((item, index) => (
+            {updates.map((item, index) => (
               <TimelineItem
                 key={`${item.date}-${index}`}
                 date={item.date}
                 type={item.type}
                 title={item.title}
                 description={item.description}
-                isLast={index === changelogData.length - 1}
+                isLast={index === updates.length - 1}
               />
             ))}
           </VStack>

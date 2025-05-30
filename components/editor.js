@@ -230,6 +230,105 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     });
   };
 
+  const setAllAge18 = (type) => {
+    const rawData = JSON.parse(data.data.toString());
+    
+    if (type === 'Member_now') {
+      rawData[type].value.forEach((member, index) => {
+        const zuzhangInfo = rawData['Member_First'].value[0];
+        const zuzhangId = zuzhangInfo[0];
+        const ID = rawData[type].value[index][0];
+        
+        // 设置年龄为18岁
+        rawData[type].value[index][6] = '18';
+        
+        // 如果是族长，同时更新Member_First中的年龄
+        if (ID === zuzhangId) {
+          rawData['Member_First'].value[0][6] = '18';
+        }
+      });
+    } else if (type === 'Member_qu') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][5] = '18'; // age字段在Member_qu中是index 5
+      });
+    } else if (type === 'MenKe_Now') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][3] = '18'; // age字段在MenKe_Now中是index 3
+      });
+    }
+    
+    setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+    
+    // 重新加载数据到表格
+    const member_now = rawData?.Member_now?.value || [];
+    const members = member_now.map(fields => {
+      const info = fields[4].split('|');
+      return {
+        gender: info[4],
+        name: info[0],
+        id: fields[0],
+        age: fields[6],
+        wen: fields[7],
+        wu: fields[8],
+        shang: fields[9],
+        yi: fields[10],
+        mou: fields[27],
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0',
+        skill_num: fields[33] || '0',
+        lucky: info[7],
+        beauty: fields[20],
+      };
+    });
+    
+    const qu_now = rawData?.Member_qu?.value || [];
+    const qu = qu_now.map(fields => {
+      const info = fields[2].split('|');
+      return {
+        name: info[0],
+        gender: info[4],
+        id: fields[0],
+        age: fields[5],
+        wen: fields[6],
+        wu: fields[7],
+        shang: fields[8],
+        yi: fields[9],
+        mou: fields[19],
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0',
+        skill_num: fields[23],
+        lucky: info[7],
+        beauty: fields[15],
+      };
+    });
+    
+    const menke_now = rawData?.MenKe_Now?.value || [];
+    const menke = menke_now.map(fields => {
+      return {
+        name: fields[2].split('|')[0],
+        id: fields[0],
+        age: fields[3],
+        wen: fields[4],
+        wu: fields[5],
+        shang: fields[6],
+        yi: fields[7],
+        mou: fields[15],
+        payment: fields[18],
+      };
+    });
+    
+    setTableDataMember(members);
+    setTableDataQu(qu);
+    setTableDataMenke(menke);
+    
+    message.success({
+      content: locale === 'zh' ? '全员年龄已设为18岁！不要忘记保存到存档文件！' : 'All ages set to 18! Don\'t forget to save to file!',
+      duration: 3
+    });
+  };
+
   const maxSingleMemberAttributes = (record, type) => {
     const rawData = JSON.parse(data.data.toString());
     const memberIndex = rawData[type].value.findIndex(member => member[0] === record.id);
@@ -1067,9 +1166,11 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             </Button>
           </span>
         ) : (
-          <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
-            {t.edit}
-          </Button>
+          <span>
+            <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small">
+              {t.edit}
+            </Button>
+          </span>
         );
       },
     },
@@ -1197,13 +1298,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                         {t.familyMembers}
                       </Heading>
                     </Box>
-                    <Button 
-                      type="primary" 
-                      size="small" 
-                      onClick={() => maxAllAttributes('Member_now')}
-                    >
-                      {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
-                    </Button>
+                    <Box display="flex" gap="2">
+                      <Button 
+                        size="small" 
+                        onClick={() => setAllAge18('Member_now')}
+                      >
+                        {locale === 'zh' ? '一键18岁' : 'Set All Age 18'}
+                      </Button>
+                      <Button 
+                        type="primary" 
+                        size="small" 
+                        onClick={() => maxAllAttributes('Member_now')}
+                      >
+                        {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+                      </Button>
+                    </Box>
                   </Box>
                   <Collapse in={collapseStates.member}>
                     <Form form={form} component={false}>
@@ -1236,13 +1345,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                           {t.familyqu}
                         </Heading>
                       </Box>
-                      <Button 
-                        type="primary" 
-                        size="small" 
-                        onClick={() => maxAllAttributes('Member_qu')}
-                      >
-                        {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
-                      </Button>
+                      <Box display="flex" gap="2">
+                        <Button 
+                          size="small" 
+                          onClick={() => setAllAge18('Member_qu')}
+                        >
+                          {locale === 'zh' ? '一键18岁' : 'Set All Age 18'}
+                        </Button>
+                        <Button 
+                          type="primary" 
+                          size="small" 
+                          onClick={() => maxAllAttributes('Member_qu')}
+                        >
+                          {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+                        </Button>
+                      </Box>
                     </Box>
                     <Collapse in={collapseStates.qu}>
                       <Form form={form} component={false}>
@@ -1276,13 +1393,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                     {t.guests}
                   </Heading>
                 </Box>
-                <Button 
-                  type="primary" 
-                  size="small" 
-                  onClick={() => maxAllAttributes('MenKe_Now')}
-                >
-                  {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
-                </Button>
+                <Box display="flex" gap="2">
+                  <Button 
+                    size="small" 
+                    onClick={() => setAllAge18('MenKe_Now')}
+                  >
+                    {locale === 'zh' ? '一键18岁' : 'Set All Age 18'}
+                  </Button>
+                  <Button 
+                    type="primary" 
+                    size="small" 
+                    onClick={() => maxAllAttributes('MenKe_Now')}
+                  >
+                    {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+                  </Button>
+                </Box>
               </Box>
               <Collapse in={collapseStates.menke}>
                 <Form form={form} component={false}>

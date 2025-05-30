@@ -135,7 +135,7 @@ const JianbingSupport = () => {
                 }}
               >
                 <Image
-                  src="/jianbing.jpg"
+                  src="https://axe-1259245809.cos.ap-chengdu.myqcloud.com/_1748541352_qr_code.jpg"
                   alt={locale === 'zh' ? '收款二维码' : 'Payment QR Code'}
                   w="220px"
                   h="220px"
@@ -155,7 +155,7 @@ const JianbingSupport = () => {
                       <VStack spacing={3}>
                         <Text fontSize="32px">🥞</Text>
                         <Text fontSize="sm" color="gray.500" textAlign="center">
-                          {locale === 'zh' ? '收款码加载中...' : 'Loading QR code...'}
+                          {locale === 'zh' ? '赞赏码加载中...' : 'Loading QR code...'}
                         </Text>
                       </VStack>
                     </Box>

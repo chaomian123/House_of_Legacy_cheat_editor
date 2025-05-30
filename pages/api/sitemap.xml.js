@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 // 定义网站的基础URL
 const SITE_URL = 'https://savefile.space';
@@ -25,12 +25,6 @@ const pages = [
     lastmod: new Date().toISOString().split('T')[0] + 'T00:00:00+00:00'
   },
   {
-    url: '/experimental',
-    changefreq: 'monthly',
-    priority: '0.6',
-    lastmod: new Date().toISOString().split('T')[0] + 'T00:00:00+00:00'
-  },
-  {
     url: '/privacy',
     changefreq: 'yearly',
     priority: '0.5',
@@ -47,13 +41,8 @@ const pages = [
 // 自动扫描pages目录获取所有页面
 function getStaticPages() {
   const pagesDirectory = path.join(process.cwd(), 'pages');
-  
-  if (!fs.existsSync(pagesDirectory)) {
-    console.warn('Pages directory not found');
-    return [];
-  }
-  
   const filenames = fs.readdirSync(pagesDirectory);
+  
   const staticPages = [];
   
   filenames.forEach(name => {
@@ -100,39 +89,17 @@ ${allPages.map(page => `  <url>
   return sitemap;
 }
 
-function writeSitemap() {
+export default function handler(req, res) {
   try {
     const sitemap = generateSitemap();
-    const publicDir = path.join(process.cwd(), 'public');
     
-    // 确保public目录存在
-    if (!fs.existsSync(publicDir)) {
-      fs.mkdirSync(publicDir, { recursive: true });
-    }
+    // 设置正确的Content-Type
+    res.setHeader('Content-Type', 'application/xml');
+    res.setHeader('Cache-Control', 'public, max-age=3600'); // 缓存1小时
     
-    const sitemapPath = path.join(publicDir, 'sitemap.xml');
-    fs.writeFileSync(sitemapPath, sitemap, 'utf8');
-    
-    console.log('✅ Sitemap generated successfully at:', sitemapPath);
-    console.log('📄 Generated sitemap with', sitemap.split('<url>').length - 1, 'pages');
-    
-    // 显示生成的页面列表
-    const staticPages = getStaticPages();
-    const allPages = [...pages, ...staticPages];
-    console.log('📋 Pages included:');
-    allPages.forEach(page => {
-      console.log(`   - ${page.url} (priority: ${page.priority}, changefreq: ${page.changefreq})`);
-    });
-    
+    res.status(200).send(sitemap);
   } catch (error) {
-    console.error('❌ Error generating sitemap:', error);
-    process.exit(1);
+    console.error('Error generating sitemap:', error);
+    res.status(500).json({ error: 'Failed to generate sitemap' });
   }
-}
-
-// 如果直接运行此脚本
-if (require.main === module) {
-  writeSitemap();
-}
-
-module.exports = { generateSitemap, writeSitemap }; 
+} 
