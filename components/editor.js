@@ -180,6 +180,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0',
         lucky: info[7],
         beauty: fields[20],
+        reputation: fields[16],
       };
     });
     
@@ -202,6 +203,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23],
         lucky: info[7],
         beauty: fields[15],
+        reputation: fields[12],
       };
     });
     
@@ -217,6 +219,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         yi: fields[7],
         mou: fields[15],
         payment: fields[18],
+        reputation: fields[11],
       };
     });
     
@@ -279,6 +282,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0',
         lucky: info[7],
         beauty: fields[20],
+        reputation: fields[16],
       };
     });
     
@@ -301,6 +305,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23],
         lucky: info[7],
         beauty: fields[15],
+        reputation: fields[12],
       };
     });
     
@@ -316,6 +321,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         yi: fields[7],
         mou: fields[15],
         payment: fields[18],
+        reputation: fields[11],
       };
     });
     
@@ -325,6 +331,98 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     
     message.success({
       content: locale === 'zh' ? '全员年龄已设为18岁！不要忘记保存到存档文件！' : 'All ages set to 18! Don\'t forget to save to file!',
+      duration: 3
+    });
+  };
+
+  const maxAllReputation = (type) => {
+    const rawData = JSON.parse(data.data.toString());
+    
+    if (type === 'Member_now') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][16] = '100'; // 家族成员声誉
+      });
+    } else if (type === 'Member_qu') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][12] = '100'; // 嫁娶成员声誉
+      });
+    } else if (type === 'MenKe_Now') {
+      rawData[type].value.forEach((member, index) => {
+        rawData[type].value[index][11] = '100'; // 门客声誉
+      });
+    }
+    
+    setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+    
+    // 重新加载数据到表格
+    const member_now = rawData?.Member_now?.value || [];
+    const members = member_now.map(fields => {
+      const info = fields[4].split('|');
+      return {
+        gender: info[4],
+        name: info[0],
+        id: fields[0],
+        age: fields[6],
+        wen: fields[7],
+        wu: fields[8],
+        shang: fields[9],
+        yi: fields[10],
+        mou: fields[27],
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0',
+        skill_num: fields[33] || '0',
+        lucky: info[7],
+        beauty: fields[20],
+        reputation: fields[16],
+      };
+    });
+    
+    const qu_now = rawData?.Member_qu?.value || [];
+    const qu = qu_now.map(fields => {
+      const info = fields[2].split('|');
+      return {
+        name: info[0],
+        gender: info[4],
+        id: fields[0],
+        age: fields[5],
+        wen: fields[6],
+        wu: fields[7],
+        shang: fields[8],
+        yi: fields[9],
+        mou: fields[19],
+        talent: info[2],
+        talent_num: info[3],
+        skill: info[6] || '0',
+        skill_num: fields[23],
+        lucky: info[7],
+        beauty: fields[15],
+        reputation: fields[12],
+      };
+    });
+    
+    const menke_now = rawData?.MenKe_Now?.value || [];
+    const menke = menke_now.map(fields => {
+      return {
+        name: fields[2].split('|')[0],
+        id: fields[0],
+        age: fields[3],
+        wen: fields[4],
+        wu: fields[5],
+        shang: fields[6],
+        yi: fields[7],
+        mou: fields[15],
+        payment: fields[18],
+        reputation: fields[11],
+      };
+    });
+    
+    setTableDataMember(members);
+    setTableDataQu(qu);
+    setTableDataMenke(menke);
+    
+    message.success({
+      content: locale === 'zh' ? '全员声誉已升满！不要忘记保存到存档文件！' : 'All reputation maxed! Don\'t forget to save to file!',
       duration: 3
     });
   };
@@ -391,6 +489,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           skill_num: fields[33] || '0',
           lucky: info[7],
           beauty: fields[20],
+          reputation: fields[16],
         };
       });
       
@@ -413,6 +512,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           skill_num: fields[23],
           lucky: info[7],
           beauty: fields[15],
+          reputation: fields[12],
         };
       });
       
@@ -428,6 +528,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           yi: fields[7],
           mou: fields[15],
           payment: fields[18],
+          reputation: fields[11],
         };
       });
       
@@ -511,7 +612,6 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         const memberIndex = rawData[type].value.findIndex(member => member[0] === key);
         if (memberIndex > -1) {
           if (type === 'MenKe_Now') {
-
             rawData[type].value[memberIndex][3] = row.age;
             rawData[type].value[memberIndex][4] = row.wen;
             rawData[type].value[memberIndex][5] = row.wu;
@@ -519,9 +619,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][7] = row.yi;
             rawData[type].value[memberIndex][15] = row.mou;
             rawData[type].value[memberIndex][18] = row.payment;
-            // console.log(rawData, 'rawData menke') // TODO: Remove this debug info
+            rawData[type].value[memberIndex][11] = row.reputation; // 门客声誉
             setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
-            // let newData = JSON.stringify(rawData)
           } else if (type === 'Member_now') {
             const zuzhangInfo = rawData['Member_First'].value[0]
             const zuzhangAge = zuzhangInfo[6]
@@ -546,6 +645,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][27] = row.mou;
             rawData[type].value[memberIndex][20] = row.beauty;
             rawData[type].value[memberIndex][33] = row.skill_num;
+            rawData[type].value[memberIndex][16] = row.reputation; // 家族成员声誉
             let newData = JSON.stringify(rawData)
             setData({ ...data, data: Buffer.from(newData)});
             // }
@@ -564,6 +664,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][19] = row.mou;
             rawData[type].value[memberIndex][15] = row.beauty;
             rawData[type].value[memberIndex][23] = row.skill_num;
+            rawData[type].value[memberIndex][12] = row.reputation; // 嫁娶成员声誉
             let newData = JSON.stringify(rawData)
             setData({ ...data, data: Buffer.from(newData)});
           }
@@ -630,6 +731,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0', // 技能数值，默认为0
         lucky: info[7],
         beauty: fields[20],
+        reputation: fields[16],
       };
     });
     const qu_now = rawData?.Member_qu?.value || []
@@ -653,6 +755,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23], // 技能数值，默认为0
         lucky: info[7],
         beauty: fields[15],
+        reputation: fields[12],
       };
     });
     const menke_now = rawData?.MenKe_Now?.value || []
@@ -667,9 +770,8 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         shang: fields[6],
         yi: fields[7],
         mou: fields[15],
-        // skill: fields[2].split('|')[4] || '0', // 技能，默认为0
-        // skill_num: fields[2].split('|')[5] || '0', // 技能数值，默认为0
         payment: fields[18],
+        reputation: fields[11],
       };
     });
     // console.log(members, 'members') // TODO: Remove this debug inf
@@ -737,6 +839,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       title: t.attributes.strategy,
       dataIndex: 'mou',
       key: 'mou',
+      editable: true,
+    },
+    {
+      title: t.attributes.reputation,
+      dataIndex: 'reputation',
+      key: 'reputation',
       editable: true,
     },
     {
@@ -939,6 +1047,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       editable: true,
     },
     {
+      title: t.attributes.reputation,
+      dataIndex: 'reputation',
+      key: 'reputation',
+      editable: true,
+    },
+    {
       title: t.attributes.luck,
       dataIndex: 'lucky',
       key: 'lucky',
@@ -1138,6 +1252,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       editable: true,
     },
     {
+      title: t.attributes.reputation,
+      dataIndex: 'reputation',
+      key: 'reputation',
+      editable: true,
+    },
+    {
       title: locale === 'zh' ? '每月薪酬' : 'Monthly Salary',
       dataIndex: 'payment',
       key: 'payment',
@@ -1301,9 +1421,15 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                     <Box display="flex" gap="2">
                       <Button 
                         size="small" 
+                        onClick={() => maxAllReputation('Member_now')}
+                      >
+                        {t.maxAllReputation}
+                      </Button>
+                      <Button 
+                        size="small" 
                         onClick={() => setAllAge18('Member_now')}
                       >
-                        {locale === 'zh' ? '一键18岁' : 'Set All Age 18'}
+                        {t.setAllAge18}
                       </Button>
                       <Button 
                         type="primary" 
@@ -1348,9 +1474,15 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                       <Box display="flex" gap="2">
                         <Button 
                           size="small" 
+                          onClick={() => maxAllReputation('Member_qu')}
+                        >
+                          {t.maxAllReputation}
+                        </Button>
+                        <Button 
+                          size="small" 
                           onClick={() => setAllAge18('Member_qu')}
                         >
-                          {locale === 'zh' ? '一键18岁' : 'Set All Age 18'}
+                          {t.setAllAge18}
                         </Button>
                         <Button 
                           type="primary" 
@@ -1396,9 +1528,15 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                 <Box display="flex" gap="2">
                   <Button 
                     size="small" 
+                    onClick={() => maxAllReputation('MenKe_Now')}
+                  >
+                    {t.maxAllReputation}
+                  </Button>
+                  <Button 
+                    size="small" 
                     onClick={() => setAllAge18('MenKe_Now')}
                   >
-                    {locale === 'zh' ? '一键18岁' : 'Set All Age 18'}
+                    {t.setAllAge18}
                   </Button>
                   <Button 
                     type="primary" 

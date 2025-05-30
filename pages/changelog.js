@@ -93,6 +93,18 @@ export default function Changelog() {
     {
       date: '2025-05-30',
       type: 'feature',
+      title: '一键升满全部成员声誉功能',
+      description: '新增一键升满声誉按钮，可快速将家族成员、嫁娶成员或门客的声誉统一设置为100。按钮位于各表格标题区域，放置在一键18岁按钮左侧。',
+    },
+    {
+      date: '2025-05-30',
+      type: 'feature',
+      title: '成员门客声誉编辑功能',
+      description: '为家族成员、嫁娶成员、门客添加声誉属性列，支持单独编辑每个成员的声誉值，提供更精细的角色属性控制。',
+    },
+    {
+      date: '2025-05-30',
+      type: 'feature',
       title: '一键18岁功能',
       description: '新增一键18岁按钮，可快速将家族成员、嫁娶成员或门客的年龄统一设置为18岁，方便玩家快速调整角色年龄'
     },
@@ -163,6 +175,18 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-30',
+      type: 'feature',
+      title: 'Max All Members Reputation Feature',
+      description: 'Added "Max All Reputation" button to quickly set the reputation of all family members, spouses, or guests to 100. Button located in table header areas, positioned to the left of "Set All Age 18" button.',
+    },
+    {
+      date: '2025-05-30',
+      type: 'feature',
+      title: 'Member and Guest Reputation Editing',
+      description: 'Added reputation attribute column for family members, spouses, and guests, supporting individual editing of each member\'s reputation value for more granular character attribute control.',
+    },
     {
       date: '2025-05-30',
       type: 'feature',
