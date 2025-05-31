@@ -98,7 +98,7 @@ export default function Home() {
           <Divider mt='5' mb='3' />
           <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
             {t.updateLog}
-            {locale === 'zh' ? '(上次更新时间: 2025-05-30)' : '(Last updated: 2025-05-30)'}
+            {locale === 'zh' ? '(上次更新时间: 2025-05-31)' : '(Last updated: 2025-05-31)'}
           </Link>
           <br />
           <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>

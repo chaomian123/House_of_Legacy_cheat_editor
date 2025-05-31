@@ -93,8 +93,14 @@ export default function Changelog() {
     {
       date: '2025-05-31',
       type: 'feature',
+      title: '健康值管理功能',
+      description: '新增健康值编辑功能，支持修改家族成员和嫁娶成员的健康值。',
+    },
+    {
+      date: '2025-05-31',
+      type: 'feature',
       title: '粮草管理功能',
-      description: '新增粮草管理功能，支持修改粮食、蔬菜、肉类数量。位于货币管理功能右侧，提供独立的编辑和保存操作。数据映射到存档文件的prop_have.value数组中对应的类型ID。',
+      description: '新增粮草管理功能，支持修改粮食、蔬菜、肉类数量。位于货币管理功能右侧，提供独立的编辑和保存操作。',
     },
     {
       date: '2025-05-30',
@@ -184,8 +190,14 @@ export default function Changelog() {
     {
       date: '2025-05-31',
       type: 'feature',
+      title: 'Health Management Feature',
+      description: 'Added health editing functionality to modify health values for family members and spouses, providing complete attribute management experience.',
+    },
+    {
+      date: '2025-05-31',
+      type: 'feature',
       title: 'Food Management Feature',
-      description: 'Added food management functionality to modify quantities of food, vegetables, and meat. Located to the right of currency management, provides independent editing and saving operations. Data maps to corresponding type IDs in the prop_have.value array of save files.',
+      description: 'Added food management functionality to modify quantities of food, vegetables, and meat. Located to the right of currency management, provides independent editing and saving operations.',
     },
     {
       date: '2025-05-30',
