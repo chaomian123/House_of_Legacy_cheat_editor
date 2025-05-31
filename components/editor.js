@@ -32,6 +32,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   const [tableData_qu, setTableDataQu] = useState([]);
   const [editingKey, setEditingKey] = useState('');
   const [pregnancyModal, setPregnancyModal] = useState({ isOpen: false, record: null, type: null });
+  const [maxAllAttributesModal, setMaxAllAttributesModal] = useState({ isOpen: false, type: null });
   const [collapseStates, setCollapseStates] = useState({
     member: true,
     qu: true,
@@ -197,7 +198,21 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     }
   }, []);
 
-  const maxAllAttributes = (type) => {
+  // 显示全属性升满确认对话框
+  const confirmMaxAllAttributes = (type) => {
+    setMaxAllAttributesModal({ isOpen: true, type });
+  };
+
+  // 取消全属性升满操作
+  const cancelMaxAllAttributes = () => {
+    setMaxAllAttributesModal({ isOpen: false, type: null });
+  };
+
+  // 执行全属性升满操作
+  const executeMaxAllAttributes = () => {
+    const type = maxAllAttributesModal.type;
+    setMaxAllAttributesModal({ isOpen: false, type: null });
+    
     const rawData = JSON.parse(data.data.toString());
     
     if (type === 'Member_now') {
@@ -1603,7 +1618,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                       <Button 
                         type="primary" 
                         size="small" 
-                        onClick={() => maxAllAttributes('Member_now')}
+                        onClick={() => confirmMaxAllAttributes('Member_now')}
                       >
                         {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
                       </Button>
@@ -1656,7 +1671,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                         <Button 
                           type="primary" 
                           size="small" 
-                          onClick={() => maxAllAttributes('Member_qu')}
+                          onClick={() => confirmMaxAllAttributes('Member_qu')}
                         >
                           {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
                         </Button>
@@ -1710,7 +1725,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                   <Button 
                     type="primary" 
                     size="small" 
-                    onClick={() => maxAllAttributes('MenKe_Now')}
+                    onClick={() => confirmMaxAllAttributes('MenKe_Now')}
                   >
                     {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
                   </Button>
@@ -1807,6 +1822,51 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             {locale === 'zh' ? '确认' : 'Confirm'}
           </Button>
           <Button onClick={cancelPregnancy}>
+            {locale === 'zh' ? '取消' : 'Cancel'}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+
+    {/* 全属性升满确认对话框 */}
+    <Modal isOpen={maxAllAttributesModal.isOpen} onClose={cancelMaxAllAttributes} size="md">
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          {locale === 'zh' ? '一键升满全属性确认' : 'Max All Attributes Confirmation'}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Alert status="warning" mb={4}>
+            <AlertIcon />
+            <Box>
+              <AlertTitle>
+                {locale === 'zh' ? '重要提醒！' : 'Important Warning!'}
+              </AlertTitle>
+              <AlertDescription>
+                {locale === 'zh' 
+                  ? '如果列表中包含被贬成员，批量操作可能存在坏档风险！' 
+                  : 'If the list contains demoted members, batch operations may pose a save corruption risk!'
+                }
+              </AlertDescription>
+            </Box>
+          </Alert>
+          <Text>
+            {locale === 'zh' 
+              ? '确定要对当前列表中的所有成员执行升满全属性操作吗？'
+              : 'Are you sure you want to max all attributes for all members in the current list?'
+            }
+          </Text>
+        </ModalBody>
+        <ModalFooter>
+          <Button 
+            colorScheme="red" 
+            mr={3} 
+            onClick={executeMaxAllAttributes}
+          >
+            {locale === 'zh' ? '确认执行' : 'Confirm'}
+          </Button>
+          <Button onClick={cancelMaxAllAttributes}>
             {locale === 'zh' ? '取消' : 'Cancel'}
           </Button>
         </ModalFooter>
