@@ -101,6 +101,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
   const [isEncryptionWarning, setIsEncryptionWarning] = useState(false);
   const { isOpen, onOpen: _onOpen, onClose: _onClose } = useDisclosure();
   const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
+  const { isOpen: isSaveConfirmOpen, onOpen: onSaveConfirmOpen, onClose: onSaveConfirmClose } = useDisclosure();
   const { locale, t } = useLocale();
 
   const onOpen = (encryption) => {
@@ -463,11 +464,80 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             }
 
             setDownloadData(cryptedData, lastFileName);
-            download();
+            
+            // 显示保存确认对话框
+            onSaveConfirmOpen();
             return true;
           }}
         />
       )}
+
+      {/* 保存确认对话框 */}
+      <Modal
+        blockScrollOnMount={false}
+        isOpen={isSaveConfirmOpen} 
+        onClose={onSaveConfirmClose}
+        scrollBehavior='inside' 
+        isCentered
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader color='blue'>
+            {locale === 'zh' ? '保存提示' : 'Save Reminder'}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text mb={3}>
+              {locale === 'zh' 
+                ? '请将存档保存到文件打开的目录，然后覆盖旧的存档文件。' 
+                : 'Please save the file to the directory where you opened the original file, and overwrite the old save file.'}
+            </Text>
+            <Text fontSize="sm" color="gray.600" mb={2}>
+              {locale === 'zh' ? '存档路径示例:' : 'Save path example:'}
+            </Text>
+            <Box 
+              as="pre"
+              p={2} 
+              bg="gray.100" 
+              fontSize="sm"
+              borderRadius="md"
+              overflow="auto"
+              style={{ userSelect: 'all' }}
+            >
+              <Text 
+                fontFamily="monospace"
+                margin={0}
+                padding={0}
+                color="#666"
+              >
+                C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3
+              </Text>
+            </Box>
+            <Text fontSize="sm" color="blue.600" mt={3}>
+              💡 {locale === 'zh' 
+                ? '小提示：保存时鼠标选中 GameData.es3，即可覆盖文件' 
+                : 'Tip: Select GameData.es3 when saving to overwrite the file'}
+            </Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              colorScheme='blue'
+              onClick={() => {
+                download();
+                onSaveConfirmClose();
+              }}
+            >
+              {locale === 'zh' ? '确认保存' : 'Confirm Save'}
+            </Button>
+            <Button
+              ml='3'
+              onClick={onSaveConfirmClose}
+            >
+              {locale === 'zh' ? '取消' : 'Cancel'}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 }

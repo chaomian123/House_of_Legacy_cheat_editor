@@ -92,6 +92,12 @@ export default function Changelog() {
   const updates = locale === 'zh' ? [
     {
       date: '2025-05-31',
+      type: 'enhancement',
+      title: '提示信息优化',
+      description: '1. 批量升满属性时，提示成员中如果有流放的人员，会有坏档风险，请单独操作；2. 保存存档时，提示保存到存档路径覆盖存档。',
+    },
+    {
+      date: '2025-05-31',
       type: 'feature',
       title: '健康值管理功能',
       description: '新增健康值编辑功能，支持修改家族成员和嫁娶成员的健康值。',
@@ -187,6 +193,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-31',
+      type: 'enhancement',
+      title: 'UI/UX Improvements',
+      description: '1. Added warning message when batch max attributes operation encounters exiled members to prevent save corruption, recommend individual operation; 2. Added save path reminder when saving to overwrite original save file.',
+    },
     {
       date: '2025-05-31',
       type: 'feature',
