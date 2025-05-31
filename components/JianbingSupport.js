@@ -135,7 +135,7 @@ const JianbingSupport = () => {
                 }}
               >
                 <Image
-                  src="https://axe-1259245809.cos.ap-chengdu.myqcloud.com/_1748541352_qr_code.jpg"
+                  src="https://makemaze.online/images/1748629316761_aa215ccr.jpg"
                   alt={locale === 'zh' ? '收款二维码' : 'Payment QR Code'}
                   w="220px"
                   h="220px"
