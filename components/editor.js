@@ -278,6 +278,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0',
         lucky: info[7],
         beauty: fields[20],
+        health: fields[21],
         reputation: fields[16],
       };
     });
@@ -301,6 +302,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23],
         lucky: info[7],
         beauty: fields[15],
+        health: fields[16],
         reputation: fields[12],
       };
     });
@@ -380,6 +382,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0',
         lucky: info[7],
         beauty: fields[20],
+        health: fields[21],
         reputation: fields[16],
       };
     });
@@ -403,6 +406,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23],
         lucky: info[7],
         beauty: fields[15],
+        health: fields[16],
         reputation: fields[12],
       };
     });
@@ -472,6 +476,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0',
         lucky: info[7],
         beauty: fields[20],
+        health: fields[21],
         reputation: fields[16],
       };
     });
@@ -495,6 +500,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23],
         lucky: info[7],
         beauty: fields[15],
+        health: fields[16],
         reputation: fields[12],
       };
     });
@@ -538,6 +544,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         rawData[type].value[memberIndex][10] = '100'; // yi
         rawData[type].value[memberIndex][27] = '100'; // mou
         rawData[type].value[memberIndex][20] = '100'; // beauty
+        rawData[type].value[memberIndex][21] = '100'; // health
         
         // 更新info字符串中的属性
         const info = rawData[type].value[memberIndex][4].split('|');
@@ -551,6 +558,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         rawData[type].value[memberIndex][9] = '100';  // yi
         rawData[type].value[memberIndex][19] = '100'; // mou
         rawData[type].value[memberIndex][15] = '100'; // beauty
+        rawData[type].value[memberIndex][16] = '100'; // health
         
         // 更新info字符串中的属性
         const info = rawData[type].value[memberIndex][2].split('|');
@@ -587,6 +595,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           skill_num: fields[33] || '0',
           lucky: info[7],
           beauty: fields[20],
+          health: fields[21],
           reputation: fields[16],
         };
       });
@@ -610,6 +619,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           skill_num: fields[23],
           lucky: info[7],
           beauty: fields[15],
+          health: fields[16],
           reputation: fields[12],
         };
       });
@@ -742,6 +752,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][10] = row.yi;
             rawData[type].value[memberIndex][27] = row.mou;
             rawData[type].value[memberIndex][20] = row.beauty;
+            rawData[type].value[memberIndex][21] = row.health;
             rawData[type].value[memberIndex][33] = row.skill_num;
             rawData[type].value[memberIndex][16] = row.reputation; // 家族成员声誉
             let newData = JSON.stringify(rawData)
@@ -761,6 +772,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
             rawData[type].value[memberIndex][9] = row.yi;
             rawData[type].value[memberIndex][19] = row.mou;
             rawData[type].value[memberIndex][15] = row.beauty;
+            rawData[type].value[memberIndex][16] = row.health;
             rawData[type].value[memberIndex][23] = row.skill_num;
             rawData[type].value[memberIndex][12] = row.reputation; // 嫁娶成员声誉
             let newData = JSON.stringify(rawData)
@@ -832,6 +844,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[33] || '0', // 技能数值，默认为0
         lucky: info[7],
         beauty: fields[20],
+        health: fields[21],
         reputation: fields[16],
       };
     });
@@ -856,6 +869,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         skill_num: fields[23], // 技能数值，默认为0
         lucky: info[7],
         beauty: fields[15],
+        health: fields[16],
         reputation: fields[12],
       };
     });
@@ -968,6 +982,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       title: t.attributes.charm,
       dataIndex: 'beauty',
       key: 'beauty',
+      editable: true,
+    },
+    {
+      title: t.attributes.health,
+      dataIndex: 'health',
+      key: 'health',
       editable: true,
     },
     {
@@ -1173,6 +1193,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
       title: t.attributes.charm,
       dataIndex: 'beauty',
       key: 'beauty',
+      editable: true,
+    },
+    {
+      title: t.attributes.health,
+      dataIndex: 'health',
+      key: 'health',
       editable: true,
     },
     {
