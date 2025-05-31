@@ -93,6 +93,12 @@ export default function Changelog() {
     {
       date: '2025-05-30',
       type: 'feature',
+      title: '粮草管理功能',
+      description: '新增粮草管理功能，支持修改粮食、蔬菜、肉类数量。位于货币管理功能右侧，提供独立的编辑和保存操作。数据映射到存档文件的prop_have.value数组中对应的类型ID。',
+    },
+    {
+      date: '2025-05-30',
+      type: 'feature',
       title: '一键升满全部成员声誉功能',
       description: '新增一键升满声誉按钮，可快速将家族成员、嫁娶成员或门客的声誉统一设置为100。按钮位于各表格标题区域，放置在一键18岁按钮左侧。',
     },
@@ -175,6 +181,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-05-30',
+      type: 'feature',
+      title: 'Food Management Feature',
+      description: 'Added food management functionality to modify quantities of food, vegetables, and meat. Located to the right of currency management, provides independent editing and saving operations. Data maps to corresponding type IDs in the prop_have.value array of save files.',
+    },
     {
       date: '2025-05-30',
       type: 'feature',

@@ -42,6 +42,16 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   const [isEditingCurrency, setIsEditingCurrency] = useState(false);
   const [tempMoney, setTempMoney] = useState('');
   const [tempYuanbao, setTempYuanbao] = useState('');
+  
+  // 粮草相关状态
+  const [food, setFood] = useState('0');
+  const [vegetables, setVegetables] = useState('0');
+  const [meat, setMeat] = useState('0');
+  const [isEditingFood, setIsEditingFood] = useState(false);
+  const [tempFood, setTempFood] = useState('0');
+  const [tempVegetables, setTempVegetables] = useState('0');
+  const [tempMeat, setTempMeat] = useState('0');
+  
   const { locale, t } = useLocale();
 
   const isEditing = (record) => record.id === editingKey;
@@ -92,7 +102,6 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     if (!rawData.CGNum) {
       rawData.CGNum = { value: ['0', '0'] };
     }
-    console.log(tempMoney, tempYuanbao, 'tempMoney, tempYuanbao')
     rawData.CGNum.value[0] = tempMoney;
     rawData.CGNum.value[1] = tempYuanbao;
     setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
@@ -113,6 +122,80 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     setTempYuanbao(yuanbao);
     setIsEditingCurrency(true);
   };
+
+  // 粮草管理函数
+  const saveFood = () => {
+    const rawData = JSON.parse(data.data.toString());
+    if (!rawData.Prop_have) {
+      rawData.Prop_have = { value: [] };
+    }
+    
+    // 更新或插入粮食数据 (类型ID: '2')
+    const foodIndex = rawData.Prop_have.value.findIndex(item => item[0] === '2');
+    if (foodIndex > -1) {
+      rawData.Prop_have.value[foodIndex][1] = tempFood;
+    } else {
+      rawData.Prop_have.value.push(['2', tempFood]);
+    }
+    
+    // 更新或插入蔬菜数据 (类型ID: '3')
+    const vegetablesIndex = rawData.Prop_have.value.findIndex(item => item[0] === '3');
+    if (vegetablesIndex > -1) {
+      rawData.Prop_have.value[vegetablesIndex][1] = tempVegetables;
+    } else {
+      rawData.Prop_have.value.push(['3', tempVegetables]);
+    }
+    
+    // 更新或插入肉类数据 (类型ID: '4')
+    const meatIndex = rawData.Prop_have.value.findIndex(item => item[0] === '4');
+    if (meatIndex > -1) {
+      rawData.Prop_have.value[meatIndex][1] = tempMeat;
+    } else {
+      rawData.Prop_have.value.push(['4', tempMeat]);
+    }
+    
+    setData({ ...data, data: Buffer.from(JSON.stringify(rawData))});
+    
+    // 更新显示的值
+    setFood(tempFood);
+    setVegetables(tempVegetables);
+    setMeat(tempMeat);
+    setIsEditingFood(false);
+    
+    message.success({
+      content: locale === 'zh' ? '粮草已保存，不要忘记保存到存档文件！' : 'Food saved, don\'t forget to save to file!',
+      duration: 3
+    });
+  };
+
+  const editFood = () => {
+    setTempFood(food);
+    setTempVegetables(vegetables);
+    setTempMeat(meat);
+    setIsEditingFood(true);
+  };
+
+  // 粮草输入处理函数
+  const handleFoodChange = useCallback((e) => {
+    const value = e.target.value;
+    if (value === '' || /^\d+$/.test(value)) {
+      setTempFood(value);
+    }
+  }, []);
+
+  const handleVegetablesChange = useCallback((e) => {
+    const value = e.target.value;
+    if (value === '' || /^\d+$/.test(value)) {
+      setTempVegetables(value);
+    }
+  }, []);
+
+  const handleMeatChange = useCallback((e) => {
+    const value = e.target.value;
+    if (value === '' || /^\d+$/.test(value)) {
+      setTempMeat(value);
+    }
+  }, []);
 
   const maxAllAttributes = (type) => {
     const rawData = JSON.parse(data.data.toString());
@@ -708,9 +791,12 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
   }, []);
 
   useEffect(() => {
-    // if (!editorContainer || !data)
-    //   return;
-    const rawData = JSON.parse(data?.data?.toString()  || "{}")
+    // 确保数据存在才进行处理
+    if (!data?.data) {
+      return;
+    }
+    
+    const rawData = JSON.parse(data.data.toString() || "{}")
     const member_now = rawData?.Member_now?.value || []
     // console.log(rawData, 'tableData')
     const members = member_now.map(fields => {
@@ -784,10 +870,20 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     setMoney(cgNum[0] || '0');
     setYuanbao(cgNum[1] || '0');
 
+    // 读取粮草数据
+    const propHave = rawData?.Prop_have?.value || [];
+    const foodItem = propHave.find(item => item[0] === '2');
+    const vegetablesItem = propHave.find(item => item[0] === '3');
+    const meatItem = propHave.find(item => item[0] === '4');
+    
+    setFood(foodItem ? foodItem[1] : '0');
+    setVegetables(vegetablesItem ? vegetablesItem[1] : '0');
+    setMeat(meatItem ? meatItem[1] : '0');
+
     return () => {
       setEditor(null);
     };
-  }, [editorContainer, data, isLoading, editorMode]); // Add editorMode to dependency array
+  }, [data, isLoading, editorMode]); // 移除editorContainer依赖，只依赖数据相关的变量
 
   useEffect(() => {
   }, [isLoading, editor, editorMode]); // Add editorMode to dependency array
@@ -1350,60 +1446,133 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         <ModalBody mt='5'>
          
             <Box display="flex" flexDirection="column" gap={4}>
-              {/* 金钱和元宝输入框 */}
-              {useMemo(() => (
-                <Box p={4} border="1px" borderColor="gray.200" borderRadius="md">
-                  <Heading size="sm" mb={3}>
-                    {locale === 'zh' ? '货币管理' : 'Currency Management'}
-                  </Heading>
-                  <Box display="flex" gap={4} alignItems="flex-start">
-                    <Box>
-                      <Text fontSize="sm" mb={1}>
-                        {locale === 'zh' ? '金钱' : 'Money'}
-                      </Text>
-                      <Input
-                        value={isEditingCurrency ? tempMoney : money}
-                        onChange={handleMoneyChange}
-                        placeholder={locale === 'zh' ? '输入金钱数量' : 'Enter money amount'}
-                        style={{ width: '150px' }}
-                        disabled={!isEditingCurrency}
-                      />
-                      <Text fontSize="xs" color="transparent" mt={1}>
-                        {/* 占位文本，保持高度一致 */}
-                        &nbsp;
-                      </Text>
-                    </Box>
-                    <Box>
-                      <Text fontSize="sm" mb={1}>
-                        {locale === 'zh' ? '元宝' : 'Yuanbao'}
-                      </Text>
-                      <Input
-                        value={isEditingCurrency ? tempYuanbao : yuanbao}
-                        onChange={handleYuanbaoChange}
-                        placeholder={locale === 'zh' ? '输入元宝数量(最大100000000)' : 'Enter yuanbao amount(max 100000000)'}
-                        style={{ width: '150px' }}
-                        disabled={!isEditingCurrency}
-                        max={100000000}
-                        type="number"
-                      />
-                      <Text fontSize="xs" color="gray.500" mt={1}>
-                        {locale === 'zh' ? '最多一亿' : 'Max 100 million'}
-                      </Text>
-                    </Box>
-                    <Box mt="25px">
-                      {isEditingCurrency ? (
-                        <Button type="primary" onClick={saveCurrency}>
-                          {locale === 'zh' ? '保存货币' : 'Save Currency'}
-                        </Button>
-                      ) : (
-                        <Button onClick={editCurrency}>
-                          {locale === 'zh' ? '编辑货币' : 'Edit Currency'}
-                        </Button>
-                      )}
+              {/* 货币和粮草管理 */}
+              <Box display="flex" gap={4}>
+                {/* 货币管理 */}
+                {useMemo(() => (
+                  <Box p={4} border="1px" borderColor="gray.200" borderRadius="md" flex="1">
+                    <Heading size="sm" mb={3}>
+                      {locale === 'zh' ? '货币管理' : 'Currency Management'}
+                    </Heading>
+                    <Box display="flex" gap={4} alignItems="flex-start">
+                      <Box>
+                        <Text fontSize="sm" mb={1}>
+                          {locale === 'zh' ? '金钱' : 'Money'}
+                        </Text>
+                        <Input
+                          value={isEditingCurrency ? tempMoney : money}
+                          onChange={handleMoneyChange}
+                          placeholder={locale === 'zh' ? '输入金钱数量' : 'Enter money amount'}
+                          style={{ width: '150px' }}
+                          disabled={!isEditingCurrency}
+                        />
+                        <Text fontSize="xs" color="transparent" mt={1}>
+                          {/* 占位文本，保持高度一致 */}
+                          &nbsp;
+                        </Text>
+                      </Box>
+                      <Box>
+                        <Text fontSize="sm" mb={1}>
+                          {locale === 'zh' ? '元宝' : 'Yuanbao'}
+                        </Text>
+                        <Input
+                          value={isEditingCurrency ? tempYuanbao : yuanbao}
+                          onChange={handleYuanbaoChange}
+                          placeholder={locale === 'zh' ? '输入元宝数量(最大100000000)' : 'Enter yuanbao amount(max 100000000)'}
+                          style={{ width: '150px' }}
+                          disabled={!isEditingCurrency}
+                          max={100000000}
+                          type="number"
+                        />
+                        <Text fontSize="xs" color="gray.500" mt={1}>
+                          {locale === 'zh' ? '最多一亿' : 'Max 100 million'}
+                        </Text>
+                      </Box>
+                      <Box mt="25px">
+                        {isEditingCurrency ? (
+                          <Button type="primary" onClick={saveCurrency}>
+                            {locale === 'zh' ? '保存货币' : 'Save Currency'}
+                          </Button>
+                        ) : (
+                          <Button onClick={editCurrency}>
+                            {locale === 'zh' ? '编辑货币' : 'Edit Currency'}
+                          </Button>
+                        )}
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
-              ), [locale, isEditingCurrency, tempMoney, money, tempYuanbao, yuanbao, handleMoneyChange, handleYuanbaoChange, saveCurrency, editCurrency])}
+                ), [locale, isEditingCurrency, tempMoney, money, tempYuanbao, yuanbao, handleMoneyChange, handleYuanbaoChange, saveCurrency, editCurrency])}
+
+                {/* 粮草管理 */}
+                {useMemo(() => (
+                  <Box p={4} border="1px" borderColor="gray.200" borderRadius="md" flex="1">
+                    <Heading size="sm" mb={3}>
+                      {locale === 'zh' ? '粮草管理' : 'Food Management'}
+                    </Heading>
+                    <Box display="flex" gap={4} alignItems="flex-start">
+                      <Box>
+                        <Text fontSize="sm" mb={1}>
+                          {locale === 'zh' ? '粮食' : 'Food'}
+                        </Text>
+                        <Input
+                          value={isEditingFood ? tempFood : food}
+                          onChange={handleFoodChange}
+                          placeholder={locale === 'zh' ? '输入粮食数量' : 'Enter food amount'}
+                          style={{ width: '120px' }}
+                          disabled={!isEditingFood}
+                          type="number"
+                        />
+                        <Text fontSize="xs" color="transparent" mt={1}>
+                          &nbsp;
+                        </Text>
+                      </Box>
+                      <Box>
+                        <Text fontSize="sm" mb={1}>
+                          {locale === 'zh' ? '蔬菜' : 'Vegetables'}
+                        </Text>
+                        <Input
+                          value={isEditingFood ? tempVegetables : vegetables}
+                          onChange={handleVegetablesChange}
+                          placeholder={locale === 'zh' ? '输入蔬菜数量' : 'Enter vegetables amount'}
+                          style={{ width: '120px' }}
+                          disabled={!isEditingFood}
+                          type="number"
+                        />
+                        <Text fontSize="xs" color="transparent" mt={1}>
+                          &nbsp;
+                        </Text>
+                      </Box>
+                      <Box>
+                        <Text fontSize="sm" mb={1}>
+                          {locale === 'zh' ? '肉类' : 'Meat'}
+                        </Text>
+                        <Input
+                          value={isEditingFood ? tempMeat : meat}
+                          onChange={handleMeatChange}
+                          placeholder={locale === 'zh' ? '输入肉类数量' : 'Enter meat amount'}
+                          style={{ width: '120px' }}
+                          disabled={!isEditingFood}
+                          type="number"
+                        />
+                        <Text fontSize="xs" color="transparent" mt={1}>
+                          &nbsp;
+                        </Text>
+                      </Box>
+                      <Box mt="25px">
+                        {isEditingFood ? (
+                          <Button type="primary" onClick={saveFood}>
+                            {locale === 'zh' ? '保存粮草' : 'Save Food'}
+                          </Button>
+                        ) : (
+                          <Button onClick={editFood}>
+                            {locale === 'zh' ? '编辑粮草' : 'Edit Food'}
+                          </Button>
+                        )}
+                      </Box>
+                    </Box>
+                  </Box>
+                ), [locale, isEditingFood, tempFood, food, tempVegetables, vegetables, tempMeat, meat, handleFoodChange, handleVegetablesChange, handleMeatChange, saveFood, editFood])}
+              </Box>
 
               <Box>
                   <Box display="flex" alignItems="center" justifyContent="space-between" mb="3">
