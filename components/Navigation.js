@@ -63,6 +63,12 @@ export default function Navigation() {
 
       <Text color="gray.300">|</Text>
 
+      <Link as={NextLink} href="/suggestions" {...linkStyle('/suggestions')}>
+        {locale === 'zh' ? '提建议' : 'Suggestions'}
+      </Link>
+
+      <Text color="gray.300">|</Text>
+
       <Text color="gray.400" fontSize="xs">
         © 2025 House of Legacy Save Editor
       </Text>

@@ -163,7 +163,7 @@ export default function Home() {
       </Flex>
 
       {/* 导航行 */}
-      {/* <Box py='4' borderTop='1px' borderColor='gray.200'>
+      <Box py='4' borderTop='1px' borderColor='gray.200'>
         <Container maxW='container.lg'>
           <Flex justify='center' align='center' wrap='wrap' gap='4'>
             <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>
@@ -173,9 +173,13 @@ export default function Home() {
             <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
               {t.updateLog}
             </Link>
+            <Text color='gray.400'>|</Text>
+            <Link href='/suggestions' style={{textDecoration: 'underline', color: 'inherit'}}>
+              💡 提建议
+            </Link>
           </Flex>
         </Container>
-      </Box> */}
+      </Box>
       
       
     </>

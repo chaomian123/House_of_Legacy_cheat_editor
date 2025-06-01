@@ -62,11 +62,72 @@ export default async function handler(req, res) {
     }
 
     if (action === 'getLikes') {
-      const { count } = await supabase
+      console.log('Getting likes count')
+      const { count, error: countError } = await supabase
         .from('likes')
         .select('*', { count: 'exact', head: true })
 
+      if (countError) {
+        console.error('Error getting likes count:', countError)
+        return res.status(500).json({ 
+          error: 'Failed to get likes count',
+          details: countError.message
+        })
+      }
+
+      console.log('Current likes count:', count)
       return res.status(200).json({ totalLikes: count })
+    }
+
+    if (action === 'submitSuggestion') {
+      const { username, suggestion } = payload || {}
+      
+      // 验证必填字段
+      if (!suggestion || !suggestion.trim()) {
+        return res.status(400).json({ error: 'Suggestion content is required' })
+      }
+
+      const clientIP = req.headers['x-forwarded-for'] || 
+                       req.headers['x-real-ip'] || 
+                       req.connection.remoteAddress ||
+                       '127.0.0.1'
+
+      const userAgent = req.headers['user-agent'] || null
+
+      console.log('Submitting suggestion from IP:', clientIP)
+      
+      try {
+        const { data, error } = await supabase
+          .from('suggestions')
+          .insert([{
+            username: username?.trim() || null,
+            suggestion: suggestion.trim(),
+            user_agent: userAgent
+          }])
+          .select()
+
+        if (error) {
+          console.error('Error inserting suggestion:', error)
+          return res.status(500).json({ 
+            error: 'Failed to submit suggestion',
+            details: error.message
+          })
+        }
+
+        console.log('Suggestion submitted successfully:', data[0]?.id)
+        return res.status(200).json({ 
+          success: true, 
+          message: 'Suggestion submitted successfully',
+          id: data[0]?.id 
+        })
+
+      } catch (error) {
+        console.error('Error in suggestion submission:', error)
+        return res.status(500).json({ 
+          error: 'Failed to submit suggestion',
+          details: error.message
+        })
+      }
     }
 
     return res.status(400).json({ error: 'Invalid action' })
