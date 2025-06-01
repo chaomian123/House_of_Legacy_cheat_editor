@@ -1,5 +1,5 @@
-import { Form, Radio, Button } from 'antd';
-import { MEMBER_TYPES, getTalentMap, getSkillMap } from './constants';
+import { Form, Radio, Button, Select } from 'antd';
+import { MEMBER_TYPES, getTalentMap, getSkillMap, getSkillOptions, getTalentOptions } from './constants';
 
 // 创建表格列配置
 export const createTableColumns = (
@@ -94,14 +94,23 @@ export const createTableColumns = (
         dataIndex: 'talent',
         key: 'talent',
         render: (text, record) => {
+          const talentOptions = getTalentOptions(locale);
+          
           return isEditing(record) ? (
             <Form.Item name="talent" style={{ margin: 0 }}>
-              <Radio.Group value={text}>
-                <Radio value={'1'}>{locale === 'zh' ? '文' : 'Literature'}</Radio>
-                <Radio value={'2'}>{locale === 'zh' ? '武' : 'Martial'}</Radio>
-                <Radio value={'3'}>{locale === 'zh' ? '商' : 'Commerce'}</Radio>
-                <Radio value={'4'}>{locale === 'zh' ? '艺' : 'Art'}</Radio>
-              </Radio.Group>
+              <Select 
+                value={text} 
+                style={{ minWidth: 100 }}
+                getPopupContainer={trigger => trigger.parentElement}
+                dropdownMatchSelectWidth={false}
+                placeholder="选择天赋"
+              >
+                {talentOptions.map(option => (
+                  <Select.Option key={option.key} value={option.key}>
+                    {option.label}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           ) : (
             talentMap[text] || text
@@ -119,12 +128,23 @@ export const createTableColumns = (
         dataIndex: 'skill',
         key: 'skill',
         render: (text, record) => {
+          const skillOptions = getSkillOptions(locale);
+          
           return isEditing(record) ? (
             <Form.Item name="skill" style={{ margin: 0 }}>
-              <Radio.Group value={text}>
-                <Radio value={'0'}>{locale === 'zh' ? '无' : 'None'}</Radio>
-                <Radio value={'2'}>{locale === 'zh' ? '医' : 'Medical'}</Radio>
-              </Radio.Group>
+              <Select 
+                value={text} 
+                style={{ minWidth: 100 }}
+                getPopupContainer={trigger => trigger.parentElement}
+                dropdownMatchSelectWidth={false}
+                placeholder="选择技能"
+              >
+                {skillOptions.map(option => (
+                  <Select.Option key={option.key} value={option.key}>
+                    {option.label}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           ) : (
             skillMap[text] || text

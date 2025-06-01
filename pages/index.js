@@ -79,7 +79,7 @@ export default function Home() {
             <Box ml={['0', '4']} fontSize='sm'>
               <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
                 {t.updateLog}
-                {locale === 'zh' ? '(2025-05-31)' : '(2025-05-31)'}
+                {locale === 'zh' ? '(2025-06-01)' : '(2025-06-01)'}
               </Link>
             </Box>
           </Flex>
@@ -169,10 +169,10 @@ export default function Home() {
             <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>
               {t.faq}
             </Link>
-            <Text color='gray.400'>|</Text>
+            {/* <Text color='gray.400'>|</Text>
             <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
               {t.updateLog}
-            </Link>
+            </Link> */}
             <Text color='gray.400'>|</Text>
             <Link href='/suggestions' style={{textDecoration: 'underline', color: 'inherit'}}>
               💡 提建议

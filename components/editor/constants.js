@@ -7,35 +7,47 @@ export const MEMBER_TYPES = {
 
 // 天赋映射
 export const getTalentMap = (locale) => locale === 'zh' ? {
+  '0': '无',
   '1': '文',
   '2': '武', 
   '3': '商',
-  '4': '艺',
-  '0': '无'
+  '4': '艺'
 } : {
+  '0': 'None',
   '1': 'Literature',
   '2': 'Martial', 
   '3': 'Commerce',
-  '4': 'Art',
-  '0': 'None'
+  '4': 'Art'
 };
 
 // 技能映射
 export const getSkillMap = (locale) => locale === 'zh' ? {
   '0': '无',
-  '2': '医'
+  '1': '巫',
+  '2': '医',
+  '3': '相',
+  '4': '卜',
+  '5': '魅',
+  '6': '工'
 } : {
   '0': 'None',
-  '2': 'Medical'
+  '1': 'Witch',
+  '2': 'Medical',
+  '3': 'Fortune',
+  '4': 'Divination',
+  '5': 'Charm',
+  '6': 'Craft'
 };
 
 // 天赋选项
 export const getTalentOptions = (locale) => locale === 'zh' ? [
+  { key: '0', value: '无', label: '无' },
   { key: '1', value: '文', label: '文' },
   { key: '2', value: '武', label: '武' },
   { key: '3', value: '商', label: '商' },
   { key: '4', value: '艺', label: '艺' }
 ] : [
+  { key: '0', value: 'None', label: 'None' },
   { key: '1', value: 'Literature', label: 'Literature' },
   { key: '2', value: 'Martial', label: 'Martial' },
   { key: '3', value: 'Commerce', label: 'Commerce' },
@@ -45,10 +57,20 @@ export const getTalentOptions = (locale) => locale === 'zh' ? [
 // 技能选项
 export const getSkillOptions = (locale) => locale === 'zh' ? [
   { key: '0', label: '无' },
-  { key: '2', label: '医' }
+  { key: '1', label: '巫' },
+  { key: '2', label: '医' },
+  { key: '3', label: '相' },
+  { key: '4', label: '卜' },
+  { key: '5', label: '魅' },
+  { key: '6', label: '工' }
 ] : [
   { key: '0', label: 'None' },
-  { key: '2', label: 'Medical' }
+  { key: '1', label: 'Witch' },
+  { key: '2', label: 'Medical' },
+  { key: '3', label: 'Fortune' },
+  { key: '4', label: 'Divination' },
+  { key: '5', label: 'Charm' },
+  { key: '6', label: 'Craft' }
 ];
 
 // 粮草类型ID

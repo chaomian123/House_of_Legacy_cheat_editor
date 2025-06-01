@@ -91,6 +91,12 @@ export default function Changelog() {
 
   const updates = locale === 'zh' ? [
     {
+      date: '2025-06-01',
+      type: 'enhancement',
+      title: '扩展技能系统',
+      description: '技能选项从2个扩展到7个，支持编辑：无、巫、医、相、卜、魅、工',
+    },
+    {
       date: '2025-05-31',
       type: 'enhancement',
       title: '提示信息优化',
@@ -193,6 +199,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-06-01',
+      type: 'enhancement',
+      title: 'Extended Skill System',
+      description: 'Skill options expanded from 2 to 7, supporting editing: None, Witch, Medical, Fortune, Divination, Charm, Craft',
+    },
     {
       date: '2025-05-31',
       type: 'enhancement',
