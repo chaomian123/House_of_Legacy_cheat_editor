@@ -8,13 +8,13 @@ const SITE_URL = 'https://savefile.space';
 const pages = [
   {
     url: '/',
-    changefreq: 'weekly',
+    changefreq: 'daily',
     priority: '1.0',
     lastmod: new Date().toISOString().split('T')[0] + 'T00:00:00+00:00'
   },
   {
     url: '/changelog',
-    changefreq: 'weekly', // 更新日志页面更新频繁
+    changefreq: 'daily', // 更新日志页面更新频繁
     priority: '0.8',
     lastmod: new Date().toISOString().split('T')[0] + 'T00:00:00+00:00'
   },
@@ -58,7 +58,25 @@ function getStaticPages() {
   
   filenames.forEach(name => {
     // 跳过API路由、_app.js、_document.js等特殊文件
-    if (name.startsWith('_') || name.startsWith('api') || name.includes('[')) {
+    // 跳过CSS文件、图片文件等非页面文件
+    if (name.startsWith('_') || 
+        name.startsWith('api') || 
+        name.includes('[') ||
+        name.endsWith('.css') ||
+        name.endsWith('.scss') ||
+        name.endsWith('.sass') ||
+        name.endsWith('.less') ||
+        name.endsWith('.png') ||
+        name.endsWith('.jpg') ||
+        name.endsWith('.jpeg') ||
+        name.endsWith('.gif') ||
+        name.endsWith('.svg') ||
+        name.endsWith('.ico') ||
+        name.endsWith('.webp') ||
+        name.endsWith('.pdf') ||
+        name.endsWith('.txt') ||
+        name.endsWith('.md') ||
+        name.endsWith('.json')) {
       return;
     }
     
