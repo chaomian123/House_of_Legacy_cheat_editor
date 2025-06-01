@@ -295,7 +295,6 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             let decryptedData;
             try {
               decryptedData = await cryptData(data, password, false);
-              console.log(decryptedData, 'decryptedData')
             } catch (e) {
               console.error(e);
               toast({

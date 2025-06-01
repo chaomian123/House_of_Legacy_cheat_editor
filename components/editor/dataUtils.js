@@ -6,6 +6,10 @@ export const parseMemberData = (rawData, memberType) => {
   const indices = FIELD_INDICES[memberType];
   
   return memberData.map(fields => {
+    if (!fields || fields.length === 0) {
+      return null;
+    }
+    
     const member = {
       id: fields[indices.id],
       age: fields[indices.age],
@@ -18,7 +22,11 @@ export const parseMemberData = (rawData, memberType) => {
     };
 
     // 解析info字符串（家族成员和嫁娶成员有info）
-    if (indices.info !== undefined) {
+    if (memberType === MEMBER_TYPES.GUEST) {
+      // 门客数据结构不同
+      member.name = fields[2].split('|')[0];
+      member.payment = fields[indices.payment] || '0';
+    } else if (indices.info !== undefined) {
       const info = fields[indices.info].split('|');
       member.name = info[0];
       member.talent = info[2];
@@ -37,10 +45,6 @@ export const parseMemberData = (rawData, memberType) => {
         member.health = fields[indices.health];
         member.skill_num = fields[indices.skill_num];
       }
-    } else if (memberType === MEMBER_TYPES.GUEST) {
-      // 门客数据结构不同
-      member.name = fields[2].split('|')[0];
-      member.payment = fields[indices.payment];
     }
 
     return member;
