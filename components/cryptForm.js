@@ -22,7 +22,7 @@ import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import crypto from 'crypto';
 
-const Editor = dynamic(() => import('./editor'), { ssr: false });
+const Editor = dynamic(() => import('./editor/Editor'), { ssr: false });
 
 function isGzip(data) {
   return data[0] == 0x1F && data[1] == 0x8B;
@@ -100,7 +100,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
   const [lastFileName, setLastFileName] = useState(null);
   const [isEncryptionWarning, setIsEncryptionWarning] = useState(false);
   const { isOpen, onOpen: _onOpen, onClose: _onClose } = useDisclosure();
-  const { isOpen: isEditorOpen, onOpen: onEditorOpen, onClose: onEditorClose } = useDisclosure();
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
   const { isOpen: isSaveConfirmOpen, onOpen: onSaveConfirmOpen, onClose: onSaveConfirmClose } = useDisclosure();
   const { locale, t } = useLocale();
 
@@ -324,7 +324,7 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
             }
 
             setEditorData({ wasGunzipped: decryptedData.wasGunzipped, data: decryptedData.cryptedData });
-            onEditorOpen();
+            setIsEditorOpen(true);
             setIsLoading(false);
           }}
         >
@@ -438,7 +438,10 @@ export default function CryptForm({ isEncryption, isLoading, setIsLoading, passw
           isLoading={isLoading}
           setIsLoading={setIsLoading}
           isOpen={isEditorOpen}
-          onClose={onEditorClose}
+          onClose={() => {
+            setIsEditorOpen(false);
+            setEditorData(null);
+          }}
           data={editorData}
           setData={setEditorData}
           saveData={async () => {
