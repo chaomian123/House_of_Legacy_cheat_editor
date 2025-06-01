@@ -33,10 +33,10 @@ export default function SuggestionsPage() {
           {/* 页面标题 */}
           <VStack spacing={4} textAlign="center">
             <Heading size="lg" color="gray.700">
-              💭 建议反馈
+              <span data-nosnippet>💭 建议反馈</span>
             </Heading>
             <Text color="gray.600" maxW="500px">
-              欢迎分享您在使用 House of Legacy 存档编辑器时的想法、建议。
+              欢迎分享您在使用 House of Legacy 存档编辑器时的想法、<span data-nosnippet>建议</span>。
             </Text>
           </VStack>
 

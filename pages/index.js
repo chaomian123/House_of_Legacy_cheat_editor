@@ -66,7 +66,9 @@ export default function Home() {
         >
           {/* 头部：标题和更新日志 */}
           <Flex justify='space-between' align='start' mb='6' wrap='wrap'>
-            <Heading mb={['4', '0']} flex='1'>{t.mainTitle}</Heading>
+            <Heading as="h1" mb={['4', '0']} flex='1'>
+              {locale === 'zh' ? '吾今有世家 在线存档修改器' : 'House of Legacy Save Editor'}
+            </Heading>
             <Box ml={['0', '4']} fontSize='sm'>
               <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
                 {t.updateLog}
@@ -76,6 +78,15 @@ export default function Home() {
           </Flex>
           
           <Divider mb='3' />
+          {/* <Heading as="h2" size='lg' mb='3' color="blue.700">
+            {locale === 'zh' ? '在线存档编辑器' : 'Online Save Editor'}
+          </Heading> */}
+          <Text textAlign="center" color="gray.600" fontSize="sm" mb='4'>
+            {locale === 'zh' 
+              ? '无需下载安装，浏览器直接使用，完全免费且安全' 
+              : 'No download required, browser-based, completely free and safe'
+            }
+          </Text>
           <Heading size='md' mb='3'>{t.onlineEditor}</Heading>
           <Text>{t.savePathExample}</Text>
           <Box 
@@ -96,6 +107,17 @@ export default function Home() {
               C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3
             </Text>
           </Box>
+          
+          <Heading as="h3" size="sm" mb='2' color="blue.600">
+            {locale === 'zh' ? '安全编辑存档文件' : 'Safe Save File Editing'}
+          </Heading>
+          <Text fontSize="sm" color="gray.600" mb='4'>
+            {locale === 'zh' 
+              ? '本地处理，数据不会上传到服务器，确保您的存档文件完全安全' 
+              : 'Local processing, no data uploaded to servers, ensuring your save files are completely secure'
+            }
+          </Text>
+          
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           
           {/* 点赞按钮 */}
@@ -148,23 +170,19 @@ export default function Home() {
       </Flex>
 
       {/* 导航行 */}
-      <Box py='4' borderTop='1px' borderColor='gray.200'>
+      {/* <Box py='4' borderTop='1px' borderColor='gray.200'>
         <Container maxW='container.lg'>
           <Flex justify='center' align='center' wrap='wrap' gap='4'>
             <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>
-              {t.faq}
+              <span data-nosnippet>{t.faq}</span>
             </Link>
-            {/* <Text color='gray.400'>|</Text>
-            <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
-              {t.updateLog}
-            </Link> */}
             <Text color='gray.400'>|</Text>
             <Link href='/suggestions' style={{textDecoration: 'underline', color: 'inherit'}}>
-              💡 提建议
+              <span data-nosnippet>💡 提建议</span>
             </Link>
           </Flex>
         </Container>
-      </Box>
+      </Box> */}
       
       
     </>

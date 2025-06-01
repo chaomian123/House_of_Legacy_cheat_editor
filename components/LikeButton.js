@@ -1,12 +1,14 @@
 import { Box, Button, Text, HStack, useToast } from '@chakra-ui/react'
 import { FaHandPointUp, FaRegHandPointUp } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
+import { useLocale } from '../lib/useLocale'
 
 export default function LikeButton() {
   const [likes, setLikes] = useState(0)
   const [hasLiked, setHasLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const toast = useToast()
+  const { locale } = useLocale()
 
   // 开发环境标识
   const isDev = process.env.NODE_ENV === 'development'
@@ -68,8 +70,8 @@ export default function LikeButton() {
         }
         
         toast({
-          title: "感谢点赞！",
-          description: "您的支持是我们前进的动力",
+          title: locale === 'zh' ? "感谢点赞！" : "Thank you for your like!",
+          description: locale === 'zh' ? "您的支持是我们前进的动力" : "Your support is our motivation to move forward",
           status: "success",
           duration: 3000,
           isClosable: true,
@@ -78,21 +80,21 @@ export default function LikeButton() {
         if (data.error === 'Already liked today') {
           setHasLiked(true)
           toast({
-            title: "今日已点赞",
-            description: "每天只能点赞一次哦",
+            title: locale === 'zh' ? "今日已点赞" : "Already liked today",
+            description: locale === 'zh' ? "每天只能点赞一次哦" : "You can only like once per day",
             status: "info",
             duration: 3000,
             isClosable: true,
           })
         } else {
-          throw new Error(data.error || '点赞失败')
+          throw new Error(data.error || (locale === 'zh' ? '点赞失败' : 'Like failed'))
         }
       }
     } catch (error) {
       console.error('点赞失败:', error)
       toast({
-        title: "点赞失败",
-        description: error.message || "网络错误，请稍后重试",
+        title: locale === 'zh' ? "点赞失败" : "Like failed",
+        description: error.message || (locale === 'zh' ? "网络错误，请稍后重试" : "Network error, please try again later"),
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -115,12 +117,15 @@ export default function LikeButton() {
           isDisabled={hasLiked}
           _hover={!hasLiked ? { bg: 'blue.50' } : {}}
         >
-          {hasLiked ? '已点赞' : '点赞支持'}
+          {hasLiked 
+            ? (locale === 'zh' ? '已点赞' : 'Liked') 
+            : (locale === 'zh' ? '点赞支持' : 'Like & Support')
+          }
         </Button>
         
         <Text fontSize="sm" color="gray.600">
           {/* 显示历史总点赞数，不是今日数量 */}
-          {likes} 人点赞 {isDev && <Text as="span" color="orange.500">[Dev]</Text>}
+          {likes} {locale === 'zh' ? '人点赞' : 'likes'} {isDev && <Text as="span" color="orange.500">[Dev]</Text>}
         </Text>
       </HStack>
     </Box>

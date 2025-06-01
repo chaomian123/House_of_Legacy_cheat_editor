@@ -113,7 +113,9 @@ export default function FAQ() {
             <HStack justify="center" mb={4}>
               <Icon as={FaQuestionCircle} boxSize={8} color="blue.500" />
               <Heading size="xl">
-                {locale === 'zh' ? '吾今有世家存档修改器 常见问题解答' : 'House of Legacy Save Editor - FAQ'}
+                <span data-nosnippet>
+                  {locale === 'zh' ? '吾今有世家存档修改器 常见问题解答' : 'House of Legacy Save Editor - FAQ'}
+                </span>
               </Heading>
             </HStack>
             <Text color="gray.600" fontSize="lg">
