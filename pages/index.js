@@ -32,6 +32,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useLocale } from '../lib/useLocale';
 import SEOHead from '../components/SEOHead';
 import JianbingSupport from '../components/JianbingSupport';
+import LikeButton from '../components/LikeButton';
 import { inject } from "@vercel/analytics"
 
 import CryptForm from '../components/cryptForm';
@@ -67,6 +68,7 @@ export default function Home() {
           position='relative'
         >
           <Heading mb='6'>{t.mainTitle}</Heading>
+          
           <Divider mt='8' mb='3' />
           <Heading size='md' mb='3'>{t.onlineEditor}</Heading>
           <Text>{t.savePathExample}</Text>
@@ -95,6 +97,12 @@ export default function Home() {
             </p>
           </Box>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
+          
+          {/* 点赞按钮放在打开修改器按钮下面 */}
+          <Box mt='3' display='flex' justifyContent='center'>
+            <LikeButton />
+          </Box>
+          
           <Divider mt='5' mb='3' />
           <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
             {t.updateLog}
