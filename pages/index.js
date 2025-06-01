@@ -45,15 +45,6 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { locale, t } = useLocale();
-  const pathRef = useRef(null);
-  
-  // 动态插入路径，避免SEO索引
-  useEffect(() => {
-    if (pathRef.current) {
-      const pathText = 'C:\\Users\\用户名\\AppData\\LocalLow\\S3Studio\\House of Legacy\\FW\\0\\GameData.es3';
-      pathRef.current.textContent = pathText;
-    }
-  }, []);
   
   inject()
   return (
@@ -96,20 +87,14 @@ export default function Home() {
             overflow="auto"
             style={{ userSelect: 'all' }}
           >
-            <p  
-              data-nosnippet="true"
-              role="presentation"
-              aria-hidden="true"
-              style={{ 
-                fontFamily: 'monospace',
-                margin: 0,
-                padding: 0,
-                color: '#666'
-              }}
-              ref={pathRef}
+            <Text  
+              fontFamily="monospace"
+              margin={0}
+              padding={0}
+              color="gray.600"
             >
-              {/* 路径将通过JavaScript动态插入，避免SEO索引 */}
-            </p>
+              C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3
+            </Text>
           </Box>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           

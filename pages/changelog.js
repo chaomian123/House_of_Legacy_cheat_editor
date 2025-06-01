@@ -91,6 +91,12 @@ export default function Changelog() {
 
   const updates = locale === 'zh' ? [
     {
+      date: '2025-06-02',
+      type: 'enhancement',
+      title: '优化首屏渲染性能',
+      description: '优化首屏渲染性能',
+    },
+    {
       date: '2025-06-01',
       type: 'enhancement',
       title: '扩展技能系统',
@@ -199,6 +205,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-06-02',
+      type: 'enhancement',
+      title: '优化首屏渲染性能',
+      description: '优化首屏渲染性能',
+    },
     {
       date: '2025-06-01',
       type: 'enhancement',

@@ -11,13 +11,14 @@ export default function LikeButton() {
   // 开发环境标识
   const isDev = process.env.NODE_ENV === 'development'
 
-  // 加载点赞数
+  // 加载点赞数 - 获取历史总量，不是今日数量
   useEffect(() => {
     fetchLikes()
   }, [])
 
   const fetchLikes = async () => {
     try {
+      // 调用 getLikes API - 返回所有历史点赞总数
       const response = await fetch('/api/supabase-proxy', {
         method: 'POST',
         headers: {
@@ -28,7 +29,13 @@ export default function LikeButton() {
 
       if (response.ok) {
         const data = await response.json()
+        // data.totalLikes 是历史总量，包含所有日期的点赞
         setLikes(data.totalLikes || 0)
+        
+        // 开发环境下打印调试信息
+        if (isDev) {
+          console.log('获取到历史总点赞数:', data.totalLikes)
+        }
       }
     } catch (error) {
       console.error('获取点赞数失败:', error)
@@ -52,8 +59,14 @@ export default function LikeButton() {
       const data = await response.json()
 
       if (response.ok) {
+        // 更新为新的历史总量（包含刚刚的点赞）
         setLikes(data.totalLikes)
         setHasLiked(true)
+        
+        if (isDev) {
+          console.log('点赞成功，新的历史总量:', data.totalLikes)
+        }
+        
         toast({
           title: "感谢点赞！",
           description: "您的支持是我们前进的动力",
@@ -106,6 +119,7 @@ export default function LikeButton() {
         </Button>
         
         <Text fontSize="sm" color="gray.600">
+          {/* 显示历史总点赞数，不是今日数量 */}
           {likes} 人点赞 {isDev && <Text as="span" color="orange.500">[Dev]</Text>}
         </Text>
       </HStack>

@@ -147,6 +147,94 @@ export default async function handler(req, res) {
       return res.status(200).json({ totalLikes: count })
     }
 
+    // 新增：获取详细的点赞统计
+    if (action === 'getLikesDetailed') {
+      console.log('Getting detailed likes statistics')
+      
+      try {
+        // 1. 获取总点赞数
+        const { count: totalCount, error: totalError } = await supabase
+          .from('likes')
+          .select('*', { count: 'exact', head: true })
+
+        if (totalError) throw totalError
+
+        // 2. 获取今天的点赞数
+        const today = new Date().toISOString().split('T')[0]
+        const { count: todayCount, error: todayError } = await supabase
+          .from('likes')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', `${today}T00:00:00.000Z`)
+          .lt('created_at', `${today}T23:59:59.999Z`)
+
+        if (todayError) throw todayError
+
+        // 3. 获取昨天的点赞数
+        const yesterday = new Date()
+        yesterday.setDate(yesterday.getDate() - 1)
+        const yesterdayStr = yesterday.toISOString().split('T')[0]
+        
+        const { count: yesterdayCount, error: yesterdayError } = await supabase
+          .from('likes')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', `${yesterdayStr}T00:00:00.000Z`)
+          .lt('created_at', `${yesterdayStr}T23:59:59.999Z`)
+
+        if (yesterdayError) throw yesterdayError
+
+        // 4. 获取最近7天的每日统计
+        const sevenDaysAgo = new Date()
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7)
+        
+        const { data: recentLikes, error: recentError } = await supabase
+          .from('likes')
+          .select('created_at')
+          .gte('created_at', sevenDaysAgo.toISOString())
+          .order('created_at', { ascending: false })
+
+        if (recentError) throw recentError
+
+        // 按日期分组统计
+        const dailyStats = {}
+        recentLikes.forEach(like => {
+          const date = new Date(like.created_at).toLocaleDateString('zh-CN')
+          dailyStats[date] = (dailyStats[date] || 0) + 1
+        })
+
+        const recentDays = Object.entries(dailyStats)
+          .map(([date, count]) => ({ date, count }))
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+
+        // 5. 获取最近一次点赞时间
+        const { data: lastLike, error: lastError } = await supabase
+          .from('likes')
+          .select('created_at')
+          .order('created_at', { ascending: false })
+          .limit(1)
+
+        const lastLikeTime = lastLike && lastLike.length > 0 ? lastLike[0].created_at : null
+
+        const result = {
+          totalCount,
+          todayCount,
+          yesterdayCount,
+          recentDays,
+          lastLikeTime,
+          generatedAt: new Date().toISOString()
+        }
+
+        console.log('Detailed stats generated:', result)
+        return res.status(200).json(result)
+
+      } catch (error) {
+        console.error('Error getting detailed likes statistics:', error)
+        return res.status(500).json({ 
+          error: 'Failed to get detailed statistics',
+          details: error.message
+        })
+      }
+    }
+
     if (action === 'submitSuggestion') {
       const { username, suggestion } = payload || {}
       
