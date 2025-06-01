@@ -1,4 +1,4 @@
-import { HStack, Text, Link } from '@chakra-ui/react';
+import { HStack, Text, Link, Flex } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useLocale } from '../lib/useLocale';
@@ -43,6 +43,11 @@ export default function Navigation() {
       <Link as={NextLink} href="/changelog" {...linkStyle('/changelog')}>
         {t.changelog}
       </Link>
+      <Text color="gray.300">|</Text>
+      <Link as={NextLink} href="/faq" {...linkStyle('/faq')}>
+        {t.faq}
+      </Link>
+
 
       <Text color="gray.300">|</Text>
       
@@ -55,6 +60,12 @@ export default function Navigation() {
       <Link as={NextLink} href="/terms" {...linkStyle('/terms')}>
         {t.termsOfService}
       </Link>
+
+      <Text color="gray.300">|</Text>
+
+      <Text color="gray.400" fontSize="xs">
+        © 2025 House of Legacy Save Editor
+      </Text>
     </HStack>
   );
 } 

@@ -25,7 +25,9 @@ import {
   PopoverHeader,
   PopoverBody,
   Image,
-  VStack
+  VStack,
+  HStack,
+  Container
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState, useRef } from 'react';
@@ -59,17 +61,30 @@ export default function Home() {
       <SEOHead />
 
       <a id='downloader' style={{ display: 'none' }}></a>
-      <Flex alignItems='center' justifyContent='center' mt='24' mb='20'>
+      
+      {/* 主要内容区域 */}
+      <Flex alignItems='center' justifyContent='center' mt='24' mb='10'>
         <Box
           direction='column'
           background='Blue.100'
           rounded='6'
           p='12'
           position='relative'
+          maxW='800px'
+          w='100%'
         >
-          <Heading mb='6'>{t.mainTitle}</Heading>
+          {/* 头部：标题和更新日志 */}
+          <Flex justify='space-between' align='start' mb='6' wrap='wrap'>
+            <Heading mb={['4', '0']} flex='1'>{t.mainTitle}</Heading>
+            <Box ml={['0', '4']} fontSize='sm'>
+              <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
+                {t.updateLog}
+                {locale === 'zh' ? '(2025-05-31)' : '(2025-05-31)'}
+              </Link>
+            </Box>
+          </Flex>
           
-          <Divider mt='8' mb='3' />
+          <Divider mb='3' />
           <Heading size='md' mb='3'>{t.onlineEditor}</Heading>
           <Text>{t.savePathExample}</Text>
           <Box 
@@ -98,67 +113,71 @@ export default function Home() {
           </Box>
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           
-          {/* 点赞按钮放在打开修改器按钮下面 */}
+          {/* 点赞按钮 */}
           <Box mt='3' display='flex' justifyContent='center'>
             <LikeButton />
           </Box>
           
           <Divider mt='5' mb='3' />
-          <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
-            {t.updateLog}
-            {locale === 'zh' ? '(上次更新时间: 2025-05-31)' : '(Last updated: 2025-05-31)'}
-          </Link>
-          <br />
-          <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>
-            {t.faq}
-          </Link>
-          <br />
-          <Link href='/experimental' style={{textDecoration: 'underline', color: 'inherit'}}>
-            {t.experimental}
-          </Link>
-          <br />
-          <Popover >
-            <PopoverTrigger>
-              <Link style={{textDecoration: 'underline', color: 'inherit', cursor: 'pointer'}}>
-                {locale === 'zh' ? '吾今有世家在线存档修改器问题反馈群' : 'House of Legacy Save Editor Feedback Group'}
-              </Link>
-            </PopoverTrigger>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverCloseButton />
-              <PopoverHeader>
-                {locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
-              </PopoverHeader>
-              <PopoverBody>
-                <Image 
-                  src="https://i.postimg.cc/t4cfrFHN/wechatgroup.jpg" 
-                  alt={locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
-                  maxW="200px"
-                  mx="auto"
-                />
-              </PopoverBody>
-            </PopoverContent>
-          </Popover>
-            {/* <ul>
-              {t.features.map((feature, index) => (
-                <li key={index}>{feature}</li>
-              ))}
-            </ul> */}
-            <VStack spacing={3} alignItems='center' justifyContent='center' mt='5'>
-              {locale === 'en' && <a href='https://ko-fi.com/U7U01FMWB3' target='_blank' rel='noreferrer'>
-                <img 
-                  height='36' 
-                  style={{border: '0px', height: '36px'}} 
-                  src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' 
-                  border='0' 
-                  alt='Buy Me a Coffee at ko-fi.com' 
-                />
-              </a>}
-              {locale === 'zh' && <JianbingSupport />}
-            </VStack>            
+          
+          {/* 微信群二维码 */}
+          {/* <Box textAlign='center' mb='3'>
+            <Popover>
+              <PopoverTrigger>
+                <Link style={{textDecoration: 'underline', color: 'inherit', cursor: 'pointer'}}>
+                  {locale === 'zh' ? '吾今有世家在线存档修改器问题反馈群' : 'House of Legacy Save Editor Feedback Group'}
+                </Link>
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>
+                  {locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
+                </PopoverHeader>
+                <PopoverBody>
+                  <Image 
+                    src="https://i.postimg.cc/t4cfrFHN/wechatgroup.jpg" 
+                    alt={locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
+                    maxW="200px"
+                    mx="auto"
+                  />
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
+          </Box> */}
+          
+          {/* 赞助支持 */}
+          <VStack spacing={3} alignItems='center' justifyContent='center' mt='3'>
+            {locale === 'en' && <a href='https://ko-fi.com/U7U01FMWB3' target='_blank' rel='noreferrer'>
+              <img 
+                height='36' 
+                style={{border: '0px', height: '36px'}} 
+                src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' 
+                border='0' 
+                alt='Buy Me a Coffee at ko-fi.com' 
+              />
+            </a>}
+            {locale === 'zh' && <JianbingSupport />}
+          </VStack>            
         </Box>
-      
       </Flex>
+
+      {/* 导航行 */}
+      {/* <Box py='4' borderTop='1px' borderColor='gray.200'>
+        <Container maxW='container.lg'>
+          <Flex justify='center' align='center' wrap='wrap' gap='4'>
+            <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>
+              {t.faq}
+            </Link>
+            <Text color='gray.400'>|</Text>
+            <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
+              {t.updateLog}
+            </Link>
+          </Flex>
+        </Container>
+      </Box> */}
+      
+      
     </>
   );
 }
