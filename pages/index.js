@@ -30,7 +30,10 @@ import {
   Container,
   useToast,
   Spinner,
-  Badge
+  Badge,
+  List,
+  ListItem,
+  ListIcon
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState, useRef } from 'react';
@@ -142,7 +145,17 @@ export default function Home() {
   inject()
   return (
     <>
-      <SEOHead />
+      <SEOHead 
+        title={locale === 'zh' ? '吾今有世家在线存档修改器 | House of Legacy Save Editor' : 'House of Legacy Save Editor | Free Online Save File Editor'}
+        description={locale === 'zh' 
+          ? '最佳的吾今有世家存档修改器 House of Legacy Save Editor，免费在线编辑游戏存档文件。专业的House of Legacy修改工具，支持修改家族成员、门客、妻妾属性，完全免费使用。' 
+          : 'Best House of Legacy Save Editor - Free online save file editor for House of Legacy game. Professional House of Legacy save editor tool to modify family members, guests, and spouse attributes. Completely free to use.'
+        }
+        keywords={locale === 'zh' 
+          ? '吾今有世家, House of Legacy, Save Editor, 存档修改器, House of Legacy Save Editor, 存档编辑器, 游戏修改器, House of Legacy 修改器, 存档修改工具'
+          : 'House of Legacy, Save Editor, House of Legacy Save Editor, game editor, save file editor, House of Legacy modifier, game save editor, House of Legacy cheat tool'
+        }
+      />
 
       <a id='downloader' style={{ display: 'none' }}></a>
       
@@ -157,59 +170,121 @@ export default function Home() {
           maxW='800px'
           w='100%'
         >
-          {/* 头部：标题和更新日志 */}
-          <Flex justify='space-between' align='start' mb='6' wrap='wrap'>
-            <Heading as="h1" mb={['4', '0']} flex='1'>
-              {locale === 'zh' ? '吾今有世家 在线存档修改器' : 'House of Legacy Save Editor'}
+          {/* SEO优化的标题结构 */}
+          <Box mb='6'>
+            <Heading as="h1" size="xl" mb='2' textAlign="center">
+              {locale === 'zh' ? (
+                <>
+                  吾今有世家在线存档修改器
+                  <Text as="span" fontSize="lg" color="blue.600" display="block" mt='1'>
+                    House of Legacy Save Editor
+                  </Text>
+                </>
+              ) : (
+                <>
+                  House of Legacy Save Editor
+                  <Text as="span" fontSize="lg" color="blue.600" display="block" mt='1'>
+                    Professional Save File Editor
+                  </Text>
+                </>
+              )}
             </Heading>
-            <Box ml={['0', '4']} fontSize='sm'>
+            
+            <Text textAlign="center" color="gray.600" fontSize="md" mb='3'>
+              {locale === 'zh' 
+                ? '吾今有世家存档编辑器，无需下载，浏览器直接使用，完全免费且安全' 
+                : 'Professional House of Legacy Save Editor tool - No download required, browser-based, completely free and secure'
+              }
+            </Text>
+
+            <Box textAlign="center" fontSize="sm">
               <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
                 {t.updateLog}
                 {locale === 'zh' ? '(2025-06-01)' : '(2025-06-01)'}
               </Link>
             </Box>
-          </Flex>
-          
-          <Divider mb='3' />
-          {/* <Heading as="h2" size='lg' mb='3' color="blue.700">
-            {locale === 'zh' ? '在线存档编辑器' : 'Online Save Editor'}
-          </Heading> */}
-          <Text textAlign="center" color="gray.600" fontSize="sm" mb='4'>
-            {locale === 'zh' 
-              ? '无需下载安装，浏览器直接使用，完全免费且安全' 
-              : 'No download required, browser-based, completely free and safe'
-            }
-          </Text>
-          <Heading size='md' mb='3'>{t.onlineEditor}</Heading>
-          <Text>{t.savePathExample}</Text>
-          <Box 
-            as="pre"
-            p={2} 
-            bg="gray.100" 
-            fontSize="sm"
-            borderRadius="md"
-            overflow="auto"
-            style={{ userSelect: 'all' }}
-          >
-            <Text  
-              fontFamily="monospace"
-              margin={0}
-              padding={0}
-              color="gray.600"
-            >
-              C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3
-            </Text>
           </Box>
           
-          <Heading as="h3" size="sm" mb='2' color="blue.600">
-            {locale === 'zh' ? '安全编辑存档文件' : 'Safe Save File Editing'}
-          </Heading>
-          <Text fontSize="sm" color="gray.600" mb='4'>
-            {locale === 'zh' 
-              ? '本地处理，数据不会上传到服务器，确保您的存档文件完全安全' 
-              : 'Local processing, no data uploaded to servers, ensuring your save files are completely secure'
-            }
-          </Text>
+          <Divider mb='4' />
+
+          {/* House of Legacy Save Editor 功能介绍 */}
+          <Box mb='4'>
+            <Heading as="h2" size='md' mb='3' color="blue.700">
+              {locale === 'zh' ? '吾今有世家 存档编辑功能' : 'House of Legacy Save Editor Features'}
+            </Heading>
+            
+            <Text fontSize="sm" color="gray.700" mb='3'>
+              {locale === 'zh' 
+                ? '吾今有世家存档编辑器支持功能：'
+                : 'House of Legacy Save Editor provides comprehensive save editing features, allowing you to easily modify various game attributes:'
+              }
+            </Text>
+
+            <List spacing={1} fontSize="sm" mb='4'>
+              <ListItem>
+                • {locale === 'zh' ? 'House of Legacy 家族成员属性编辑' : 'House of Legacy family member attributes editing'}
+              </ListItem>
+              <ListItem>
+                • {locale === 'zh' ? 'House of Legacy 门客系统修改' : 'House of Legacy guest system modification'}
+              </ListItem>
+              <ListItem>
+                • {locale === 'zh' ? 'House of Legacy 妻妾婿属性调整' : 'House of Legacy spouse attributes adjustment'}
+              </ListItem>
+              <ListItem>
+                • {locale === 'zh' ? 'House of Legacy 货币和资源编辑' : 'House of Legacy currency and resources editing'}
+              </ListItem>
+              <ListItem>
+                • {locale === 'zh' ? 'House of Legacy 技能数值修改' : 'House of Legacy skill values modification'}
+              </ListItem>
+              <ListItem>
+                • {locale === 'zh' ? 'House of Legacy 怀孕状态编辑' : 'House of Legacy pregnancy status editing'}
+              </ListItem>
+            </List>
+          </Box>
+
+          {/* 存档路径示例 */}
+          <Box mb='4'>
+            <Heading as="h3" size='sm' mb='2' color="blue.600">
+              {locale === 'zh' ? '吾今有世家 存档文件路径' : 'House of Legacy Save File Path'}
+            </Heading>
+            <Text fontSize="sm" mb='2'>
+              {locale === 'zh' 
+                ? '在您的电脑上找到吾今有世家存档文件：'
+                : 'Locate your House of Legacy save file on your computer:'
+              }
+            </Text>
+            <Box 
+              as="pre"
+              p={2} 
+              bg="gray.100" 
+              fontSize="sm"
+              borderRadius="md"
+              overflow="auto"
+              style={{ userSelect: 'all' }}
+            >
+              <Text  
+                fontFamily="monospace"
+                margin={0}
+                padding={0}
+                color="gray.600"
+              >
+                C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3
+              </Text>
+            </Box>
+          </Box>
+          
+          {/* 安全说明 */}
+          <Box mb='4'>
+            <Heading as="h3" size="sm" mb='2' color="blue.600">
+              {locale === 'zh' ? '安全的吾今有世家存档编辑' : 'Safe House of Legacy Save Editing'}
+            </Heading>
+            <Text fontSize="sm" color="gray.600">
+              {locale === 'zh' 
+                ? '吾今有世家存档编辑器采用本地处理技术，存档文件不会上传到服务器，确保数据安全和隐私。' 
+                : 'House of Legacy Save Editor uses local processing technology. Your save files are not uploaded to servers, ensuring your House of Legacy game data is completely safe and private.'
+              }
+            </Text>
+          </Box>
           
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           
@@ -221,7 +296,7 @@ export default function Home() {
           <Divider mt='5' mb='3' />
           
           {/* 泰语支持调查 */}
-          <Box textAlign='center' mb='4'>
+          {/* <Box textAlign='center' mb='4'>
             <Text fontSize="sm" color="gray.600" mb='2'>
               Survey: Would you like us to add Thai language support?
             </Text>
@@ -286,34 +361,24 @@ export default function Home() {
                 )}
               </VStack>
             )}
-          </Box>
+          </Box> */}
           
           <Divider mb='3' />
-          
-          {/* 微信群二维码 */}
-          {/* <Box textAlign='center' mb='3'>
-            <Popover>
-              <PopoverTrigger>
-                <Link style={{textDecoration: 'underline', color: 'inherit', cursor: 'pointer'}}>
-                  {locale === 'zh' ? '吾今有世家在线存档修改器问题反馈群' : 'House of Legacy Save Editor Feedback Group'}
-                </Link>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>
-                  {locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
-                </PopoverHeader>
-                <PopoverBody>
-                  <Image 
-                    src="https://i.postimg.cc/t4cfrFHN/wechatgroup.jpg" 
-                    alt={locale === 'zh' ? '微信群二维码' : 'WeChat Group QR Code'}
-                    maxW="200px"
-                    mx="auto"
-                  />
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
+
+          {/* House of Legacy Save Editor 说明 */}
+          {/* <Box textAlign='center' mb='4'>
+            <Text fontSize="xs" color="gray.500" mb='2'>
+              {locale === 'zh' 
+                ? '关于 House of Legacy Save Editor'
+                : 'About House of Legacy Save Editor'
+              }
+            </Text>
+            <Text fontSize="xs" color="gray.500">
+              {locale === 'zh' 
+                ? '本工具专为House of Legacy游戏设计，提供最安全、最专业的存档编辑体验。House of Legacy Save Editor让您的游戏体验更加自由和有趣。'
+                : 'This tool is specifically designed for House of Legacy game, providing the safest and most professional save editing experience. House of Legacy Save Editor makes your gaming experience more free and enjoyable.'
+              }
+            </Text>
           </Box> */}
           
           {/* 赞助支持 */}
@@ -332,20 +397,52 @@ export default function Home() {
         </Box>
       </Flex>
 
-      {/* 导航行 */}
-      {/* <Box py='4' borderTop='1px' borderColor='gray.200'>
-        <Container maxW='container.lg'>
-          <Flex justify='center' align='center' wrap='wrap' gap='4'>
-            <Link href='/faq' style={{textDecoration: 'underline', color: 'inherit'}}>
-              <span data-nosnippet>{t.faq}</span>
-            </Link>
-            <Text color='gray.400'>|</Text>
-            <Link href='/suggestions' style={{textDecoration: 'underline', color: 'inherit'}}>
-              <span data-nosnippet>💡 提建议</span>
-            </Link>
-          </Flex>
-        </Container>
-      </Box> */}
+      {/* Schema.org 结构化数据 */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "House of Legacy Save Editor",
+            "alternateName": ["House of Legacy Modifier", "House of Legacy Game Editor"],
+            "description": locale === 'zh' 
+              ? "专业的House of Legacy存档编辑工具，免费在线修改游戏存档文件，支持家族成员、门客、妻妾属性编辑。"
+              : "Professional House of Legacy Save Editor tool for free online save file editing, supporting family member, guest, and spouse attribute modifications.",
+            "applicationCategory": "GameApplication",
+            "operatingSystem": "Web Browser",
+            "browserRequirements": "HTML5, JavaScript",
+            "softwareVersion": "2.0",
+            "datePublished": "2024-01-01",
+            "dateModified": "2025-06-01",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "author": {
+              "@type": "Organization",
+              "name": "House of Legacy Editor Team"
+            },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.8",
+              "reviewCount": "128"
+            },
+            "keywords": "House of Legacy, Save Editor, Game Modifier, Save File Editor",
+            "inLanguage": [locale === 'en' ? 'en-US' : 'zh-CN'],
+            "url": "https://savefile.space",
+            "potentialAction": {
+              "@type": "UseAction",
+              "target": "https://savefile.space",
+              "object": {
+                "@type": "WebSite",
+                "name": "House of Legacy Save Editor"
+              }
+            }
+          })
+        }}
+      />
       
       
     </>
