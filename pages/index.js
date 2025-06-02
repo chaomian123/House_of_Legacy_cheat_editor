@@ -27,7 +27,10 @@ import {
   Image,
   VStack,
   HStack,
-  Container
+  Container,
+  useToast,
+  Spinner,
+  Badge
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState, useRef } from 'react';
@@ -45,7 +48,97 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { locale, t } = useLocale();
+  const toast = useToast();
   
+  // 调查相关状态
+  const [surveyStats, setSurveyStats] = useState(null);
+  const [hasVoted, setHasVoted] = useState(false);
+  const [isVoting, setIsVoting] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+
+  // 获取调查统计
+  const fetchSurveyStats = async () => {
+    try {
+      const response = await fetch('/api/survey');
+      const data = await response.json();
+      setSurveyStats(data.stats);
+    } catch (error) {
+      console.error('Error fetching survey stats:', error);
+    }
+  };
+
+  // 处理投票
+  const handleVote = async (vote) => {
+    if (hasVoted) {
+      toast({
+        title: "Already voted",
+        description: "You have already participated in this survey.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    setIsVoting(true);
+    try {
+      const response = await fetch('/api/survey', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          action: 'vote',
+          vote: vote
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setHasVoted(true);
+        setSurveyStats(data.stats);
+        setShowStats(true);
+        toast({
+          title: "Vote recorded!",
+          description: "Thank you for your feedback!",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        if (data.error === 'You have already voted') {
+          setHasVoted(true);
+          setShowStats(true);
+          await fetchSurveyStats();
+        }
+        toast({
+          title: "Error",
+          description: data.error || "Failed to record vote",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error('Error voting:', error);
+      toast({
+        title: "Error",
+        description: "Network error. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setIsVoting(false);
+    }
+  };
+
+  // 组件加载时获取统计数据
+  useEffect(() => {
+    fetchSurveyStats();
+  }, []);
+
   inject()
   return (
     <>
@@ -126,6 +219,76 @@ export default function Home() {
           </Box>
           
           <Divider mt='5' mb='3' />
+          
+          {/* 泰语支持调查 */}
+          <Box textAlign='center' mb='4'>
+            <Text fontSize="sm" color="gray.600" mb='2'>
+              Survey: Would you like us to add Thai language support?
+            </Text>
+            
+            {!hasVoted && !showStats ? (
+              <HStack spacing={2} justifyContent='center'>
+                <Button 
+                  size="sm" 
+                  colorScheme="green" 
+                  variant="outline"
+                  onClick={() => handleVote('yes')}
+                  isLoading={isVoting}
+                  disabled={isVoting}
+                >
+                  Yes, I need Thai support
+                </Button>
+                <Button 
+                  size="sm" 
+                  colorScheme="gray" 
+                  variant="outline"
+                  onClick={() => handleVote('no')}
+                  isLoading={isVoting}
+                  disabled={isVoting}
+                >
+                  No, current languages are enough
+                </Button>
+              </HStack>
+            ) : (
+              <VStack spacing={2}>
+                {hasVoted && (
+                  <Text fontSize="xs" color="green.600" fontWeight="medium">
+                    ✓ Thank you for voting!
+                  </Text>
+                )}
+                
+                {surveyStats && (
+                  <HStack spacing={4} fontSize="sm">
+                    <HStack>
+                      <Badge colorScheme="green" variant="outline">
+                        Yes: {surveyStats.yes} ({surveyStats.yesPercentage}%)
+                      </Badge>
+                    </HStack>
+                    <HStack>
+                      <Badge colorScheme="gray" variant="outline">
+                        No: {surveyStats.no} ({surveyStats.noPercentage}%)
+                      </Badge>
+                    </HStack>
+                    <Text color="gray.500" fontSize="xs">
+                      Total: {surveyStats.total} votes
+                    </Text>
+                  </HStack>
+                )}
+                
+                {!hasVoted && (
+                  <Button 
+                    size="xs" 
+                    variant="ghost" 
+                    onClick={() => setShowStats(false)}
+                  >
+                    Vote now
+                  </Button>
+                )}
+              </VStack>
+            )}
+          </Box>
+          
+          <Divider mb='3' />
           
           {/* 微信群二维码 */}
           {/* <Box textAlign='center' mb='3'>
