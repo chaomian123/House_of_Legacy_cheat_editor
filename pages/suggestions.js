@@ -11,6 +11,7 @@ import NextLink from 'next/link';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import SEOHead from '../components/SEOHead';
 import SuggestionForm from '../components/SuggestionForm';
+import { useLocale } from '../lib/useLocale';
 
 export default function SuggestionsPage() {
   const { locale, t } = useLocale();
