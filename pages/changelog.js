@@ -208,8 +208,8 @@ export default function Changelog() {
     {
       date: '2025-06-02',
       type: 'enhancement',
-      title: '优化首屏渲染性能',
-      description: '优化首屏渲染性能',
+      title: 'Optimized First Screen Rendering Performance',
+      description: 'Improved initial page load and rendering performance',
     },
     {
       date: '2025-06-01',
