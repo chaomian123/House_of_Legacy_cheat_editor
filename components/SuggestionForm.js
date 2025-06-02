@@ -13,8 +13,10 @@ import {
   Heading
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useLocale } from '../lib/useLocale';
 
 export default function SuggestionForm() {
+  const { locale } = useLocale();
   const [username, setUsername] = useState('');
   const [suggestion, setSuggestion] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,8 +27,8 @@ export default function SuggestionForm() {
     
     if (!suggestion.trim()) {
       toast({
-        title: "请填写建议内容",
-        description: "建议内容不能为空",
+        title: locale === 'zh' ? "请填写建议内容" : "Please enter your suggestion",
+        description: locale === 'zh' ? "建议内容不能为空" : "Suggestion content cannot be empty",
         status: "warning",
         duration: 3000,
         isClosable: true,
@@ -55,8 +57,8 @@ export default function SuggestionForm() {
 
       if (response.ok) {
         toast({
-          title: "提交成功！",
-          description: "感谢您的宝贵建议，我们会认真考虑！",
+          title: locale === 'zh' ? "提交成功！" : "Submitted Successfully!",
+          description: locale === 'zh' ? "感谢您的宝贵建议，我们会认真考虑！" : "Thank you for your valuable suggestion. We will consider it carefully!",
           status: "success",
           duration: 5000,
           isClosable: true,
@@ -66,13 +68,13 @@ export default function SuggestionForm() {
         setUsername('');
         setSuggestion('');
       } else {
-        throw new Error(data.error || '提交失败');
+        throw new Error(data.error || (locale === 'zh' ? '提交失败' : 'Submission failed'));
       }
     } catch (error) {
-      console.error('提交建议失败:', error);
+      console.error(locale === 'zh' ? '提交建议失败:' : 'Failed to submit suggestion:', error);
       toast({
-        title: "提交失败",
-        description: error.message || "网络错误，请稍后重试",
+        title: locale === 'zh' ? "提交失败" : "Submission Failed",
+        description: error.message || (locale === 'zh' ? "网络错误，请稍后重试" : "Network error, please try again later"),
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -87,21 +89,21 @@ export default function SuggestionForm() {
       <CardBody>
         <VStack spacing={4} align="stretch">
           <Heading size="md" textAlign="center" color="blue.600">
-            💡 提点建议
+            💡 {locale === 'zh' ? '提点建议' : 'Share Your Thoughts'}
           </Heading>
           
           <Text fontSize="sm" color="gray.600" textAlign="center">
-            您的意见对我们很重要，请随时分享您的想法！
+            {locale === 'zh' ? '您的意见对我们很重要，请随时分享您的想法！' : 'Your feedback is important to us. Feel free to share your thoughts!'}
           </Text>
 
           <Box as="form" onSubmit={handleSubmit}>
             <VStack spacing={4}>
               <FormControl>
-                <FormLabel fontSize="sm">您的称呼 (可选)</FormLabel>
+                <FormLabel fontSize="sm">{locale === 'zh' ? '您的称呼 (可选)' : 'Your Name (Optional)'}</FormLabel>
                 <Input
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="留个昵称吧～"
+                  placeholder={locale === 'zh' ? "留个昵称吧～" : "Enter your nickname..."}
                   size="sm"
                   maxLength={50}
                 />
@@ -109,19 +111,21 @@ export default function SuggestionForm() {
 
               <FormControl isRequired>
                 <FormLabel fontSize="sm">
-                  您的宝贵建议 <Text as="span" color="red.500">*</Text>
+                  {locale === 'zh' ? '您的宝贵建议' : 'Your Suggestion'} <Text as="span" color="red.500">*</Text>
                 </FormLabel>
                 <Textarea
                   value={suggestion}
                   onChange={(e) => setSuggestion(e.target.value)}
-                  placeholder="写下任何您想说的...&#10;比如：功能建议、使用体验、发现的问题等"
+                  placeholder={locale === 'zh' 
+                    ? "写下任何您想说的...&#10;比如：功能建议、使用体验、发现的问题等"
+                    : "Write anything you want to say...&#10;For example: feature suggestions, user experience, issues found, etc."}
                   rows={5}
                   size="sm"
                   maxLength={1000}
                   resize="vertical"
                 />
                 <Text fontSize="xs" color="gray.500" mt={1}>
-                  {suggestion.length}/1000 字符
+                  {suggestion.length}/1000 {locale === 'zh' ? '字符' : 'characters'}
                 </Text>
               </FormControl>
 
@@ -130,10 +134,10 @@ export default function SuggestionForm() {
                 colorScheme="blue"
                 w="100%"
                 isLoading={isSubmitting}
-                loadingText="提交中..."
+                loadingText={locale === 'zh' ? "提交中..." : "Submitting..."}
                 size="sm"
               >
-                💌 提交建议
+                💌 {locale === 'zh' ? '提交建议' : 'Submit'}
               </Button>
             </VStack>
           </Box>
