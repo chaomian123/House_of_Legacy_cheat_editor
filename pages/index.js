@@ -222,22 +222,22 @@ export default function Home() {
 
             <List spacing={1} fontSize="sm" mb='4'>
               <ListItem>
-                • {locale === 'zh' ? 'House of Legacy 家族成员属性编辑' : 'House of Legacy family member attributes editing'}
+                • {locale === 'zh' ? '家族成员属性编辑' : 'House of Legacy family member attributes editing'}
               </ListItem>
               <ListItem>
-                • {locale === 'zh' ? 'House of Legacy 门客系统修改' : 'House of Legacy guest system modification'}
+                • {locale === 'zh' ? '门客系统修改' : 'House of Legacy guest system modification'}
               </ListItem>
               <ListItem>
-                • {locale === 'zh' ? 'House of Legacy 妻妾婿属性调整' : 'House of Legacy spouse attributes adjustment'}
+                • {locale === 'zh' ? '妻妾婿属性调整' : 'House of Legacy spouse attributes adjustment'}
               </ListItem>
               <ListItem>
-                • {locale === 'zh' ? 'House of Legacy 货币和资源编辑' : 'House of Legacy currency and resources editing'}
+                • {locale === 'zh' ? '货币和资源编辑' : 'House of Legacy currency and resources editing'}
               </ListItem>
               <ListItem>
-                • {locale === 'zh' ? 'House of Legacy 技能数值修改' : 'House of Legacy skill values modification'}
+                • {locale === 'zh' ? '技能数值修改' : 'House of Legacy skill values modification'}
               </ListItem>
               <ListItem>
-                • {locale === 'zh' ? 'House of Legacy 怀孕状态编辑' : 'House of Legacy pregnancy status editing'}
+                • {locale === 'zh' ? '怀孕状态编辑' : 'House of Legacy pregnancy status editing'}
               </ListItem>
             </List>
           </Box>
