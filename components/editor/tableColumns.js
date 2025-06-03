@@ -1,6 +1,5 @@
 import { Form, Radio, Button, Select } from 'antd';
 import { MEMBER_TYPES, getTalentMap, getSkillMap, getSkillOptions, getTalentOptions } from './constants';
-
 // 创建表格列配置
 export const createTableColumns = (
   locale,
@@ -12,7 +11,8 @@ export const createTableColumns = (
   handlePregnancy,
   maxSingleMemberAttributes,
   memberType,
-  editingKey
+  editingKey,
+  handleRemovePunishment
 ) => {
   const talentMap = getTalentMap(locale);
   const skillMap = getSkillMap(locale);
@@ -180,6 +180,10 @@ export const createTableColumns = (
     dataIndex: 'operation',
     render: (_, record) => {
       const editable = isEditing(record);
+      // 检查是否处于异常状态（仅适用于家族成员）
+      const isInAbnormalState = memberType === MEMBER_TYPES.FAMILY && 
+        record.punishmentStatus && ['1', '4', '5', '6', '7', '8', '9'].includes(record.punishmentStatus);
+
       return editable ? (
         <span>
           <Button
@@ -198,6 +202,17 @@ export const createTableColumns = (
           <Button disabled={editingKey !== ''} onClick={() => edit(record)} size="small" style={{ marginRight: 8 }}>
             {t.edit}
           </Button>
+          {isInAbnormalState && (
+            <Button 
+              type="primary"
+              size="small" 
+              onClick={() => handleRemovePunishment(record, memberType)}
+              disabled={editingKey !== ''}
+              style={{ marginRight: 8 }}
+            >
+              {locale === 'zh' ? '解除刑罚' : 'Remove Punishment'}
+            </Button>
+          )}
           {memberType !== MEMBER_TYPES.GUEST && (
             <Button 
               size="small" 

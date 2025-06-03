@@ -94,7 +94,8 @@ export const FIELD_INDICES = {
     health: 21,
     mou: 27,
     skill_num: 33,
-    info: 4
+    info: 4,
+    punishmentStatus: 15
   },
   [MEMBER_TYPES.SPOUSE]: {
     id: 0,

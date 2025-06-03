@@ -25,7 +25,8 @@ import {
   maxAllMemberReputation,
   setMemberPregnant,
   getCurrencyData,
-  getFoodData
+  getFoodData,
+  removePunishment
 } from './dataUtils';
 import CurrencyManager from './CurrencyManager';
 import FoodManager from './FoodManager';
@@ -188,6 +189,20 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     });
   };
 
+  // 处理解除刑罚
+  const handleRemovePunishment = (record, memberType) => {
+    const rawData = JSON.parse(data.data.toString());
+    const updatedRawData = removePunishment(rawData, memberType, record.id);
+    setData({ ...data, data: Buffer.from(JSON.stringify(updatedRawData)) });
+    
+    updateAllTableData(updatedRawData);
+    
+    message.success({
+      content: locale === 'zh' ? `${record.name} 刑罚已解除！` : `${record.name} punishment removed!`,
+      duration: 2
+    });
+  };
+
   // 怀孕相关函数
   const handlePregnancy = (record, type) => {
     setPregnancyModal({ isOpen: true, record, type });
@@ -327,6 +342,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                 form={form}
                 EditableCell={EditableCell}
                 t={t}
+                handleRemovePunishment={handleRemovePunishment}
               />
 
               <MemberTable
@@ -348,6 +364,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                 form={form}
                 EditableCell={EditableCell}
                 t={t}
+                handleRemovePunishment={handleRemovePunishment}
               />
 
               <MemberTable
@@ -369,6 +386,7 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                 form={form}
                 EditableCell={EditableCell}
                 t={t}
+                handleRemovePunishment={handleRemovePunishment}
               />
             </Box>
           </ModalBody>

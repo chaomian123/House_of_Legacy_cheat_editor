@@ -39,6 +39,7 @@ export const parseMemberData = (rawData, memberType) => {
         member.beauty = fields[indices.beauty];
         member.health = fields[indices.health];
         member.skill_num = fields[indices.skill_num] || '0';
+        member.punishmentStatus = fields[indices.punishmentStatus] || '0';
       } else if (memberType === MEMBER_TYPES.SPOUSE) {
         member.gender = info[4];
         member.beauty = fields[indices.beauty];
@@ -124,11 +125,40 @@ export const maxAllMemberAttributes = (rawData, memberType) => {
 
       if (memberType === MEMBER_TYPES.FAMILY) {
         member[indices.health] = '100';
+        const currentPunishmentStatus = parseInt(member[15]);
+        const abnormalStates = [1, 4, 5, 6, 7, 8, 9];
+        if (abnormalStates.includes(currentPunishmentStatus)) {
+          member[15] = '0'; // 解除刑罚
+        }
+      
       } else if (memberType === MEMBER_TYPES.SPOUSE) {
         member[indices.health] = '100';
       }
     }
   });
+
+  return rawData;
+};
+// 检查成员是否处于异常状态
+export const isMemberInAbnormalState = (member, memberType) => {
+  if (memberType !== MEMBER_TYPES.FAMILY) return false;
+  
+  const punishmentStatus = member.punishmentStatus;
+  const abnormalStates = ['1', '4', '5', '6', '7', '8', '9'];
+  
+  return abnormalStates.includes(punishmentStatus);
+};
+
+// 解除单个成员刑罚
+export const removePunishment = (rawData, memberType, memberId) => {
+  console.log(rawData, memberType, memberId);
+  const memberIndex = rawData[memberType].value.findIndex(member => member[0] === memberId);
+  if (memberIndex === -1) return rawData;
+
+  // 只对家族成员执行解除刑罚操作
+  if (memberType === MEMBER_TYPES.FAMILY) {
+    rawData[memberType].value[memberIndex][15] = '0';
+  }
 
   return rawData;
 };

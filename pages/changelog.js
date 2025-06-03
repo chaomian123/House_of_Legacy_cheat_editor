@@ -91,6 +91,12 @@ export default function Changelog() {
 
   const updates = locale === 'zh' ? [
     {
+      date: '2025-06-03',
+      type: 'feature',
+      title: '解除刑罚功能',
+      description: '新增解除刑罚功能，支持对处于异常状态的角色进行刑罚解除。异常状态包括：被贬、徒刑、4种流放、斩首，共计7种状态。当角色处于这些异常状态时，会在操作列显示"解除刑罚"按钮。同时，全体属性一键升满时会自动对处于异常状态的角色解除刑罚。',
+    },
+    {
       date: '2025-06-02',
       type: 'enhancement',
       title: '优化首屏渲染性能',
@@ -205,6 +211,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-06-03',
+      type: 'feature',
+      title: 'Punishment Removal Feature',
+      description: 'Added punishment removal functionality to lift penalties from characters in abnormal states. Abnormal states include: demotion, imprisonment, 4 types of exile, and execution - totaling 7 states. When characters are in these abnormal states, a "Remove Punishment" button will appear in the actions column. Additionally, the batch max attributes feature will automatically remove punishments from characters in abnormal states.',
+    },
     {
       date: '2025-06-02',
       type: 'enhancement',

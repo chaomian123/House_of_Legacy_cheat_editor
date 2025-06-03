@@ -24,7 +24,8 @@ const MemberTable = ({
   onSetAllAge18,
   form,
   EditableCell,
-  t
+  t,
+  handleRemovePunishment
 }) => {
   const { locale } = useLocale();
 
@@ -39,9 +40,10 @@ const MemberTable = ({
       handlePregnancy,
       maxSingleMemberAttributes,
       memberType,
-      editingKey
+      editingKey,
+      handleRemovePunishment
     ),
-    [locale, t, isEditing, edit, cancel, save, handlePregnancy, maxSingleMemberAttributes, memberType, editingKey]
+    [locale, t, isEditing, edit, cancel, save, handlePregnancy, maxSingleMemberAttributes, memberType, editingKey, handleRemovePunishment]
   );
 
   const mergedColumns = useMemo(() => 
