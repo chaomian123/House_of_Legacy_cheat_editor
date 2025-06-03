@@ -200,7 +200,7 @@ export default function Home() {
             <Box textAlign="center" fontSize="sm">
               <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
                 {t.updateLog}
-                {locale === 'zh' ? '(2025-06-01)' : '(2025-06-01)'}
+                {locale === 'zh' ? '(2025-06-03)' : '(2025-06-03)'}
               </Link>
             </Box>
           </Box>
