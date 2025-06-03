@@ -148,11 +148,11 @@ export default function Home() {
       <SEOHead 
         title={locale === 'zh' ? '吾今有世家在线存档修改器 | House of Legacy Save Editor' : 'House of Legacy Save Editor | Free Online Save File Editor'}
         description={locale === 'zh' 
-          ? '最佳的吾今有世家存档修改器 House of Legacy Save Editor，免费在线编辑游戏存档文件。专业的House of Legacy修改工具，支持修改家族成员、门客、妻妾属性，完全免费使用。' 
-          : 'Best House of Legacy Save Editor - Free online save file editor for House of Legacy game. Professional House of Legacy save editor tool to modify family members, guests, and spouse attributes. Completely free to use.'
+          ? '最佳的吾今有世家存档修改器 ，免费在线编辑游戏存档文件。直观查看和修改游戏中角色的各项属性和你的资源' 
+          : 'The best House of Legacy save editor, free online editing of game save files. Intuitively view and modify various attributes of characters in the game and your resources.'
         }
         keywords={locale === 'zh' 
-          ? '吾今有世家, House of Legacy, Save Editor, 存档修改器, House of Legacy Save Editor, 存档编辑器, 游戏修改器, House of Legacy 修改器, 存档修改工具'
+          ? '吾今有世家存档修改器, 存档编辑器, 游戏修改器, 存档修改工具'
           : 'House of Legacy, Save Editor, House of Legacy Save Editor, game editor, save file editor, House of Legacy modifier, game save editor, House of Legacy cheat tool'
         }
       />
