@@ -1866,13 +1866,10 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
           <Alert status="warning" mb={4}>
             <AlertIcon />
             <Box>
-              <AlertTitle>
-                {locale === 'zh' ? '重要提醒！' : 'Important Warning!'}
-              </AlertTitle>
               <AlertDescription>
                 {locale === 'zh' 
-                  ? '如果列表中包含被贬成员，批量操作可能存在坏档风险！' 
-                  : 'If the list contains demoted members, batch operations may pose a save corruption risk!'
+                  ? '如果列表中有处于流放、被贬、斩首等刑罚的成员，批量操作会自动免除其刑罚' 
+                  : 'If the list contains members under punishment such as exile, demotion, or execution, batch operations will automatically remove their punishments'
                 }
               </AlertDescription>
             </Box>
