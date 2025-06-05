@@ -50,6 +50,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isFeedbackOpen, onOpen: onFeedbackOpen, onClose: onFeedbackClose } = useDisclosure();
   const { locale, t } = useLocale();
   const toast = useToast();
   
@@ -293,6 +294,21 @@ export default function Home() {
             <LikeButton />
           </Box>
           
+          {/* 问题反馈群按钮 - 仅中文环境显示 */}
+          {locale === 'zh' && (
+            <Box mt='3' display='flex' justifyContent='center'>
+              <Button
+                onClick={onFeedbackOpen}
+                colorScheme="green"
+                variant="outline"
+                size="sm"
+                _hover={{ bg: "green.50" }}
+              >
+                {t.feedbackGroup}
+              </Button>
+            </Box>
+          )}
+          
           <Divider mt='5' mb='3' />
           
           {/* 泰语支持调查 */}
@@ -444,6 +460,23 @@ export default function Home() {
         }}
       />
       
+      {/* 问题反馈群图片弹窗 */}
+      <Modal isOpen={isFeedbackOpen} onClose={onFeedbackClose} size="lg">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader textAlign="center">问题反馈群</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody textAlign="center" pb={6}>
+            <Image
+              src="https://makemaze.online/images/1749132276318_blxtzulo.jpg"
+              alt="问题反馈群二维码"
+              maxW="100%"
+              height="auto"
+              objectFit="contain"
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       
     </>
   );
