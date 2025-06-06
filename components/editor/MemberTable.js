@@ -102,7 +102,8 @@ const MemberTable = ({
             size="middle"
             rowClassName="editable-row"
             pagination={false}
-            scroll={{ y: 400 }}
+            // scroll={{ y: 400 }}
+            style={{ minHeight: '400px' }}
           />
         </Form>
       </Collapse>

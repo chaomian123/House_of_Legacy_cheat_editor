@@ -91,6 +91,12 @@ export default function Changelog() {
 
   const updates = locale === 'zh' ? [
     {
+      date: '2025-06-06',
+      type: 'fix',
+      title: '修复表格显示问题',
+      description: '修复家族成员较少时，表格上天赋技能选择框被遮挡的问题。通过设置表格最小高度和移除滚动限制，确保界面元素正常显示。新增用户使用指南页面，提供详细的修改器使用教程。',
+    },
+    {
       date: '2025-06-03',
       type: 'feature',
       title: '解除刑罚功能',
@@ -211,6 +217,12 @@ export default function Changelog() {
       description: '开发家族成员属性编辑系统，支持修改文、武、商、艺、谋、幸运、魅力、天赋等属性，为玩家提供全面的角色定制功能。'
     }
   ] : [
+    {
+      date: '2025-06-06',
+      type: 'fix',
+      title: 'Fixed Table Display Issue',
+      description: 'Fixed the issue where talent and skill selection dropdowns were blocked when there were fewer family members. Implemented table minimum height and removed scroll restrictions to ensure proper UI element display. Added comprehensive user guide page with detailed save editor tutorial.',
+    },
     {
       date: '2025-06-03',
       type: 'feature',

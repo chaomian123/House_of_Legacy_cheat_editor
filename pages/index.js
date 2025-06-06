@@ -33,7 +33,8 @@ import {
   Badge,
   List,
   ListItem,
-  ListIcon
+  ListIcon,
+  Collapse
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 import { useEffect, useState, useRef } from 'react';
@@ -59,6 +60,9 @@ export default function Home() {
   const [hasVoted, setHasVoted] = useState(false);
   const [isVoting, setIsVoting] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  
+  // 功能列表折叠状态
+  const [isFeatureListOpen, setIsFeatureListOpen] = useState(false);
 
   // 获取调查统计
   const fetchSurveyStats = async () => {
@@ -146,6 +150,22 @@ export default function Home() {
   inject()
   return (
     <>
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% {
+            transform: scale(1.05);
+            opacity: 0.8;
+          }
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+      `}</style>
       <SEOHead 
         title={locale === 'zh' ? '吾今有世家在线存档修改器 | House of Legacy Save Editor' : 'House of Legacy Save Editor | Free Online Save File Editor'}
         description={locale === 'zh' 
@@ -199,10 +219,29 @@ export default function Home() {
             </Text>
 
             <Box textAlign="center" fontSize="sm">
-              <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
-                {t.updateLog}
-                {locale === 'zh' ? '(2025-06-03)' : '(2025-06-03)'}
-              </Link>
+              <VStack spacing={2}>
+                <HStack spacing={2} justifyContent="center" alignItems="center">
+                  <Link href='/guide' style={{textDecoration: 'underline', color: 'inherit'}}>
+                    {t.userGuide}
+                  </Link>
+                  <Badge 
+                    colorScheme="red" 
+                    variant="solid" 
+                    fontSize="xs"
+                    px={2}
+                    py={1}
+                    borderRadius="full"
+                    animation="pulse 2s infinite"
+                    fontWeight="bold"
+                  >
+                    NEW
+                  </Badge>
+                </HStack>
+                <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
+                  {t.updateLog}
+                  {locale === 'zh' ? '(2025-06-06)' : '(2025-06-06)'}
+                </Link>
+              </VStack>
             </Box>
           </Box>
           
@@ -210,37 +249,53 @@ export default function Home() {
 
           {/* House of Legacy Save Editor 功能介绍 */}
           <Box mb='4'>
-            <Heading as="h2" size='md' mb='3' color="blue.700">
+            <Heading 
+              as="h2" 
+              size='md' 
+              mb='3' 
+              color="blue.700"
+              cursor="pointer"
+              onClick={() => setIsFeatureListOpen(!isFeatureListOpen)}
+              _hover={{ color: "blue.600" }}
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
               {locale === 'zh' ? '吾今有世家 存档编辑功能' : 'House of Legacy Save Editor Features'}
+              <Text fontSize="sm" color="gray.500" ml={2}>
+                {isFeatureListOpen ? '▼' : '▶'}
+              </Text>
             </Heading>
             
-            <Text fontSize="sm" color="gray.700" mb='3'>
-              {locale === 'zh' 
-                ? '吾今有世家存档编辑器支持功能：'
-                : 'House of Legacy Save Editor provides comprehensive save editing features, allowing you to easily modify various game attributes:'
-              }
-            </Text>
+            <Collapse in={isFeatureListOpen} animateOpacity>
+              <Text fontSize="sm" color="gray.700" mb='3'>
+                {locale === 'zh' 
+                  ? '吾今有世家存档编辑器支持功能：'
+                  : 'House of Legacy Save Editor provides comprehensive save editing features, allowing you to easily modify various game attributes:'
+                }
+              </Text>
 
-            <List spacing={1} fontSize="sm" mb='4'>
-              <ListItem>
-                • {locale === 'zh' ? '家族成员属性编辑' : 'family member attributes editing'}
-              </ListItem>
-              <ListItem>
-                • {locale === 'zh' ? '门客系统修改' : 'guest system modification'}
-              </ListItem>
-              <ListItem>
-                • {locale === 'zh' ? '妻妾婿属性调整' : 'spouse attributes adjustment'}
-              </ListItem>
-              <ListItem>
-                • {locale === 'zh' ? '货币和资源编辑' : 'currency and resources editing'}
-              </ListItem>
-              <ListItem>
-                • {locale === 'zh' ? '技能数值修改' : 'skill values modification'}
-              </ListItem>
-              <ListItem>
-                • {locale === 'zh' ? '怀孕状态编辑' : 'pregnancy status editing'}
-              </ListItem>
-            </List>
+              <List spacing={1} fontSize="sm" mb='4'>
+                <ListItem>
+                  • {locale === 'zh' ? '家族成员属性编辑' : 'family member attributes editing'}
+                </ListItem>
+                <ListItem>
+                  • {locale === 'zh' ? '门客系统修改' : 'guest system modification'}
+                </ListItem>
+                <ListItem>
+                  • {locale === 'zh' ? '妻妾婿属性调整' : 'spouse attributes adjustment'}
+                </ListItem>
+                <ListItem>
+                  • {locale === 'zh' ? '货币和资源编辑' : 'currency and resources editing'}
+                </ListItem>
+                <ListItem>
+                  • {locale === 'zh' ? '技能数值修改' : 'skill values modification'}
+                </ListItem>
+                <ListItem>
+                  • {locale === 'zh' ? '怀孕状态编辑' : 'pregnancy status editing'}
+                </ListItem>
+              </List>
+            </Collapse>
           </Box>
 
           {/* 存档路径示例 */}
