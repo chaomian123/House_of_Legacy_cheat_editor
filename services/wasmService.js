@@ -1,6 +1,10 @@
-// 从CDN加载WASM模块
-const WASM_CDN_URL = 'https://makemaze.online/wasm/1750021714445_8u87qbny.wasm';
-const WASM_CDN_JS_URL = 'https://makemaze.online/js/1750023870567_wstc5r0x.js';
+// 原始CDN URL
+const ORIGINAL_WASM_URL = 'https://makemaze.online/wasm/1750021714445_8u87qbny.wasm';
+const ORIGINAL_JS_URL = 'https://makemaze.online/js/1750023870567_wstc5r0x.js';
+
+// 通过API代理加载WASM模块
+const WASM_CDN_URL = `/api/wasm-proxy?url=${encodeURIComponent(ORIGINAL_WASM_URL)}`;
+const WASM_CDN_JS_URL = `/api/wasm-proxy?url=${encodeURIComponent(ORIGINAL_JS_URL)}`;
 
 // 本地路径作为备选
 const LOCAL_WASM_JS_URL = '../pkg/uesave_wasm.js';
@@ -102,7 +106,7 @@ export const initializeWasm = async () => {
         loadFromCdnImport, 
         loadFromCdnFetch, 
         loadFromLocalImport,
-        setupFallbackFunctions
+        // setupFallbackFunctions
       ];
       
       let lastError = null;
