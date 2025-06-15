@@ -40,14 +40,21 @@ export default function Navigation() {
       
       <Text color="gray.300">|</Text>
       
+      <Link as={NextLink} href="/hol_guide" {...linkStyle('/hol_guide')}>
+        {t.userGuide}
+      </Link>
+
+      <Text color="gray.300">|</Text>
+      
       <Link as={NextLink} href="/changelog" {...linkStyle('/changelog')}>
         {t.changelog}
       </Link>
+
       <Text color="gray.300">|</Text>
+      
       <Link as={NextLink} href="/faq" {...linkStyle('/faq')}>
         {t.faq}
       </Link>
-
 
       <Text color="gray.300">|</Text>
       

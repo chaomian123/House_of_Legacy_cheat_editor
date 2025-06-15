@@ -39,7 +39,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { action, vote } = req.body || {}
+    const { action, vote, surveyId } = req.body || {}
+    const querySurveyId = req.query.surveyId || 'default'
 
     // 处理POST请求 - 投票
     if (req.method === 'POST' && action === 'vote') {
@@ -52,13 +53,14 @@ export default async function handler(req, res) {
                       req.connection.remoteAddress || 
                       '127.0.0.1'
       
-      console.log('Processing survey vote from IP:', clientIP, 'Vote:', vote)
+      console.log('Processing survey vote from IP:', clientIP, 'Vote:', vote, 'Survey:', surveyId || querySurveyId)
       
       // 检查是否已经投过票
       const { data: existingVote, error: checkError } = await supabase
-        .from('thai_survey')
+        .from('surveys')
         .select('id')
         .eq('ip', clientIP)
+        .eq('survey_id', surveyId || querySurveyId)
         .maybeSingle()
 
       if (checkError) {
@@ -78,10 +80,11 @@ export default async function handler(req, res) {
       console.log('Inserting new vote record')
       
       const { data, error } = await supabase
-        .from('thai_survey')
+        .from('surveys')
         .insert([{ 
           ip: clientIP, 
           vote: vote,
+          survey_id: surveyId || querySurveyId,
           created_at: new Date().toISOString()
         }])
         .select()
@@ -97,7 +100,7 @@ export default async function handler(req, res) {
       console.log('Vote inserted successfully:', data[0]?.id)
 
       // 返回当前投票统计
-      const stats = await getSurveyStats(supabase)
+      const stats = await getSurveyStats(supabase, surveyId || querySurveyId)
       return res.status(200).json({ 
         success: true, 
         message: 'Vote recorded successfully',
@@ -107,8 +110,8 @@ export default async function handler(req, res) {
 
     // 处理GET请求 - 获取统计
     if (req.method === 'GET') {
-      console.log('Getting survey statistics')
-      const stats = await getSurveyStats(supabase)
+      console.log('Getting survey statistics for survey:', querySurveyId)
+      const stats = await getSurveyStats(supabase, querySurveyId)
       return res.status(200).json({ stats })
     }
 
@@ -124,27 +127,30 @@ export default async function handler(req, res) {
 }
 
 // 获取调查统计的辅助函数
-async function getSurveyStats(supabase) {
+async function getSurveyStats(supabase, surveyId) {
   try {
     // 获取总投票数
     const { count: totalCount, error: totalError } = await supabase
-      .from('thai_survey')
+      .from('surveys')
       .select('*', { count: 'exact', head: true })
+      .eq('survey_id', surveyId)
 
     if (totalError) throw totalError
 
     // 获取YES投票数
     const { count: yesCount, error: yesError } = await supabase
-      .from('thai_survey')
+      .from('surveys')
       .select('*', { count: 'exact', head: true })
+      .eq('survey_id', surveyId)
       .eq('vote', 'yes')
 
     if (yesError) throw yesError
 
     // 获取NO投票数
     const { count: noCount, error: noError } = await supabase
-      .from('thai_survey')
+      .from('surveys')
       .select('*', { count: 'exact', head: true })
+      .eq('survey_id', surveyId)
       .eq('vote', 'no')
 
     if (noError) throw noError

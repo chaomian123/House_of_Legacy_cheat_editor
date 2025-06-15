@@ -43,9 +43,9 @@ import SEOHead from '../components/SEOHead';
 import JianbingSupport from '../components/JianbingSupport';
 import LikeButton from '../components/LikeButton';
 import { inject } from "@vercel/analytics"
-
 import CryptForm from '../components/cryptForm';
-// import passwords from '../passwords';
+import SurveyVote from '../components/SurveyVote';
+import FeedbackGroupModal from '../components/FeedbackGroupModal';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
@@ -55,97 +55,8 @@ export default function Home() {
   const { locale, t } = useLocale();
   const toast = useToast();
   
-  // 调查相关状态
-  const [surveyStats, setSurveyStats] = useState(null);
-  const [hasVoted, setHasVoted] = useState(false);
-  const [isVoting, setIsVoting] = useState(false);
-  const [showStats, setShowStats] = useState(false);
-  
   // 功能列表折叠状态
   const [isFeatureListOpen, setIsFeatureListOpen] = useState(false);
-
-  // 获取调查统计
-  const fetchSurveyStats = async () => {
-    try {
-      const response = await fetch('/api/survey');
-      const data = await response.json();
-      setSurveyStats(data.stats);
-    } catch (error) {
-      console.error('Error fetching survey stats:', error);
-    }
-  };
-
-  // 处理投票
-  const handleVote = async (vote) => {
-    if (hasVoted) {
-      toast({
-        title: "Already voted",
-        description: "You have already participated in this survey.",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    setIsVoting(true);
-    try {
-      const response = await fetch('/api/survey', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          action: 'vote',
-          vote: vote
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setHasVoted(true);
-        setSurveyStats(data.stats);
-        setShowStats(true);
-        toast({
-          title: "Vote recorded!",
-          description: "Thank you for your feedback!",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      } else {
-        if (data.error === 'You have already voted') {
-          setHasVoted(true);
-          setShowStats(true);
-          await fetchSurveyStats();
-        }
-        toast({
-          title: "Error",
-          description: data.error || "Failed to record vote",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-    } catch (error) {
-      console.error('Error voting:', error);
-      toast({
-        title: "Error",
-        description: "Network error. Please try again.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-    } finally {
-      setIsVoting(false);
-    }
-  };
-
-  // 组件加载时获取统计数据
-  useEffect(() => {
-    fetchSurveyStats();
-  }, []);
 
   inject()
   return (
@@ -221,7 +132,7 @@ export default function Home() {
             <Box textAlign="center" fontSize="sm">
               <VStack spacing={2}>
                 <HStack spacing={2} justifyContent="center" alignItems="center">
-                  <Link href='/guide' style={{textDecoration: 'underline', color: 'inherit'}}>
+                  <Link href='/hol_guide' style={{textDecoration: 'underline', color: 'inherit'}}>
                     {t.userGuide}
                   </Link>
                   <Badge 
@@ -345,9 +256,9 @@ export default function Home() {
           <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
           
           {/* 点赞按钮 */}
-          <Box mt='3' display='flex' justifyContent='center'>
+          {/* <Box mt='3' display='flex' justifyContent='center'>
             <LikeButton />
-          </Box>
+          </Box> */}
           
           {/* 问题反馈群按钮 - 仅中文环境显示 */}
           {locale === 'zh' && (
@@ -366,90 +277,14 @@ export default function Home() {
           
           <Divider mt='5' mb='3' />
           
-          {/* 泰语支持调查 */}
-          {/* <Box textAlign='center' mb='4'>
-            <Text fontSize="sm" color="gray.600" mb='2'>
-              Survey: Would you like us to add Thai language support?
-            </Text>
-            
-            {!hasVoted && !showStats ? (
-              <HStack spacing={2} justifyContent='center'>
-                <Button 
-                  size="sm" 
-                  colorScheme="green" 
-                  variant="outline"
-                  onClick={() => handleVote('yes')}
-                  isLoading={isVoting}
-                  disabled={isVoting}
-                >
-                  Yes, I need Thai support
-                </Button>
-                <Button 
-                  size="sm" 
-                  colorScheme="gray" 
-                  variant="outline"
-                  onClick={() => handleVote('no')}
-                  isLoading={isVoting}
-                  disabled={isVoting}
-                >
-                  No, current languages are enough
-                </Button>
-              </HStack>
-            ) : (
-              <VStack spacing={2}>
-                {hasVoted && (
-                  <Text fontSize="xs" color="green.600" fontWeight="medium">
-                    ✓ Thank you for voting!
-                  </Text>
-                )}
-                
-                {surveyStats && (
-                  <HStack spacing={4} fontSize="sm">
-                    <HStack>
-                      <Badge colorScheme="green" variant="outline">
-                        Yes: {surveyStats.yes} ({surveyStats.yesPercentage}%)
-                      </Badge>
-                    </HStack>
-                    <HStack>
-                      <Badge colorScheme="gray" variant="outline">
-                        No: {surveyStats.no} ({surveyStats.noPercentage}%)
-                      </Badge>
-                    </HStack>
-                    <Text color="gray.500" fontSize="xs">
-                      Total: {surveyStats.total} votes
-                    </Text>
-                  </HStack>
-                )}
-                
-                {!hasVoted && (
-                  <Button 
-                    size="xs" 
-                    variant="ghost" 
-                    onClick={() => setShowStats(false)}
-                  >
-                    Vote now
-                  </Button>
-                )}
-              </VStack>
-            )}
-          </Box> */}
-          
-          <Divider mb='3' />
-
-          {/* House of Legacy Save Editor 说明 */}
-          {/* <Box textAlign='center' mb='4'>
-            <Text fontSize="xs" color="gray.500" mb='2'>
-              {locale === 'zh' 
-                ? '关于 House of Legacy Save Editor'
-                : 'About House of Legacy Save Editor'
-              }
-            </Text>
-            <Text fontSize="xs" color="gray.500">
-              {locale === 'zh' 
-                ? '本工具专为House of Legacy游戏设计，提供最安全、最专业的存档编辑体验。House of Legacy Save Editor让您的游戏体验更加自由和有趣。'
-                : 'This tool is specifically designed for House of Legacy game, providing the safest and most professional save editing experience. House of Legacy Save Editor makes your gaming experience more free and enjoyable.'
-              }
-            </Text>
+          {/* 调查组件 */}
+          {/* <Box mt={8}>
+            <SurveyVote 
+              surveyId="default"
+              title="您觉得这个工具对您有帮助吗？"
+              yesText="有帮助"
+              noText="没帮助"
+            />
           </Box> */}
           
           {/* 赞助支持 */}
@@ -515,24 +350,11 @@ export default function Home() {
         }}
       />
       
-      {/* 问题反馈群图片弹窗 */}
-      <Modal isOpen={isFeedbackOpen} onClose={onFeedbackClose} size="lg">
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader textAlign="center">问题反馈群</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody textAlign="center" pb={6}>
-            <Image
-              src="https://makemaze.online/images/1749132276318_blxtzulo.jpg"
-              alt="问题反馈群二维码"
-              maxW="100%"
-              height="auto"
-              objectFit="contain"
-            />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-      
+      {/* 问题反馈群弹窗 */}
+      <FeedbackGroupModal 
+        isOpen={isFeedbackOpen}
+        onClose={onFeedbackClose}
+      />
     </>
   );
 }
