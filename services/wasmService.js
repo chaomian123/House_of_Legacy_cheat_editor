@@ -2,6 +2,9 @@
 const WASM_CDN_URL = 'https://makemaze.online/wasm/1750021714445_8u87qbny.wasm';
 const WASM_CDN_JS_URL = 'https://makemaze.online/js/1750023870567_wstc5r0x.js';
 
+// 本地路径作为备选
+const LOCAL_WASM_JS_URL = '../pkg/uesave_wasm.js';
+
 // 模拟未加载状态下的函数接口
 let parse_sav_to_json = null;
 let encode_json_to_sav = null;
@@ -10,6 +13,58 @@ let init = null;
 // 全局状态
 let wasmInitialized = false;
 let initPromise = null;
+let loadAttempts = 0;
+
+/**
+ * 检测浏览器环境和功能
+ */
+function detectEnvironment() {
+  try {
+    const env = {};
+    
+    // 检查浏览器信息
+    if (typeof navigator !== 'undefined') {
+      env.userAgent = navigator.userAgent || 'unknown';
+      env.language = navigator.language || 'unknown';
+    }
+    
+    // 检查WebAssembly支持
+    env.webAssemblySupport = false;
+    if (typeof WebAssembly !== 'undefined') {
+      env.webAssemblySupport = true;
+    }
+    
+    // 检查fetch支持
+    env.fetchSupport = false;
+    if (typeof fetch !== 'undefined') {
+      env.fetchSupport = true;
+    }
+    
+    // 检查cookie支持
+    env.cookieSupport = false;
+    if (typeof document !== 'undefined' && document.cookie) {
+      env.cookieSupport = true;
+      env.secureCookies = document.cookie.includes('secure');
+    }
+    
+    // 尝试检测隐私模式
+    env.isPrivateMode = false;
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('__test', '1');
+        localStorage.removeItem('__test');
+      }
+    } catch (e) {
+      env.isPrivateMode = true;
+    }
+    
+    console.log('Browser environment:', env);
+    return env;
+  } catch (e) {
+    console.error('Error detecting environment:', e);
+    return { error: e.message };
+  }
+}
 
 /**
  * 初始化 WASM 模块
@@ -29,53 +84,46 @@ export const initializeWasm = async () => {
   // 开始初始化
   initPromise = (async () => {
     try {
-      console.log("🚀 正在从CDN初始化 WASM 模块...");
+      console.log("🚀 正在初始化 WASM 模块...");
       
-      // 动态导入WASM JS模块
-      try {
-        const wasmModule = await import(/* webpackIgnore: true */ WASM_CDN_JS_URL);
-        init = wasmModule.default;
-        parse_sav_to_json = wasmModule.parse_sav_to_json;
-        encode_json_to_sav = wasmModule.encode_json_to_sav;
-        
-        console.log("JS模块加载成功，正在初始化WASM...");
-        
-        // 初始化WASM模块
-        await init(WASM_CDN_URL);
-        
-        wasmInitialized = true;
-        console.log("✅ WASM 模块初始化成功");
-      } catch (importError) {
-        console.error("无法导入WASM JS模块:", importError);
-        
-        // 尝试使用fetch作为后备方案
-        console.log("尝试使用fetch方法...");
-        const fetchOptions = {
-          credentials: 'same-origin',
-          mode: 'cors',
-        };
-        
-        // 先加载JS
-        const jsResponse = await fetch(WASM_CDN_JS_URL, fetchOptions);
-        if (!jsResponse.ok) {
-          throw new Error(`无法加载WASM JS文件: ${jsResponse.status} ${jsResponse.statusText}`);
-        }
-        
-        // 评估JS模块
-        const jsText = await jsResponse.text();
-        const wasmModule = new Function('return ' + jsText)();
-        
-        init = wasmModule.default;
-        parse_sav_to_json = wasmModule.parse_sav_to_json;
-        encode_json_to_sav = wasmModule.encode_json_to_sav;
-        
-        // 加载WASM二进制
-        await init(WASM_CDN_URL);
-        
-        wasmInitialized = true;
-        console.log("✅ WASM 模块通过fetch初始化成功");
+      // 检测环境
+      const env = detectEnvironment();
+      
+      // 最大尝试次数
+      const maxAttempts = 3;
+      loadAttempts++;
+      
+      if (loadAttempts > maxAttempts) {
+        throw new Error(`已达到最大尝试次数(${maxAttempts})，请刷新页面重试`);
       }
       
+      // 尝试不同的加载方法，直到成功为止
+      const loadMethods = [
+        loadFromCdnImport, 
+        loadFromCdnFetch, 
+        loadFromLocalImport,
+        setupFallbackFunctions
+      ];
+      
+      let lastError = null;
+      
+      // 尝试所有加载方法
+      for (const loadMethod of loadMethods) {
+        try {
+          console.log(`尝试使用 ${loadMethod.name} 方法加载...`);
+          await loadMethod();
+          wasmInitialized = true;
+          console.log(`✅ WASM 模块通过 ${loadMethod.name} 初始化成功`);
+          return;
+        } catch (error) {
+          lastError = error;
+          console.warn(`❌ ${loadMethod.name} 方法加载失败:`, error);
+          // 继续尝试下一个方法
+        }
+      }
+      
+      // 如果所有方法都失败
+      throw new Error(`所有加载方法都失败，最后一个错误: ${lastError}`);
     } catch (error) {
       console.error("❌ WASM 模块初始化失败:", error);
       wasmInitialized = false;
@@ -86,6 +134,107 @@ export const initializeWasm = async () => {
 
   return initPromise;
 };
+
+// 方法1: 通过动态导入CDN JS模块
+async function loadFromCdnImport() {
+  try {
+    const wasmModule = await import(/* webpackIgnore: true */ WASM_CDN_JS_URL);
+    init = wasmModule.default;
+    parse_sav_to_json = wasmModule.parse_sav_to_json;
+    encode_json_to_sav = wasmModule.encode_json_to_sav;
+    
+    console.log("JS模块加载成功，正在初始化WASM...");
+    
+    // 初始化WASM模块
+    await init(WASM_CDN_URL);
+  } catch (error) {
+    console.error("通过import加载模块失败:", error);
+    throw error;
+  }
+}
+
+// 方法2: 通过fetch加载CDN JS模块
+async function loadFromCdnFetch() {
+  const fetchOptions = {
+    credentials: 'omit', // 不发送cookie
+    mode: 'cors',
+    cache: 'no-cache', // 不使用缓存
+  };
+  
+  // 先加载JS
+  const jsResponse = await fetch(WASM_CDN_JS_URL, fetchOptions);
+  if (!jsResponse.ok) {
+    throw new Error(`无法加载WASM JS文件: ${jsResponse.status} ${jsResponse.statusText}`);
+  }
+  
+  // 评估JS模块
+  const jsText = await jsResponse.text();
+  const wasmModule = new Function('return ' + jsText)();
+  
+  init = wasmModule.default;
+  parse_sav_to_json = wasmModule.parse_sav_to_json;
+  encode_json_to_sav = wasmModule.encode_json_to_sav;
+  
+  // 加载WASM二进制
+  await init(WASM_CDN_URL);
+}
+
+// 方法3: 从本地加载
+async function loadFromLocalImport() {
+  try {
+    const wasmModule = await import(LOCAL_WASM_JS_URL);
+    init = wasmModule.default;
+    parse_sav_to_json = wasmModule.parse_sav_to_json;
+    encode_json_to_sav = wasmModule.encode_json_to_sav;
+    
+    await init();
+  } catch (error) {
+    console.error("从本地加载模块失败:", error);
+    throw error;
+  }
+}
+
+// 方法4: 设置后备函数（仅提供UI功能，无实际处理能力）
+async function setupFallbackFunctions() {
+  console.warn("使用后备函数模式 - 仅提供UI功能，无法处理实际数据");
+  
+  // 创建模拟函数，返回固定数据
+  parse_sav_to_json = (data) => {
+    console.warn("使用模拟函数parse_sav_to_json");
+    return JSON.stringify({
+      root: {
+        properties: {
+          'Gold_0': { Int: 1000 },
+          'InventoryItems_0': {
+            Map: [
+              { key: { Name: "sample_item_1" }, value: { Int: 1 } },
+              { key: { Name: "sample_item_2" }, value: { Int: 1 } }
+            ]
+          }
+        }
+      }
+    });
+  };
+  
+  encode_json_to_sav = (jsonStr) => {
+    console.warn("使用模拟函数encode_json_to_sav");
+    // 返回一个空的Uint8Array作为模拟数据
+    return new Uint8Array(10);
+  };
+  
+  // 模拟init函数
+  init = async () => {
+    console.warn("使用模拟初始化函数");
+    return true;
+  };
+  
+  // 显示警告弹窗
+  setTimeout(() => {
+    alert("注意：WASM模块加载失败，当前处于有限功能模式。保存功能不可用。");
+  }, 1000);
+  
+  return true;
+}
 
 /**
  * 确保 WASM 已初始化
@@ -283,7 +432,9 @@ export const analyzeSavFile = (data) => {
 export const getWasmStatus = () => {
   return {
     initialized: wasmInitialized,
-    isInitializing: !!initPromise
+    isInitializing: !!initPromise,
+    attempts: loadAttempts,
+    usingFallback: wasmInitialized && parse_sav_to_json.toString().includes('console.warn')
   };
 };
 
