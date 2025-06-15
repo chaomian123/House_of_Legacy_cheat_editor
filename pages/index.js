@@ -1,361 +1,208 @@
 import {
   Box,
-  Code,
-  Divider,
-  Flex,
-  Heading,
-  Input,
-  Text,
-  Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  IconButton,
-  Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverHeader,
-  PopoverBody,
-  Image,
-  VStack,
-  HStack,
   Container,
-  useToast,
-  Spinner,
+  Heading,
+  Text,
+  SimpleGrid,
+  VStack,
+  useColorModeValue,
+  Image,
+  Flex,
+  Icon,
+  Button,
   Badge,
-  List,
-  ListItem,
-  ListIcon,
-  Collapse
+  useColorMode
 } from '@chakra-ui/react';
-import { CloseIcon } from '@chakra-ui/icons';
-import { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { useLocale } from '../lib/useLocale';
 import SEOHead from '../components/SEOHead';
-import JianbingSupport from '../components/JianbingSupport';
-import LikeButton from '../components/LikeButton';
-import { inject } from "@vercel/analytics"
-import CryptForm from '../components/cryptForm';
-import SurveyVote from '../components/SurveyVote';
-import FeedbackGroupModal from '../components/FeedbackGroupModal';
+import GameCard from '../components/GameCard';
+
+
+const MotionBox = motion(Box);
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [password, setPassword] = useState('');
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isFeedbackOpen, onOpen: onFeedbackOpen, onClose: onFeedbackClose } = useDisclosure();
-  const { locale, t } = useLocale();
-  const toast = useToast();
-  
-  // 功能列表折叠状态
-  const [isFeatureListOpen, setIsFeatureListOpen] = useState(false);
+  const { locale } = useLocale();
+  const { colorMode } = useColorMode();
+  const bgGradient = useColorModeValue(
+    'linear(to-br, blue.50, purple.50)',
+    'linear(to-br, blue.900, purple.900)'
+  );
 
-  inject()
+  const games = [
+    {
+      id: 'hol',
+      title: locale === 'zh' ? '吾今有世家' : 'House of Legacy',
+      description: locale === 'zh' 
+        ? '吾今有世家存档编辑器 - 修改家族成员属性、门客系统、妻妾婿属性等'
+        : 'House of Legacy Save Editor - Edit family member attributes, guest system, spouse attributes and more',
+      image: 'https://makemaze.online/images/1750002850230_vrt5yhyp.png',
+      status: 'available',
+      engine: 'Custom Engine',
+      path: '/house-of-legacy'
+    },
+    {
+      id: 'expedition33',
+      title: locale === 'zh' ? '光与影: 33号远征队' : 'Clair Obscur: Expedition 33',
+      description: locale === 'zh'
+        ? '33号远征队存档编辑器 - 修改灵光点、金币、物品、服装发型等'
+        : 'Clair Obscur: Expedition 33 Save Editor in browser - Edit lumina points, gold, items, outfits, hair and more',
+      image: 'https://makemaze.online/images/1750002852122_57dcf4ey.png',
+      status: 'new',
+      engine: 'Unreal Engine',
+      path: '/expedition33'
+    }
+  ];
+
   return (
     <>
-      <style jsx>{`
-        @keyframes pulse {
-          0% {
-            transform: scale(1);
-            opacity: 1;
-          }
-          50% {
-            transform: scale(1.05);
-            opacity: 0.8;
-          }
-          100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-      `}</style>
       <SEOHead 
-        title={locale === 'zh' ? '吾今有世家在线存档修改器 | House of Legacy Save Editor' : 'House of Legacy Save Editor | Free Online Save File Editor'}
+        title={locale === 'zh' ? '游戏存档修改器 | Game Save Editor' : 'Game Save Editor | Professional Save File Editor'}
         description={locale === 'zh' 
-          ? '最佳的吾今有世家存档修改器 ，免费在线编辑游戏存档文件。直观查看和修改游戏中角色的各项属性和你的资源' 
-          : 'The best House of Legacy save editor, free online editing of game save files. Intuitively view and modify various attributes of characters in the game and your resources.'
+          ? '专业的游戏存档修改器，支持多款热门游戏，免费在线编辑游戏存档文件' 
+          : 'Professional game save editor supporting multiple popular games. Free online editing of game save files.'
         }
         keywords={locale === 'zh' 
-          ? '吾今有世家存档修改器, 存档编辑器, 游戏修改器, 存档修改工具'
-          : 'House of Legacy, Save Editor, House of Legacy Save Editor, game editor, save file editor, House of Legacy modifier, game save editor, House of Legacy cheat tool'
+          ? '游戏存档修改器, 存档编辑器, 吾今有世家存档修改, 33号远征队存档修改'
+          : 'Game Save Editor, save file editor, House of Legacy save editor, Expedition 33 save editor'
         }
       />
 
-      <a id='downloader' style={{ display: 'none' }}></a>
-      
-      {/* 主要内容区域 */}
-      <Flex alignItems='center' justifyContent='center' mt='24' mb='10'>
+      <Box
+        minH="100vh"
+        position="relative"
+        overflow="hidden"
+      >
+     
+
+        {/* 渐变背景 */}
         <Box
-          direction='column'
-          background='Blue.100'
-          rounded='6'
-          p='12'
-          position='relative'
-          maxW='800px'
-          w='100%'
-        >
-          {/* SEO优化的标题结构 */}
-          <Box mb='6'>
-            <Heading as="h1" size="xl" mb='2' textAlign="center">
-              {locale === 'zh' ? (
-                <>
-                  吾今有世家在线存档修改器
-                  <Text as="span" fontSize="lg" color="blue.600" display="block" mt='1'>
-                    House of Legacy Save Editor
-                  </Text>
-                </>
-              ) : (
-                <>
-                  House of Legacy Save Editor
-                  <Text as="span" fontSize="lg" color="blue.600" display="block" mt='1'>
-                    Professional Save File Editor
-                  </Text>
-                </>
-              )}
-            </Heading>
-            
-            <Text textAlign="center" color="gray.600" fontSize="md" mb='3'>
-              {locale === 'zh' 
-                ? '吾今有世家存档编辑器，无需下载，浏览器直接使用，完全免费且安全' 
-                : 'Professional House of Legacy Save Editor tool - No download required, browser-based, completely free and secure'
-              }
-            </Text>
+          position="absolute"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          bgGradient={bgGradient}
+          opacity={0.8}
+          zIndex={1}
+        />
 
-            <Box textAlign="center" fontSize="sm">
-              <VStack spacing={2}>
-                <HStack spacing={2} justifyContent="center" alignItems="center">
-                  <Link href='/hol_guide' style={{textDecoration: 'underline', color: 'inherit'}}>
-                    {t.userGuide}
-                  </Link>
-                  <Badge 
-                    colorScheme="red" 
-                    variant="solid" 
-                    fontSize="xs"
-                    px={2}
-                    py={1}
-                    borderRadius="full"
-                    animation="pulse 2s infinite"
-                    fontWeight="bold"
-                  >
-                    NEW
-                  </Badge>
-                </HStack>
-                <Link href='/changelog' style={{textDecoration: 'underline', color: 'inherit'}}>
-                  {t.updateLog}
-                  {locale === 'zh' ? '(2025-06-06)' : '(2025-06-06)'}
-                </Link>
+        {/* 主要内容 */}
+        <Container maxW="container.xl" position="relative" zIndex={2} py={20}>
+          <VStack spacing={8} align="stretch">
+            {/* 标题区域 */}
+            <VStack spacing={4} textAlign="center" mb={12}>
+              <MotionBox
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Heading
+                  as="h1"
+                  size="2xl"
+                  bgGradient="linear(to-r, blue.500, purple.500)"
+                  bgClip="text"
+                  fontWeight="extrabold"
+                >
+                  {locale === 'zh' ? '在线游戏存档修改器' : 'Game Save Editor in browser'}
+                </Heading>
+              </MotionBox>
+              <MotionBox
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <Text fontSize="xl" color="gray.600" maxW="2xl">
+                  {locale === 'zh'
+                    ? '选择你想要编辑存档的游戏'
+                    : 'Select the game you want to edit'}
+                </Text>
+              </MotionBox>
+            </VStack>
+
+            {/* 游戏列表 */}
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
+              {games.map((game, index) => (
+                <MotionBox
+                  key={game.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <GameCard
+                    title={game.title}
+                    description={game.description}
+                    image={game.image}
+                    status={game.status}
+                    engine={game.engine}
+                    path={game.path}
+                  />
+                </MotionBox>
+              ))}
+            </SimpleGrid>
+
+            {/* 功能说明 */}
+            {/* <Box
+              borderRadius="xl"
+              p={8}
+              mt={8}
+              boxShadow="xl"
+              bg={useColorModeValue('white', 'gray.800')}
+            >
+              <VStack spacing={6} align="stretch">
+                <Heading size="lg" textAlign="center">
+                  {locale === 'zh' ? '主要功能' : 'Key Features'}
+                </Heading>
+                
+                <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
+                  <FeatureCard
+                    icon={FaTools}
+                    title={locale === 'zh' ? '存档编辑' : 'Save Editing'}
+                    description={locale === 'zh'
+                      ? '支持修改游戏存档中的各种数据，包括角色属性、物品、技能等'
+                      : 'Edit various game data including character attributes, items, skills and more'}
+                  />
+                  <FeatureCard
+                    icon={FaGamepad}
+                    title={locale === 'zh' ? '多游戏支持' : 'Multi-Game Support'}
+                    description={locale === 'zh'
+                      ? '支持多款热门游戏，持续更新中'
+                      : 'Support for multiple popular games, continuously updated'}
+                  />
+                  <FeatureCard
+                    icon={FaInfoCircle}
+                    title={locale === 'zh' ? '使用指南' : 'User Guide'}
+                    description={locale === 'zh'
+                      ? '详细的使用说明和教程，帮助您快速上手'
+                      : 'Detailed instructions and tutorials to help you get started quickly'}
+                  />
+                </SimpleGrid>
               </VStack>
-            </Box>
-          </Box>
-          
-          <Divider mb='4' />
-
-          {/* House of Legacy Save Editor 功能介绍 */}
-          <Box mb='4'>
-            <Heading 
-              as="h2" 
-              size='md' 
-              mb='3' 
-              color="blue.700"
-              cursor="pointer"
-              onClick={() => setIsFeatureListOpen(!isFeatureListOpen)}
-              _hover={{ color: "blue.600" }}
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              {locale === 'zh' ? '吾今有世家 存档编辑功能' : 'House of Legacy Save Editor Features'}
-              <Text fontSize="sm" color="gray.500" ml={2}>
-                {isFeatureListOpen ? '▼' : '▶'}
-              </Text>
-            </Heading>
-            
-            <Collapse in={isFeatureListOpen} animateOpacity>
-              <Text fontSize="sm" color="gray.700" mb='3'>
-                {locale === 'zh' 
-                  ? '吾今有世家存档编辑器支持功能：'
-                  : 'House of Legacy Save Editor provides comprehensive save editing features, allowing you to easily modify various game attributes:'
-                }
-              </Text>
-
-              <List spacing={1} fontSize="sm" mb='4'>
-                <ListItem>
-                  • {locale === 'zh' ? '家族成员属性编辑' : 'family member attributes editing'}
-                </ListItem>
-                <ListItem>
-                  • {locale === 'zh' ? '门客系统修改' : 'guest system modification'}
-                </ListItem>
-                <ListItem>
-                  • {locale === 'zh' ? '妻妾婿属性调整' : 'spouse attributes adjustment'}
-                </ListItem>
-                <ListItem>
-                  • {locale === 'zh' ? '货币和资源编辑' : 'currency and resources editing'}
-                </ListItem>
-                <ListItem>
-                  • {locale === 'zh' ? '技能数值修改' : 'skill values modification'}
-                </ListItem>
-                <ListItem>
-                  • {locale === 'zh' ? '怀孕状态编辑' : 'pregnancy status editing'}
-                </ListItem>
-              </List>
-            </Collapse>
-          </Box>
-
-          {/* 存档路径示例 */}
-          <Box mb='4'>
-            <Heading as="h3" size='sm' mb='2' color="blue.600">
-              {locale === 'zh' ? '吾今有世家 存档文件路径' : 'House of Legacy Save File Path'}
-            </Heading>
-            <Text fontSize="sm" mb='2'>
-              {locale === 'zh' 
-                ? '在您的电脑上找到吾今有世家存档文件：'
-                : 'Locate your House of Legacy save file on your computer:'
-              }
-            </Text>
-            <Box 
-              as="pre"
-              p={2} 
-              bg="gray.100" 
-              fontSize="sm"
-              borderRadius="md"
-              overflow="auto"
-              style={{ userSelect: 'all' }}
-            >
-              <Text  
-                fontFamily="monospace"
-                margin={0}
-                padding={0}
-                color="gray.600"
-              >
-                C:\Users\用户名\AppData\LocalLow\S3Studio\House of Legacy\FW\0\GameData.es3
-              </Text>
-            </Box>
-          </Box>
-          
-          {/* 安全说明 */}
-          <Box mb='4'>
-            <Heading as="h3" size="sm" mb='2' color="blue.600">
-              {locale === 'zh' ? '安全的吾今有世家存档编辑' : 'Safe House of Legacy Save Editing'}
-            </Heading>
-            <Text fontSize="sm" color="gray.600">
-              {locale === 'zh' 
-                ? '吾今有世家存档编辑器采用本地处理技术，存档文件不会上传到服务器，确保数据安全和隐私。' 
-                : 'House of Legacy Save Editor uses local processing technology. Your save files are not uploaded to servers, ensuring your House of Legacy game data is completely safe and private.'
-              }
-            </Text>
-          </Box>
-          
-          <CryptForm isLoading={isLoading} setIsLoading={setIsLoading} password={password} />
-          
-          {/* 点赞按钮 */}
-          {/* <Box mt='3' display='flex' justifyContent='center'>
-            <LikeButton />
-          </Box> */}
-          
-          {/* 问题反馈群按钮 - 仅中文环境显示 */}
-          {locale === 'zh' && (
-            <Box mt='3' display='flex' justifyContent='center'>
-              <Button
-                onClick={onFeedbackOpen}
-                colorScheme="green"
-                variant="outline"
-                size="sm"
-                _hover={{ bg: "green.50" }}
-              >
-                {t.feedbackGroup}
-              </Button>
-            </Box>
-          )}
-          
-          <Divider mt='5' mb='3' />
-          
-          {/* 调查组件 */}
-          {/* <Box mt={8}>
-            <SurveyVote 
-              surveyId="default"
-              title="您觉得这个工具对您有帮助吗？"
-              yesText="有帮助"
-              noText="没帮助"
-            />
-          </Box> */}
-          
-          {/* 赞助支持 */}
-          <VStack spacing={3} alignItems='center' justifyContent='center' mt='3'>
-            {locale === 'en' && <a href='https://ko-fi.com/U7U01FMWB3' target='_blank' rel='noreferrer'>
-              <img 
-                height='36' 
-                style={{border: '0px', height: '36px'}} 
-                src='https://storage.ko-fi.com/cdn/kofi3.png?v=6' 
-                border='0' 
-                alt='Buy Me a Coffee at ko-fi.com' 
-              />
-            </a>}
-            {locale === 'zh' && <JianbingSupport />}
-          </VStack>            
-        </Box>
-      </Flex>
-
-      {/* Schema.org 结构化数据 */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "House of Legacy Save Editor",
-            "alternateName": ["House of Legacy Modifier", "House of Legacy Game Editor"],
-            "description": locale === 'zh' 
-              ? "专业的House of Legacy存档编辑工具，免费在线修改游戏存档文件，支持家族成员、门客、妻妾属性编辑。"
-              : "Professional House of Legacy Save Editor tool for free online save file editing, supporting family member, guest, and spouse attribute modifications.",
-            "applicationCategory": "GameApplication",
-            "operatingSystem": "Web Browser",
-            "browserRequirements": "HTML5, JavaScript",
-            "softwareVersion": "2.0",
-            "datePublished": "2024-01-01",
-            "dateModified": "2025-06-01",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
-            },
-            "author": {
-              "@type": "Organization",
-              "name": "House of Legacy Editor Team"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.8",
-              "reviewCount": "128"
-            },
-            "keywords": "House of Legacy, Save Editor, Game Modifier, Save File Editor",
-            "inLanguage": [locale === 'en' ? 'en-US' : 'zh-CN'],
-            "url": "https://savefile.space",
-            "potentialAction": {
-              "@type": "UseAction",
-              "target": "https://savefile.space",
-              "object": {
-                "@type": "WebSite",
-                "name": "House of Legacy Save Editor"
-              }
-            }
-          })
-        }}
-      />
-      
-      {/* 问题反馈群弹窗 */}
-      <FeedbackGroupModal 
-        isOpen={isFeedbackOpen}
-        onClose={onFeedbackClose}
-      />
+            </Box> */}
+          </VStack>
+        </Container>
+      </Box>
     </>
+  );
+}
+
+function FeatureCard({ icon, title, description }) {
+  return (
+    <VStack
+      p={6}
+      bg={useColorModeValue('gray.50', 'gray.700')}
+      borderRadius="lg"
+      spacing={4}
+      align="start"
+      transition="all 0.3s"
+      _hover={{ transform: 'translateY(-5px)', shadow: 'lg' }}
+    >
+      <Icon as={icon} w={8} h={8} color="blue.500" />
+      <Heading size="md">{title}</Heading>
+      <Text color={useColorModeValue('gray.600', 'gray.300')} fontSize="sm">
+        {description}
+      </Text>
+    </VStack>
   );
 }
 

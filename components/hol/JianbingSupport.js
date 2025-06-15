@@ -14,7 +14,7 @@ import {
   HStack,
   useColorModeValue
 } from '@chakra-ui/react';
-import { useLocale } from '../lib/useLocale';
+import { useLocale } from '../../lib/useLocale';
 
 const JianbingSupport = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

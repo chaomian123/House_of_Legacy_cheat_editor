@@ -17,12 +17,12 @@ import {
 } from '@chakra-ui/react';
 import { FaDownload, FaEdit } from 'react-icons/fa';
 import { useRef, useState } from 'react';
-import { useLocale } from '../lib/useLocale';
+import { useLocale } from '../../lib/useLocale';
 import dynamic from 'next/dynamic';
 import NextLink from 'next/link';
 import crypto from 'crypto';
 
-const Editor = dynamic(() => import('./editor/Editor'), { ssr: false });
+const Editor = dynamic(() => import('../editor/Editor'), { ssr: false });
 
 function isGzip(data) {
   return data[0] == 0x1F && data[1] == 0x8B;

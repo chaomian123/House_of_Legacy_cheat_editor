@@ -1,0 +1,1913 @@
+items:
+- name: Chroma Pack ExtraLarge
+  save_key: would_map_to_ChromaPack_ExtraLarge
+  category: Tints.Chroma Pack
+  type: int
+- name: Chroma Pack Large
+  save_key: would_map_to_ChromaPack_Large
+  category: Tints.Chroma Pack
+  type: int
+- name: Chroma Pack Regular
+  save_key: would_map_to_ChromaPack_Regular
+  category: Tints.Chroma Pack
+  type: int
+- name: Baguette Outfit (Gustave)
+  save_key: SkinGustave_Baguette
+  category: Outfits.Gustave
+  type: int
+- name: Civilian Outfit (Gustave)
+  save_key: SkinGustave_Civil
+  category: Outfits.Gustave
+  type: int
+- name: Clair Outfit (Gustave)
+  save_key: SkinGustave_Clair
+  category: Outfits.Gustave
+  type: int
+- name: Crimson Uniform Outfit (Gustave)
+  save_key: SkinGustave_Default_Red
+  category: Outfits.Gustave
+  type: int
+- name: Expedition Outfit (Gustave)
+  save_key: SkinGustave_Default
+  category: Outfits.Gustave
+  type: int
+- name: Flowers Suit Outfit (Gustave)
+  save_key: SkinGustave_FlowerSuit
+  category: Outfits.Gustave
+  type: int
+- name: Gommage Outfit (Gustave)
+  save_key: SkinGustave_Gommage
+  category: Outfits.Gustave
+  type: int
+- name: Lumiere Suit Outfit (Gustave)
+  save_key: SkinGustave_LumiereSuit
+  category: Outfits.Gustave
+  type: int
+- name: Obscur Outfit (Gustave)
+  save_key: SkinGustave_Obscur
+  category: Outfits.Gustave
+  type: int
+- name: Pure Outfit (Gustave)
+  save_key: SkinGustave_Pure
+  category: Outfits.Gustave
+  type: int
+# maby wrong.
+- name: Renoir Outfit (Gustave)
+  save_key: SkinGustave_MirrorRenoir
+  category: Outfits.Gustave
+  type: int
+# maby wrong.
+- name: Renoir's Suit Outfit (Gustave)
+  save_key: SkinGustave_RealRenoir
+  category: Outfits.Gustave
+  type: int
+# maby wrong.
+- name: Sakapatate Outfit (Gustave)
+  save_key: SkinGustave_Potatoe_Bag 
+  category: Outfits.Gustave
+  type: int
+- name: Swimsuit Outfit (Gustave)
+  save_key: SkinGustave_Bikini
+  category: Outfits.Gustave
+  type: int
+- name: Baguette Haircut (Gustave)
+  save_key: FaceGustave_Baguette
+  category: Hair.Gustave
+  type: int
+- name: Bald Haircut (Gustave)
+  save_key: FaceGustave_Bald
+  category: Hair.Gustave
+  type: int
+- name: Bun Haircut (Gustave)
+  save_key: FaceGustave_Default
+  category: Hair.Gustave
+  type: int
+- name: Charming Haircut (Gustave)
+  save_key: FaceGustave_Charming
+  category: Hair.Gustave
+  type: int
+- name: Curly Haircut (Gustave)
+  save_key: FaceGustave_Curly
+  category: Hair.Gustave
+  type: int
+# maby wrong.
+- name: Expedition White Haircut (Gustave)
+  save_key: FaceGustave_Default_WhiteVersion
+  category: Hair.Gustave
+  type: int
+- name: Flowers Haircut (Gustave)
+  save_key: FaceGustave_Flowers
+  category: Hair.Gustave
+  type: int
+- name: Gestral Haircut (Gustave)
+  save_key: FaceGustave_Gestral
+  category: Hair.Gustave
+  type: int
+- name: Noah Haircut (Gustave)
+  save_key: FaceGustave_Noah
+  category: Hair.Gustave
+  type: int
+- name: Renoir Haircut (Gustave)
+  save_key: FaceGustave_Renoir
+  category: Hair.Gustave
+  type: int
+- name: Baguette Outfit (Lune)
+  save_key: SkinLune_Baguette
+  category: Outfits.Lune
+  type: int
+- name: Civilian Outfit (Lune)
+  save_key: SkinLune_Civil
+  category: Outfits.Lune
+  type: int
+- name: Clea Outfit (Lune)
+  save_key: SkinLune_Clea
+  category: Outfits.Lune
+  type: int
+- name: Danseuse Outfit (Lune)
+  save_key: SkinLune_Danseuse
+  category: Outfits.Lune
+  type: int
+- name: Expedition Outfit (Lune)
+  save_key: SkinLune_Default
+  category: Outfits.Lune
+  type: int
+- name: Flowers Suit Outfit (Lune)
+  save_key: SkinLune_FlowerSuit
+  category: Outfits.Lune
+  type: int
+- name: Gommage Outfit (Lune)
+  save_key: SkinLune_Gommage
+  category: Outfits.Lune
+  type: int
+- name: Pure Outfit (Lune)
+  save_key: SkinLune_Pure
+  category: Outfits.Lune
+  type: int
+- name: Sakapatate Outfit (Lune)
+  save_key: SkinLune_Potatoe_Bag
+  category: Outfits.Lune
+  type: int
+- name: Sirene Outfit (Lune)
+  save_key: SkinLune_Sirene
+  category: Outfits.Lune
+  type: int
+- name: Skirt Outfit (Lune)
+  save_key: SkinLune_CivilianSkirt
+  category: Outfits.Lune
+  type: int
+- name: Swimsuit 1 Outfit (Lune)
+  save_key: SkinLune_BikiniA
+  category: Outfits.Lune
+  type: int
+- name: Swimsuit 2 Outfit (Lune)
+  save_key: SkinLune_BikiniB
+  category: Outfits.Lune
+  type: int
+- name: Artist Haircut (Lune)
+  save_key: FaceLune_Artist_s_One
+  category: Hair.Lune
+  type: int
+- name: Baguette Haircut (Lune)
+  save_key: FaceLune_Baguette
+  category: Hair.Lune
+  type: int
+- name: Bald Haircut (Lune)
+  save_key: FaceLune_Bald
+  category: Hair.Lune
+  type: int
+- name: Braid Haircut (Lune)
+  save_key: FaceLune_Braid
+  category: Hair.Lune
+  type: int
+- name: Clea Haircut (Lune)
+  save_key: FaceLune_Clea
+  category: Hair.Lune
+  type: int
+- name: Lune Haircut (Lune)
+  save_key: FaceLune_Default
+  category: Hair.Lune
+  type: int
+- name: Double Braid Haircut (Lune)
+  save_key: FaceLune_DoubleBraid
+  category: Hair.Lune
+  type: int
+- name: Flowers Haircut (Lune)
+  save_key: FaceLune_Flowers
+  category: Hair.Lune
+  type: int
+- name: French Bob Haircut (Lune)
+  save_key: FaceLune_Frenchbob
+  category: Hair.Lune
+  type: int
+- name: Gestral Haircut (Lune)
+  save_key: FaceLune_Gestral
+  category: Hair.Lune
+  type: int
+- name: Messy Bun Haircut (Lune)
+  save_key: FaceLune_MessyBun
+  category: Hair.Lune
+  type: int
+- name: Half Ponytail Haircut (Lune)
+  save_key: FaceLune_HalfPonytail
+  category: Hair.Lune
+  type: int
+- name: Ponytail Haircut (Lune)
+  save_key: FaceLune_Ponytail
+  category: Hair.Lune
+  type: int
+- name: Rebellious White Haircut (Lune)
+  save_key: FaceLune_Default_WhiteVer
+  category: Hair.Lune
+  type: int
+- name: Short Haircut (Lune)
+  save_key: FaceLune_Short
+  category: Hair.Lune
+  type: int
+- name: Sirene Haircut (Lune)
+  save_key: FaceLune_Sirene
+  category: Hair.Lune
+  type: int
+- name: Wavy Haircut (Lune)
+  save_key: FaceLune_Wavy
+  category: Hair.Lune
+  type: int
+# - name: Vintage Haircut (Lune) save_key NOT SET DONT USE!!
+  # save_key: AutoGen_Vintage_Haircut_Lune
+  # category: Hair.Lune
+  # type: int
+- name: Voluminous Haircut (Lune)
+  save_key: FaceLune_Voluminous
+  category: Hair.Lune
+  type: int
+- name: Artist Haircut (Maelle)
+  save_key: FaceMaelle_Artist_s_One
+  category: Hair.Maelle
+  type: int
+- name: Baguette Haircut (Maelle)
+  save_key: FaceMaelle_Baguette
+  category: Hair.Maelle
+  type: int
+- name: Bald Haircut (Maelle)
+  save_key: FaceMaelle_Bald
+  category: Hair.Maelle
+  type: int
+- name: Braid Haircut (Maelle)
+  save_key: FaceMaelle_Braid
+  category: Hair.Maelle
+  type: int
+- name: Clea Haircut (Maelle)
+  save_key: FaceMaelle_Clea
+  category: Hair.Maelle
+  type: int
+#- name: Maelle Haircut (Maelle)
+#  save_key: AutoGen_Maelle_Haircut_Maelle
+#  category: Hair.Maelle
+#  type: int
+- name: Double Braid Haircut (Maelle)
+  save_key: FaceMaelle_DoubleBraid
+  category: Hair.Maelle
+  type: int
+- name: Double Braid White Haircut (Maelle)
+  save_key: FaceMaelle_DoubleBraid_WhiteVersion
+  category: Hair.Maelle
+  type: int
+- name: Flowers Haircut (Maelle)
+  save_key: FaceMaelle_Flowers
+  category: Hair.Maelle
+  type: int
+- name: French Bob Haircut (Maelle)
+  save_key: FaceMaelle_FrenchBob
+  category: Hair.Maelle
+  type: int
+- name: Gestral Haircut (Maelle)
+  save_key: FaceMaelle_Gestral
+  category: Hair.Maelle
+  type: int
+- name: Gestral White Haircut (Maelle)
+  save_key: FaceMaelle_Gestral_WhiteVersion
+  category: Hair.Maelle
+  type: int
+- name: Messy Bun Haircut (Maelle)
+  save_key: FaceMaelle_MessyBun
+  category: Hair.Maelle
+  type: int
+#- name: Painted Me Haircut (Maelle)
+#  save_key: AutoGen_Painted_Me_Haircut_Maelle
+#  category: Hair.Maelle
+#  type: int
+- name: Ponytail Haircut (Maelle)
+  save_key: FaceMaelle_Ponytail
+  category: Hair.Maelle
+  type: int
+- name: Real Maelle Haircut (Maelle)
+  save_key: FaceMaelle_Default
+  category: Hair.Maelle
+  type: int
+- name: Rebellious Haircut (Maelle)
+  save_key: FaceMaelle_Rebellious
+  category: Hair.Maelle
+  type: int
+- name: Short Haircut (Maelle)
+  save_key: FaceMaelle_Short
+  category: Hair.Maelle
+  type: int
+- name: Short White Haircut (Maelle)
+  save_key: FaceMaelle_Short_WhiteVersion
+  category: Hair.Maelle
+  type: int
+- name: Vintage Haircut (Maelle)
+  save_key: FaceMaelle_Vintage
+  category: Hair.Maelle
+  type: int
+- name: Voluminous Haircut (Maelle)
+  save_key: FaceMaelle_Voluminous
+  category: Hair.Maelle
+  type: int
+- name: ActeIII Haircut (Maelle)
+  save_key: FaceMaelle_ActeIII
+  category: Hair.Maelle
+  type: int
+- name: Alicia Haircut (Maelle)
+  save_key: FaceMaelle_Alicia
+  category: Hair.Maelle
+  type: int
+- name: Default WhiteVersion Haircut (Maelle)
+  save_key: FaceMaelle_Default_WhiteVersion
+  category: Hair.Maelle
+  type: int
+- name: Alicia Outfit (Maelle)
+  save_key: SkinMaelle_Alicia
+  category: Outfits.Maelle
+  type: int
+- name: Baguette Outfit (Maelle)
+  save_key: SkinMaelle_Baguette
+  category: Outfits.Maelle
+  type: int
+- name: Civilian Outfit (Maelle)
+  save_key: SkinMaelle_CivilianLumiere
+  category: Outfits.Maelle
+  type: int
+- name: Clair Outfit (Maelle)
+  save_key: SkinMaelle_Clair
+  category: Outfits.Maelle
+  type: int
+- name: Clea Outfit (Maelle)
+  save_key: SkinMaelle_Clea
+  category: Outfits.Maelle
+  type: int
+- name: Expedition Outfit (Maelle)
+  save_key: SkinMaelle_Default
+  category: Outfits.Maelle
+  type: int
+- name: Flowers Suit Outfit (Maelle)
+  save_key: SkinMaelle_FlowerSuit
+  category: Outfits.Maelle
+  type: int
+- name: Gommage Outfit (Maelle)
+  save_key: SkinMaelle_Gommage
+  category: Outfits.Maelle
+  type: int
+- name: Lumiere Outfit (Maelle)
+  save_key: SkinMaelle_Lumiere
+  category: Outfits.Maelle
+  type: int
+- name: Obscur Outfit (Maelle)
+  save_key: SkinMaelle_Obscur
+  category: Outfits.Maelle
+  type: int
+- name: Painted Me Outfit (Maelle)
+  save_key: SkinMaelle_ActeIII
+  category: Outfits.Maelle
+  type: int
+- name: Pure Outfit (Maelle)
+  save_key: SkinMaelle_Pure
+  category: Outfits.Maelle
+  type: int
+- name: Sakapatate Outfit (Maelle)
+  save_key: SkinMaelle_Potatoe_Bag
+  category: Outfits.Maelle
+  type: int
+- name: Skirt Outfit (Maelle)
+  save_key: SkinMaelle_CivilianSkirt
+  category: Outfits.Maelle
+  type: int
+- name: Swimsuit Outfit (Maelle)
+  save_key: SkinMaelle_Bikini
+  category: Outfits.Maelle
+  type: int
+- name: Bald Haircut (Monoco)
+  save_key: FaceMonoco_Bald
+  category: Hair.Monoco
+  type: int
+- name: Flowers Haircut (Monoco)
+  save_key: FaceMonoco_Flowers
+  category: Hair.Monoco
+  type: int
+- name: Monoco Haircut (Monoco)
+  save_key: FaceMonoco_Default
+  category: Hair.Monoco
+  type: int
+- name: Pure Haircut (Monoco)
+  save_key: FaceMonoco_Pure
+  category: Hair.Monoco
+  type: int
+- name: Viking Haircut (Monoco)
+  save_key: FaceMonoco_Viking
+  category: Hair.Monoco
+  type: int
+- name: Civilian Outfit (Monoco)
+  save_key: SkinMonoco_Civilian
+  category: Outfits.Monoco
+  type: int
+- name: Expedition Outfit (Monoco)
+  save_key: SkinMonoco_Default
+  category: Outfits.Monoco
+  type: int
+- name: Flowers Suit Outfit (Monoco)
+  save_key: SkinMonoco_FlowerSuit
+  category: Outfits.Monoco
+  type: int
+- name: Gommage Outfit (Monoco)
+  save_key: SkinMonoco_Gommage
+  category: Outfits.Monoco
+  type: int
+- name: Lumiere Outfit (Monoco)
+  save_key: SkinMonoco_Lumiere
+  category: Outfits.Monoco
+  type: int
+- name: Pure Outfit (Monoco)
+  save_key: SkinMonoco_Pure
+  category: Outfits.Monoco
+  type: int
+- name: Swimsuit Outfit (Monoco)
+  save_key: SkinMonoco_Bikini
+  category: Outfits.Monoco
+  type: int
+- name: Baguette Outfit (Sciel)
+  save_key: SkinSciel_Baguette
+  category: Outfits.Sciel
+  type: int
+- name: Civilian Outfit (Sciel)
+  save_key: SkinSciel_Civil
+  category: Outfits.Sciel
+  type: int
+- name: Clea Outfit (Sciel)
+  save_key: SkinSciel_Clea
+  category: Outfits.Sciel
+  type: int
+- name: Danseuse Outfit (Sciel)
+  save_key: SkinSciel_Danseuse
+  category: Outfits.Sciel
+  type: int
+- name: Expedition Outfit (Sciel)
+  save_key: SkinSciel_Default
+  category: Outfits.Sciel
+  type: int
+- name: Flowers Suit Outfit (Sciel)
+  save_key: SkinSciel_FlowerSuit
+  category: Outfits.Sciel
+  type: int
+- name: Gommage Outfit (Sciel)
+  save_key: SkinSciel_Gommage
+  category: Outfits.Sciel
+  type: int
+- name: Pure Outfit (Sciel)
+  save_key: SkinSciel_Pure
+  category: Outfits.Sciel
+  type: int
+- name: Sakapatate Outfit (Sciel)
+  save_key: SkinSciel_Potatoe_Bag
+  category: Outfits.Sciel
+  type: int
+- name: Sirene Outfit (Sciel)
+  save_key: SkinSciel_Sirene
+  category: Outfits.Sciel
+  type: int
+- name: Skirt Outfit (Sciel)
+  save_key: SkinSciel_CivilianSkirt
+  category: Outfits.Sciel
+  type: int
+- name: Swimsuit 1 Outfit (Sciel)
+  save_key: SkinSciel_BikiniA
+  category: Outfits.Sciel
+  type: int
+- name: Swimsuit 2 Outfit (Sciel)
+  save_key: SkinSciel_BikiniB
+  category: Outfits.Sciel
+  type: int
+- name: Artist Haircut (Sciel)
+  save_key: FaceSciel_Artist_s_One
+  category: Hair.Sciel
+  type: int
+- name: Baguette Haircut (Sciel)
+  save_key: FaceSciel_Baguette
+  category: Hair.Sciel
+  type: int
+- name: Bald Haircut (Sciel)
+  save_key: FaceSciel_Bald
+  category: Hair.Sciel
+  type: int
+- name: Braid Haircut (Sciel)
+  save_key: FaceSciel_Braid
+  category: Hair.Sciel
+  type: int
+- name: Clea Haircut (Sciel)
+  save_key: FaceSciel_Clea
+  category: Hair.Sciel
+  type: int
+- name: Double Braid Haircut (Sciel)
+  save_key: FaceSciel_DoubleBraid
+  category: Hair.Sciel
+  type: int
+- name: Flowers Haircut (Sciel)
+  save_key: FaceSciel_Flowers
+  category: Hair.Sciel
+  type: int
+- name: French Bob Haircut (Sciel)
+  save_key: FaceSciel_FrenchBob
+  category: Hair.Sciel
+  type: int
+- name: Gestral Haircut (Sciel)
+  save_key: FaceSciel_Gestral
+  category: Hair.Sciel
+  type: int
+- name: Messy Bun White Haircut (Sciel)
+  save_key: FaceSciel_Default_WhiteVersion
+  category: Hair.Sciel
+  type: int
+- name: Plunging Bobg Haircut (Sciel)
+  save_key: FaceSciel_OldConcept
+  category: Hair.Sciel
+  type: int
+- name: Ponytail Haircut (Sciel)
+  save_key: FaceSciel_Ponytail
+  category: Hair.Sciel
+  type: int
+- name: Rebellious Haircut (Sciel)
+  save_key: FaceSciel_Rebellious
+  category: Hair.Sciel
+  type: int
+- name: Sciel Haircut (Sciel)
+  save_key: FaceSciel_Default
+  category: Hair.Sciel
+  type: int
+- name: Short Curly Haircut (Sciel)
+  save_key: FaceSciel_CurlyShort
+  category: Hair.Sciel
+  type: int
+- name: Short Haircut (Sciel)
+  save_key: FaceSciel_Short
+  category: Hair.Sciel
+  type: int
+- name: Vintage Haircut (Sciel)
+  save_key: FaceSciel_Vintage
+  category: Hair.Sciel
+  type: int
+- name: Voluminous Haircut (Sciel)
+  save_key: FaceSciel_Voluminous
+  category: Hair.Sciel
+  type: int
+- name: Baguette Outfit (Verso)
+  save_key: SkinVerso_Baguette
+  category: Outfits.Verso
+  type: int
+- name: Civilian Outfit (Verso)
+  save_key: SkinVerso_Civil
+  category: Outfits.Verso
+  type: int
+- name: Clair Outfit (Verso)
+  save_key: SkinVerso_Clair
+  category: Outfits.Verso
+  type: int
+- name: Expedition Outfit (Verso)
+  save_key: SkinVerso_Default
+  category: Outfits.Verso
+  type: int
+- name: Flowers Suit Outfit (Verso)
+  save_key: SkinVerso_FlowerSuit
+  category: Outfits.Verso
+  type: int
+- name: Gommage Outfit (Verso)
+  save_key: SkinVerso_Gommage
+  category: Outfits.Verso
+  type: int
+- name: Obscur Outfit (Verso)
+  save_key: SkinVerso_Obscur
+  category: Outfits.Verso
+  type: int
+- name: Perelin Outfit (Verso)
+  save_key: SkinVerso_Pelerin
+  category: Outfits.Verso
+  type: int
+- name: Pure Outfit (Verso)
+  save_key: SkinVerso_Pure
+  category: Outfits.Verso
+  type: int
+- name: Renoir Outfit (Verso)
+  save_key: SkinVerso_Mirror
+  category: Outfits.Verso
+  type: int
+- name: Renoir's Suit Outfit (Verso)
+  save_key: SkinVerso_RealRenoir
+  category: Outfits.Verso
+  type: int
+- name: Sakapatate Outfit (Verso)
+  save_key: SkinVerso_Potatoe_Bag
+  category: Outfits.Verso
+  type: int
+- name: Simple Outfit (Verso)
+  save_key: SkinVerso_Simple
+  category: Outfits.Verso
+  type: int
+- name: Swimsuit 1 Outfit (Verso)
+  save_key: SkinVerso_BikiniA
+  category: Outfits.Verso
+  type: int
+- name: Swimsuit 2 Outfit (Verso)
+  save_key: SkinVerso_BikiniB
+  category: Outfits.Verso
+  type: int
+- name: NoArmBand Outfit (Verso)
+  save_key: SkinVerso_NoArmBand
+  category: Outfits.Verso
+  type: int
+- name: Baguette Haircut (Verso)
+  save_key: FaceVerso_Baguette
+  category: Hair.Verso
+  type: int
+- name: Bald Haircut (Verso)
+  save_key: FaceVerso_Bald
+  category: Hair.Verso
+  type: int
+- name: Bun Haircut (Verso)
+  save_key: FaceVerso_bun
+  category: Hair.Verso
+  type: int
+- name: Curly Haircut (Verso)
+  save_key: FaceVerso_Curly
+  category: Hair.Verso
+  type: int
+- name: Expedition White Haircut (Verso)
+  save_key: FaceVerso_Default_WhiteVersion
+  category: Hair.Verso
+  type: int
+- name: Flowers Haircut (Verso)
+  save_key: FaceVerso_Flowers
+  category: Hair.Verso
+  type: int
+- name: Gestral Haircut (Verso)
+  save_key: FaceVerso_Gestral
+  category: Hair.Verso
+  type: int
+- name: Gustave's Haircut (Verso)
+  save_key: FaceVerso_Handsome
+  category: Hair.Verso
+  type: int
+- name: Renoir Haircut (Verso)
+  save_key: FaceVerso_Renoir
+  category: Hair.Verso
+  type: int
+- name: Samurai Haircut (Verso)
+  save_key: FaceVerso_Samourai
+  category: Hair.Verso
+  type: int
+- name: Verso Haircut (Verso)
+  save_key: FaceVerso_Default
+  category: Hair.Verso
+  type: int
+- name: chroma elixir shard
+  save_key: AutoGen_chroma_elixir_shard
+  category: Tints.Other Tints
+  type: int
+- name: colour of lumina
+  save_key: AutoGen_colour_of_lumina
+  category: Tints.Other Tints
+  type: int
+- name: Colour of Skill
+  save_key: AutoGen_Colour_of_Skill
+  category: Tints.Other Tints
+  type: int
+- name: energy tint shard
+  save_key: AutoGen_energy_tint_shard
+  category: Tints.Other Tints
+  type: int
+- name: healing tint
+  save_key: AutoGen_healing_tint
+  category: Tints.Other Tints
+  type: int
+- name: recoat
+  save_key: AutoGen_recoat
+  category: Tints.Other Tints
+  type: int
+- name: revive tint shard
+  save_key: AutoGen_revive_tint_shard
+  category: Tints.Other Tints
+  type: int
+- name: shape of energy
+  save_key: AutoGen_shape_of_energy
+  category: Tints.Other Tints
+  type: int
+- name: shape of health
+  save_key: AutoGen_shape_of_health
+  category: Tints.Other Tints
+  type: int
+- name: shape of life
+  save_key: AutoGen_shape_of_life
+  category: Tints.Other Tints
+  type: int
+- name: Accelerating Heal
+  save_key: AutoGen_Accelerating_Heal
+  category: Pictos.Pictos
+  type: int
+- name: Accelerating Last Stand
+  save_key: AutoGen_Accelerating_Last_Stand
+  category: Pictos.Pictos
+  type: int
+- name: Accelerating Shots
+  save_key: AutoGen_Accelerating_Shots
+  category: Pictos.Pictos
+  type: int
+- name: Accelerating Tint
+  save_key: AutoGen_Accelerating_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Aegis Revival
+  save_key: AutoGen_Aegis_Revival
+  category: Pictos.Pictos
+  type: int
+- name: At Death's Door
+  save_key: AutoGen_At_Death_s_Door
+  category: Pictos.Pictos
+  type: int
+- name: Attack Lifesteal
+  save_key: AutoGen_Attack_Lifesteal
+  category: Pictos.Pictos
+  type: int
+- name: Augmented Aim
+  save_key: AutoGen_Augmented_Aim
+  category: Pictos.Pictos
+  type: int
+- name: Augmented Attack
+  save_key: AutoGen_Augmented_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Augmented Counter I
+  save_key: AutoGen_Augmented_Counter_I
+  category: Pictos.Pictos
+  type: int
+- name: Augmented Counter II
+  save_key: AutoGen_Augmented_Counter_II
+  category: Pictos.Pictos
+  type: int
+- name: Augmented Counter III
+  save_key: AutoGen_Augmented_Counter_III
+  category: Pictos.Pictos
+  type: int
+- name: Augmented First Strike
+  save_key: AutoGen_Augmented_First_Strike
+  category: Pictos.Pictos
+  type: int
+- name: Auto Death
+  save_key: AutoGen_Auto_Death
+  category: Pictos.Pictos
+  type: int
+- name: Auto Powerful
+  save_key: AutoGen_Auto_Powerful
+  category: Pictos.Pictos
+  type: int
+- name: Auto Regen
+  save_key: AutoGen_Auto_Regen
+  category: Pictos.Pictos
+  type: int
+- name: Auto Rush
+  save_key: AutoGen_Auto_Rush
+  category: Pictos.Pictos
+  type: int
+- name: Auto Shell
+  save_key: AutoGen_Auto_Shell
+  category: Pictos.Pictos
+  type: int
+- name: Base Shield
+  save_key: AutoGen_Base_Shield
+  category: Pictos.Pictos
+  type: int
+- name: Beneficial Contamination
+  save_key: AutoGen_Beneficial_Contamination
+  category: Pictos.Pictos
+  type: int
+- name: Break Specialist
+  save_key: AutoGen_Break_Specialist
+  category: Pictos.Pictos
+  type: int
+- name: Breaker
+  save_key: AutoGen_Breaker
+  category: Pictos.Pictos
+  type: int
+- name: Breaking Attack
+  save_key: AutoGen_Breaking_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Breaking Burn
+  save_key: AutoGen_Breaking_Burn
+  category: Pictos.Pictos
+  type: int
+- name: Breaking Counter
+  save_key: AutoGen_Breaking_Counter
+  category: Pictos.Pictos
+  type: int
+- name: Breaking Death
+  save_key: AutoGen_Breaking_Death
+  category: Pictos.Pictos
+  type: int
+- name: Breaking Shots
+  save_key: AutoGen_Breaking_Shots
+  category: Pictos.Pictos
+  type: int
+- name: Breaking Slow
+  save_key: AutoGen_Breaking_Slow
+  category: Pictos.Pictos
+  type: int
+- name: Burn Affinity
+  save_key: AutoGen_Burn_Affinity
+  category: Pictos.Pictos
+  type: int
+- name: Burning Break
+  save_key: AutoGen_Burning_Break
+  category: Pictos.Pictos
+  type: int
+- name: Burning Death
+  save_key: AutoGen_Burning_Death
+  category: Pictos.Pictos
+  type: int
+- name: Burning Mark
+  save_key: AutoGen_Burning_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Burning Shots
+  save_key: AutoGen_Burning_Shots
+  category: Pictos.Pictos
+  type: int
+- name: Charging Alteration
+  save_key: AutoGen_Charging_Alteration
+  category: Pictos.Pictos
+  type: int
+- name: Charging Attack
+  save_key: AutoGen_Charging_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Charging Burn
+  save_key: AutoGen_Charging_Burn
+  category: Pictos.Pictos
+  type: int
+- name: Charging Counter
+  save_key: AutoGen_Charging_Counter
+  category: Pictos.Pictos
+  type: int
+- name: Charging Critical
+  save_key: AutoGen_Charging_Critical
+  category: Pictos.Pictos
+  type: int
+- name: Charging Mark
+  save_key: AutoGen_Charging_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Charging Stun
+  save_key: AutoGen_Charging_Stun
+  category: Pictos.Pictos
+  type: int
+- name: Charging Tint
+  save_key: AutoGen_Charging_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Charging Weakness
+  save_key: AutoGen_Charging_Weakness
+  category: Pictos.Pictos
+  type: int
+- name: Cheater
+  save_key: AutoGen_Cheater
+  category: Pictos.Pictos
+  type: int
+- name: Clea's Life
+  save_key: AutoGen_Clea_s_Life
+  category: Pictos.Pictos
+  type: int
+- name: Cleansing Tint
+  save_key: AutoGen_Cleansing_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Combo Attack I
+  save_key: AutoGen_Combo_Attack_I
+  category: Pictos.Pictos
+  type: int
+- name: Combo Attack II
+  save_key: AutoGen_Combo_Attack_II
+  category: Pictos.Pictos
+  type: int
+- name: Combo Attack III
+  save_key: AutoGen_Combo_Attack_III
+  category: Pictos.Pictos
+  type: int
+- name: Confident
+  save_key: AutoGen_Confident
+  category: Pictos.Pictos
+  type: int
+- name: Confident Fighter
+  save_key: AutoGen_Confident_Fighter
+  category: Pictos.Pictos
+  type: int
+- name: Critical Break
+  save_key: AutoGen_Critical_Break
+  category: Pictos.Pictos
+  type: int
+- name: Critical Burn
+  save_key: AutoGen_Critical_Burn
+  category: Pictos.Pictos
+  type: int
+- name: Critical Moment
+  save_key: AutoGen_Critical_Moment
+  category: Pictos.Pictos
+  type: int
+- name: Critical Stun
+  save_key: AutoGen_Critical_Stun
+  category: Pictos.Pictos
+  type: int
+- name: Critical Vulnerability
+  save_key: AutoGen_Critical_Vulnerability
+  category: Pictos.Pictos
+  type: int
+- name: Critical Weakness
+  save_key: AutoGen_Critical_Weakness
+  category: Pictos.Pictos
+  type: int
+- name: Dead Energy I
+  save_key: AutoGen_Dead_Energy_I
+  category: Pictos.Pictos
+  type: int
+- name: Dead Energy II
+  save_key: AutoGen_Dead_Energy_II
+  category: Pictos.Pictos
+  type: int
+- name: Death Bomb
+  save_key: AutoGen_Death_Bomb
+  category: Pictos.Pictos
+  type: int
+- name: Defensive Mode
+  save_key: AutoGen_Defensive_Mode
+  category: Pictos.Pictos
+  type: int
+- name: Dodger
+  save_key: AutoGen_Dodger
+  category: Pictos.Pictos
+  type: int
+- name: Double Burn
+  save_key: AutoGen_Double_Burn
+  category: Pictos.Pictos
+  type: int
+- name: Double Mark
+  save_key: AutoGen_Double_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Draining Cleanse
+  save_key: AutoGen_Draining_Cleanse
+  category: Pictos.Pictos
+  type: int
+- name: Effective Heal
+  save_key: AutoGen_Effective_Heal
+  category: Pictos.Pictos
+  type: int
+- name: Effective Support
+  save_key: AutoGen_Effective_Support
+  category: Pictos.Pictos
+  type: int
+- name: Empowering Attack
+  save_key: AutoGen_Empowering_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Empowering Break
+  save_key: AutoGen_Empowering_Break
+  category: Pictos.Pictos
+  type: int
+- name: Empowering Dodge
+  save_key: AutoGen_Empowering_Dodge
+  category: Pictos.Pictos
+  type: int
+- name: Empowering Last Stand
+  save_key: AutoGen_Empowering_Last_Stand
+  category: Pictos.Pictos
+  type: int
+- name: Empowering Parry
+  save_key: AutoGen_Empowering_Parry
+  category: Pictos.Pictos
+  type: int
+- name: Empowering Tint
+  save_key: AutoGen_Empowering_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Energising Attack I
+  save_key: AutoGen_Energising_Attack_I
+  category: Pictos.Pictos
+  type: int
+- name: Energising Attack II
+  save_key: AutoGen_Energising_Attack_II
+  category: Pictos.Pictos
+  type: int
+- name: Energising Break
+  save_key: AutoGen_Energising_Break
+  category: Pictos.Pictos
+  type: int
+- name: Energising Burn
+  save_key: AutoGen_Energising_Burn
+  category: Pictos.Pictos
+  type: int
+- name: Energising Cleanse
+  save_key: AutoGen_Energising_Cleanse
+  category: Pictos.Pictos
+  type: int
+- name: Energising Death
+  save_key: AutoGen_Energising_Death
+  category: Pictos.Pictos
+  type: int
+- name: Energising Gradient
+  save_key: AutoGen_Energising_Gradient
+  category: Pictos.Pictos
+  type: int
+- name: Energising Heal
+  save_key: AutoGen_Energising_Heal
+  category: Pictos.Pictos
+  type: int
+- name: Energising Jump
+  save_key: AutoGen_Energising_Jump
+  category: Pictos.Pictos
+  type: int
+- name: Energising Pain
+  save_key: AutoGen_Energising_Pain
+  category: Pictos.Pictos
+  type: int
+- name: Energising Parry
+  save_key: AutoGen_Energising_Parry
+  category: Pictos.Pictos
+  type: int
+- name: Energising Powerful
+  save_key: AutoGen_Energising_Powerful
+  category: Pictos.Pictos
+  type: int
+- name: Energising Revive
+  save_key: AutoGen_Energising_Revive
+  category: Pictos.Pictos
+  type: int
+- name: Energising Rush
+  save_key: AutoGen_Energising_Rush
+  category: Pictos.Pictos
+  type: int
+- name: Energising Shell
+  save_key: AutoGen_Energising_Shell
+  category: Pictos.Pictos
+  type: int
+- name: Energising Shots
+  save_key: AutoGen_Energising_Shots
+  category: Pictos.Pictos
+  type: int
+- name: Energising Start I
+  save_key: AutoGen_Energising_Start_I
+  category: Pictos.Pictos
+  type: int
+- name: Energising Start II
+  save_key: AutoGen_Energising_Start_II
+  category: Pictos.Pictos
+  type: int
+- name: Energising Start III
+  save_key: AutoGen_Energising_Start_III
+  category: Pictos.Pictos
+  type: int
+- name: Energising Start IV
+  save_key: AutoGen_Energising_Start_IV
+  category: Pictos.Pictos
+  type: int
+- name: Energising Stun
+  save_key: AutoGen_Energising_Stun
+  category: Pictos.Pictos
+  type: int
+- name: Energising Turn
+  save_key: AutoGen_Energising_Turn
+  category: Pictos.Pictos
+  type: int
+- name: Energy Master
+  save_key: AutoGen_Energy_Master
+  category: Pictos.Pictos
+  type: int
+- name: Enfeebling Attack
+  save_key: AutoGen_Enfeebling_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Enfeebling Mark
+  save_key: AutoGen_Enfeebling_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Exhausting Power
+  save_key: AutoGen_Exhausting_Power
+  category: Pictos.Pictos
+  type: int
+- name: Exposing Attack
+  save_key: AutoGen_Exposing_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Exposing Break
+  save_key: AutoGen_Exposing_Break
+  category: Pictos.Pictos
+  type: int
+- name: Faster Than Strong
+  save_key: AutoGen_Faster_Than_Strong
+  category: Pictos.Pictos
+  type: int
+- name: First Offensive
+  save_key: AutoGen_First_Offensive
+  category: Pictos.Pictos
+  type: int
+- name: First Strike
+  save_key: AutoGen_First_Strike
+  category: Pictos.Pictos
+  type: int
+- name: Fueling Break
+  save_key: AutoGen_Fueling_Break
+  category: Pictos.Pictos
+  type: int
+- name: Full Strength
+  save_key: AutoGen_Full_Strength
+  category: Pictos.Pictos
+  type: int
+- name: Glass Canon
+  save_key: AutoGen_Glass_Canon
+  category: Pictos.Pictos
+  type: int
+- name: Gradient Break
+  save_key: AutoGen_Gradient_Break
+  category: Pictos.Pictos
+  type: int
+- name: Gradient Breaker
+  save_key: AutoGen_Gradient_Breaker
+  category: Pictos.Pictos
+  type: int
+- name: Gradient Fighter
+  save_key: AutoGen_Gradient_Fighter
+  category: Pictos.Pictos
+  type: int
+- name: Greater Defenceless
+  save_key: AutoGen_Greater_Defenceless
+  category: Pictos.Pictos
+  type: int
+- name: Greater Powerful
+  save_key: AutoGen_Greater_Powerful
+  category: Pictos.Pictos
+  type: int
+- name: Greater Powerless
+  save_key: AutoGen_Greater_Powerless
+  category: Pictos.Pictos
+  type: int
+- name: Greater Rush
+  save_key: AutoGen_Greater_Rush
+  category: Pictos.Pictos
+  type: int
+- name: Greater Shell
+  save_key: AutoGen_Greater_Shell
+  category: Pictos.Pictos
+  type: int
+- name: Greater Slow
+  save_key: AutoGen_Greater_Slow
+  category: Pictos.Pictos
+  type: int
+- name: Healing Boon
+  save_key: AutoGen_Healing_Boon
+  category: Pictos.Pictos
+  type: int
+- name: Healing Counter
+  save_key: AutoGen_Healing_Counter
+  category: Pictos.Pictos
+  type: int
+- name: Healing Death
+  save_key: AutoGen_Healing_Death
+  category: Pictos.Pictos
+  type: int
+- name: Healing Fire
+  save_key: AutoGen_Healing_Fire
+  category: Pictos.Pictos
+  type: int
+- name: Healing Mark
+  save_key: AutoGen_Healing_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Healing Parry
+  save_key: AutoGen_Healing_Parry
+  category: Pictos.Pictos
+  type: int
+- name: Healing Share
+  save_key: AutoGen_Healing_Share
+  category: Pictos.Pictos
+  type: int
+- name: Healing Stun
+  save_key: AutoGen_Healing_Stun
+  category: Pictos.Pictos
+  type: int
+- name: Healing Tint Energy
+  save_key: AutoGen_Healing_Tint_Energy
+  category: Pictos.Pictos
+  type: int
+- name: Immaculate
+  save_key: AutoGen_Immaculate
+  category: Pictos.Pictos
+  type: int
+- name: In Medias Res
+  save_key: AutoGen_In_Medias_Res
+  category: Pictos.Pictos
+  type: int
+- name: Inverted Affinity
+  save_key: AutoGen_Inverted_Affinity
+  category: Pictos.Pictos
+  type: int
+- name: Last Stand Critical
+  save_key: AutoGen_Last_Stand_Critical
+  category: Pictos.Pictos
+  type: int
+- name: Longer Burn
+  save_key: AutoGen_Longer_Burn
+  category: Pictos.Pictos
+  type: int
+- name: Longer Powerful
+  save_key: AutoGen_Longer_Powerful
+  category: Pictos.Pictos
+  type: int
+- name: Longer Rush
+  save_key: AutoGen_Longer_Rush
+  category: Pictos.Pictos
+  type: int
+- name: Longer Shell
+  save_key: AutoGen_Longer_Shell
+  category: Pictos.Pictos
+  type: int
+- name: Marking Break
+  save_key: AutoGen_Marking_Break
+  category: Pictos.Pictos
+  type: int
+- name: Marking Shots
+  save_key: AutoGen_Marking_Shots
+  category: Pictos.Pictos
+  type: int
+- name: Painted Power
+  save_key: AutoGen_Painted_Power
+  category: Pictos.Pictos
+  type: int
+- name: Painter
+  save_key: AutoGen_Painter
+  category: Pictos.Pictos
+  type: int
+- name: Perilous Parry
+  save_key: AutoGen_Perilous_Parry
+  category: Pictos.Pictos
+  type: int
+- name: Piercing Shot
+  save_key: AutoGen_Piercing_Shot
+  category: Pictos.Pictos
+  type: int
+- name: Powered Attack
+  save_key: AutoGen_Powered_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Powerful Heal
+  save_key: AutoGen_Powerful_Heal
+  category: Pictos.Pictos
+  type: int
+- name: Powerful Mark
+  save_key: AutoGen_Powerful_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Powerful on Shell
+  save_key: AutoGen_Powerful_on_Shell
+  category: Pictos.Pictos
+  type: int
+- name: Powerful Revive
+  save_key: AutoGen_Powerful_Revive
+  category: Pictos.Pictos
+  type: int
+- name: Powerful Shield
+  save_key: AutoGen_Powerful_Shield
+  category: Pictos.Pictos
+  type: int
+- name: Powerful Shots
+  save_key: AutoGen_Powerful_Shots
+  category: Pictos.Pictos
+  type: int
+- name: Pro Retreat
+  save_key: AutoGen_Pro_Retreat
+  category: Pictos.Pictos
+  type: int
+- name: Protecting Attack
+  save_key: AutoGen_Protecting_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Protecting Death
+  save_key: AutoGen_Protecting_Death
+  category: Pictos.Pictos
+  type: int
+- name: Protecting Heal
+  save_key: AutoGen_Protecting_Heal
+  category: Pictos.Pictos
+  type: int
+- name: Protecting Last Stand
+  save_key: AutoGen_Protecting_Last_Stand
+  category: Pictos.Pictos
+  type: int
+- name: Protecting Tint
+  save_key: AutoGen_Protecting_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Quick Break
+  save_key: AutoGen_Quick_Break
+  category: Pictos.Pictos
+  type: int
+- name: Random Defense
+  save_key: AutoGen_Random_Defense
+  category: Pictos.Pictos
+  type: int
+- name: Recovery
+  save_key: AutoGen_Recovery
+  category: Pictos.Pictos
+  type: int
+- name: Rejuvenating Revive
+  save_key: AutoGen_Rejuvenating_Revive
+  category: Pictos.Pictos
+  type: int
+- name: Revive Paradox
+  save_key: AutoGen_Revive_Paradox
+  category: Pictos.Pictos
+  type: int
+- name: Revive Tint Energy
+  save_key: AutoGen_Revive_Tint_Energy
+  category: Pictos.Pictos
+  type: int
+- name: Rewarding Mark
+  save_key: AutoGen_Rewarding_Mark
+  category: Pictos.Pictos
+  type: int
+- name: Roulette
+  save_key: AutoGen_Roulette
+  category: Pictos.Pictos
+  type: int
+- name: Rush on Powerful
+  save_key: AutoGen_Rush_on_Powerful
+  category: Pictos.Pictos
+  type: int
+- name: Second Chance
+  save_key: AutoGen_Second_Chance
+  category: Pictos.Pictos
+  type: int
+- name: Shared Care
+  save_key: AutoGen_Shared_Care
+  category: Pictos.Pictos
+  type: int
+- name: Shell On Rush
+  save_key: AutoGen_Shell_On_Rush
+  category: Pictos.Pictos
+  type: int
+- name: Shield Affinity
+  save_key: AutoGen_Shield_Affinity
+  category: Pictos.Pictos
+  type: int
+- name: Shielding Death
+  save_key: AutoGen_Shielding_Death
+  category: Pictos.Pictos
+  type: int
+- name: Shielding Tint
+  save_key: AutoGen_Shielding_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Shortcut
+  save_key: AutoGen_Shortcut
+  category: Pictos.Pictos
+  type: int
+- name: Slowing Break
+  save_key: AutoGen_Slowing_Break
+  category: Pictos.Pictos
+  type: int
+- name: Sniper
+  save_key: AutoGen_Sniper
+  category: Pictos.Pictos
+  type: int
+- name: Solidifying
+  save_key: AutoGen_Solidifying
+  category: Pictos.Pictos
+  type: int
+- name: Solo Fighter
+  save_key: AutoGen_Solo_Fighter
+  category: Pictos.Pictos
+  type: int
+- name: SOS Power
+  save_key: AutoGen_SOS_Power
+  category: Pictos.Pictos
+  type: int
+- name: SOS Rush
+  save_key: AutoGen_SOS_Rush
+  category: Pictos.Pictos
+  type: int
+- name: SOS Shell
+  save_key: AutoGen_SOS_Shell
+  category: Pictos.Pictos
+  type: int
+- name: Staggering Attack
+  save_key: AutoGen_Staggering_Attack
+  category: Pictos.Pictos
+  type: int
+- name: Stay Marked
+  save_key: AutoGen_Stay_Marked
+  category: Pictos.Pictos
+  type: int
+- name: Stun Boost
+  save_key: AutoGen_Stun_Boost
+  category: Pictos.Pictos
+  type: int
+- name: Survivor
+  save_key: AutoGen_Survivor
+  category: Pictos.Pictos
+  type: int
+- name: Sweet Kill
+  save_key: AutoGen_Sweet_Kill
+  category: Pictos.Pictos
+  type: int
+- name: Tainted
+  save_key: AutoGen_Tainted
+  category: Pictos.Pictos
+  type: int
+- name: Teamwork
+  save_key: AutoGen_Teamwork
+  category: Pictos.Pictos
+  type: int
+- name: The One
+  save_key: AutoGen_The_One
+  category: Pictos.Pictos
+  type: int
+- name: Time Tint
+  save_key: AutoGen_Time_Tint
+  category: Pictos.Pictos
+  type: int
+- name: Versatile
+  save_key: AutoGen_Versatile
+  category: Pictos.Pictos
+  type: int
+- name: Warming Up
+  save_key: AutoGen_Warming_Up
+  category: Pictos.Pictos
+  type: int
+- name: Weakness Gain
+  save_key: AutoGen_Weakness_Gain
+  category: Pictos.Pictos
+  type: int
+- name: Chroma Catalyst
+  save_key: UpgradeMaterial_Level1
+  category: Tints.Weapon Upgrade Material
+  type: int
+- name: Grandiose Chroma Catalyst
+  save_key: UpgradeMaterial_Level2
+  category: Tints.Weapon Upgrade Material
+  type: int
+- name: perfect chroma catalyst
+  save_key: UpgradeMaterial_Level3
+  category: Tints.Weapon Upgrade Material
+  type: int
+- name: polished chroma catalyst
+  save_key: UpgradeMaterial_Level4
+  category: Tints.Weapon Upgrade Material
+  type: int
+- name: resplendent chroma catalyst
+  save_key: UpgradeMaterial_Level5
+  category: Tints.Weapon Upgrade Material
+  type: int
+- name: Colour of Lumina
+  save_key: Consumable_LuminaPoint
+  category: Tints.Other Tints
+  type: int
+- name: Healing Tint Shard
+  save_key: HealingTint_Shard
+  category: Tints.Other Tints
+  type: int
+- name: Recoat
+  save_key: Consumable_Respec
+  category: Tints.Other Tints
+  type: int
+- name: Shape of Energy
+  save_key: ConsumableUpgradeMaterial_AP
+  category: Tints.Other Tints
+  type: int
+- name: Shape of Health
+  save_key: ConsumableUpgradeMaterial_Health
+  category: Tints.Other Tints
+  type: int
+- name: Abysseram
+  save_key: Abysseram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Blodam
+  save_key: Blodam
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Chevalam
+  save_key: Chevalam
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Confuso
+  save_key: Confuso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Contorso
+  save_key: Contorso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Corpeso
+  save_key: Corpeso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Cruleram
+  save_key: Cruleram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Cultam
+  save_key: Cultam
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Danseso
+  save_key: Danseso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Delaram
+  save_key: Delaram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Demonam
+  save_key: Demonam
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Dreameso
+  save_key: Dreameso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Dualiso
+  save_key: Dualiso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Gaulteram
+  save_key: Gaulteram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Gesam
+  save_key: Gesam
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Glaceso
+  save_key: Glaceso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Lanceram
+  save_key: Lanceram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Liteso
+  save_key: Liteso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Noahram
+  save_key: Noahram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Nosaram
+  save_key: Nosaram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Sakaram
+  save_key: Sakaram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Seeram
+  save_key: Seeram
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Simoso
+  save_key: Simoso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Sireso
+  save_key: Sireso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Tireso
+  save_key: Tireso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Verleso
+  save_key: Verleso
+  category: Weapons.Gustave & Verso
+  type: int
+- name: Angerim
+  save_key: Angerim
+  category: Weapons.Lune
+  type: int
+- name: Benisim
+  save_key: Benisim
+  category: Weapons.Lune
+  type: int
+- name: Betelim
+  save_key: Betelim
+  category: Weapons.Lune
+  type: int
+- name: Braselim
+  save_key: Braselim
+  category: Weapons.Lune
+  type: int
+- name: Chapelim
+  save_key: Chapelim
+  category: Weapons.Lune
+  type: int
+- name: Choralim
+  save_key: Choralim
+  category: Weapons.Lune
+  type: int
+- name: Colim
+  save_key: Colim
+  category: Weapons.Lune
+  type: int
+- name: Coralim
+  save_key: Coralim
+  category: Weapons.Lune
+  type: int
+- name: Deminerim
+  save_key: Deminerim
+  category: Weapons.Lune
+  type: int
+- name: Elerim
+  save_key: Elerim
+  category: Weapons.Lune
+  type: int
+- name: Kralim
+  save_key: Kralim
+  category: Weapons.Lune
+  type: int
+- name: Lighterim
+  save_key: Lighterim
+  category: Weapons.Lune
+  type: int
+- name: Lithelim
+  save_key: Lithelim
+  category: Weapons.Lune
+  type: int
+- name: Lunerim
+  save_key: Lunerim
+  category: Weapons.Lune
+  type: int
+- name: Painerim
+  save_key: Painerim
+  category: Weapons.Lune
+  type: int
+- name: Potierim
+  save_key: Potierim
+  category: Weapons.Lune
+  type: int
+- name: Redalim
+  save_key: Redalim
+  category: Weapons.Lune
+  type: int
+- name: Saperim
+  save_key: Saperim
+  category: Weapons.Lune
+  type: int
+- name: Scaverim
+  save_key: Scaverim
+  category: Weapons.Lune
+  type: int
+- name: Snowim
+  save_key: Snowim
+  category: Weapons.Lune
+  type: int
+- name: Trebuchim
+  save_key: Trebuchim
+  category: Weapons.Lune
+  type: int
+- name: Troubadim
+  save_key: Troubadim
+  category: Weapons.Lune
+  type: int
+- name: Barrier Breaker
+  save_key: Barrier_Breaker
+  category: Weapons.Maelle
+  type: int
+- name: Battlum
+  save_key: Battlum
+  category: Weapons.Maelle
+  type: int
+- name: Brulerum
+  save_key: Brulerum
+  category: Weapons.Maelle
+  type: int
+- name: Chalium
+  save_key: Chalium
+  category: Weapons.Maelle
+  type: int
+- name: Chantenum
+  save_key: Chantenum
+  category: Weapons.Maelle
+  type: int
+- name: Clierum
+  save_key: Clierum
+  category: Weapons.Maelle
+  type: int
+- name: Coldum
+  save_key: Coldum
+  category: Weapons.Maelle
+  type: int
+- name: Duenum
+  save_key: Duenum
+  category: Weapons.Maelle
+  type: int
+- name: Facesum
+  save_key: Facesum
+  category: Weapons.Maelle
+  type: int
+- name: Glaisum
+  save_key: Glaisum
+  category: Weapons.Maelle
+  type: int
+- name: Jarum
+  save_key: Jarum
+  category: Weapons.Maelle
+  type: int
+- name: Lithum
+  save_key: Lithum
+  category: Weapons.Maelle
+  type: int
+- name: Maellum
+  save_key: Maellum
+  category: Weapons.Maelle
+  type: int
+- name: Medalum
+  save_key: Medalum
+  category: Weapons.Maelle
+  type: int
+- name: Melarum
+  save_key: Melarum
+  category: Weapons.Maelle
+  type: int
+- name: Plenum
+  save_key: Plenum
+  category: Weapons.Maelle
+  type: int
+- name: Seashellum
+  save_key: Seashellum
+  category: Weapons.Maelle
+  type: int
+- name: Sekarum
+  save_key: Sekarum
+  category: Weapons.Maelle
+  type: int
+- name: Stalum
+  save_key: Stalum
+  category: Weapons.Maelle
+  type: int
+- name: Tissenum
+  save_key: Tissenum
+  category: Weapons.Maelle
+  type: int
+- name: Veremum
+  save_key: Veremum
+  category: Weapons.Maelle
+  type: int
+- name: Volesterum
+  save_key: Volesterum
+  category: Weapons.Maelle
+  type: int
+- name: Yeverum
+  save_key: Yeverum
+  category: Weapons.Maelle
+  type: int
+- name: Ballaro
+  save_key: Ballaro
+  category: Weapons.Monoco
+  type: int
+- name: Boucharo
+  save_key: Boucharo
+  category: Weapons.Monoco
+  type: int
+- name: Brumaro
+  save_key: Brumaro
+  category: Weapons.Monoco
+  type: int
+- name: Chromaro
+  save_key: Chromaro
+  category: Weapons.Monoco
+  type: int
+- name: Fragaro
+  save_key: Fragaro
+  category: Weapons.Monoco
+  type: int
+- name: Grandaro
+  save_key: Grandaro
+  category: Weapons.Monoco
+  type: int
+- name: Joyaro
+  save_key: Joyaro
+  category: Weapons.Monoco
+  type: int
+- name: Monocaro
+  save_key: Monocaro
+  category: Weapons.Monoco
+  type: int
+- name: Nusaro
+  save_key: Nusaro
+  category: Weapons.Monoco
+  type: int
+- name: Sidaro
+  save_key: Sidaro
+  category: Weapons.Monoco
+  type: int
+- name: Urnaro
+  save_key: Urnaro
+  category: Weapons.Monoco
+  type: int
+- name: Algueron
+  save_key: Algueron
+  category: Weapons.Sciel
+  type: int
+- name: Blizzon
+  save_key: Blizzon
+  category: Weapons.Sciel
+  type: int
+- name: Bourgelon
+  save_key: Bourgelon
+  category: Weapons.Sciel
+  type: int
+- name: Charnon
+  save_key: Charnon
+  category: Weapons.Sciel
+  type: int
+- name: Chation
+  save_key: Chation
+  category: Weapons.Sciel
+  type: int
+- name: Corderon
+  save_key: Corderon
+  category: Weapons.Sciel
+  type: int
+- name: Direton
+  save_key: Direton
+  category: Weapons.Sciel
+  type: int
+- name: Garganon
+  save_key: Garganon
+  category: Weapons.Sciel
+  type: int
+- name: Gobluson
+  save_key: Gobluson
+  category: Weapons.Sciel
+  type: int
+- name: Guleson
+  save_key: Guleson
+  category: Weapons.Sciel
+  type: int
+- name: Hevasson
+  save_key: Hevasson
+  category: Weapons.Sciel
+  type: int
+- name: Litheson
+  save_key: Litheson
+  category: Weapons.Sciel
+  type: int
+- name: Lusteson
+  save_key: Lusteson
+  category: Weapons.Sciel
+  type: int
+- name: Martenon
+  save_key: Martenon
+  category: Weapons.Sciel
+  type: int
+- name: Minason
+  save_key: Minason
+  category: Weapons.Sciel
+  type: int
+- name: Moisson
+  save_key: Moisson
+  category: Weapons.Sciel
+  type: int
+- name: Ramasson
+  save_key: Ramasson
+  category: Weapons.Sciel
+  type: int
+- name: Rangeson
+  save_key: Rangeson
+  category: Weapons.Sciel
+  type: int
+- name: Sadon
+  save_key: Sadon
+  category: Weapons.Sciel
+  type: int
+- name: Scieleson
+  save_key: Scieleson
+  category: Weapons.Sciel
+  type: int
+- name: Tisseron
+  save_key: Tisseron
+  category: Weapons.Sciel
+  type: int

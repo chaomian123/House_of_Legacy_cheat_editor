@@ -8,7 +8,7 @@ import {
   useToast
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
-import { useLocale } from '../lib/useLocale';
+import { useLocale } from '../../lib/useLocale';
 
 export default function SurveyVote({ 
   surveyId,

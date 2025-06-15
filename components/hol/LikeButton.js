@@ -1,7 +1,7 @@
 import { Box, Button, Text, HStack, useToast } from '@chakra-ui/react'
 import { FaHandPointUp, FaRegHandPointUp } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
-import { useLocale } from '../lib/useLocale'
+import { useLocale } from '../../lib/useLocale'
 
 export default function LikeButton() {
   const [likes, setLikes] = useState(0)

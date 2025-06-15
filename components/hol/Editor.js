@@ -18,7 +18,7 @@ import {
 import { Table, Input, Form, Button, Radio, message } from 'antd';
 import JSONEditor from 'jsoneditor';
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react';
-import { useLocale } from '../lib/useLocale';
+import { useLocale } from '../../lib/useLocale';
 import 'jsoneditor/dist/jsoneditor.min.css';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
 
