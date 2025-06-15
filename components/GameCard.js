@@ -12,7 +12,7 @@ import {
 import { motion } from 'framer-motion';
 import { FaGamepad } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-
+import { useLocale } from '../lib/useLocale';
 const MotionBox = motion(Box);
 
 const STATUS_COLORS = {
@@ -48,7 +48,7 @@ export default function GameCard({
   const bgColor = useColorModeValue('white', 'gray.800');
   const hoverBg = useColorModeValue('gray.50', 'gray.700');
   const textColor = useColorModeValue('gray.600', 'gray.300');
-
+  const { locale } = useLocale();
   const handleClick = () => {
     if (path) {
       router.push(path);
@@ -135,7 +135,7 @@ export default function GameCard({
             _hover={{ transform: 'translateY(-2px)', shadow: 'lg' }}
             transition="all 0.2s"
           >
-            Start Editing
+            {locale === 'zh' ? '进入编辑器' : 'Enter Editor'}
           </Button>
         </VStack>
       </Box>

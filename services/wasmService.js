@@ -1,8 +1,11 @@
-// 直接从编译生成的 WASM 文件导入
-import init, { 
-  parse_sav_to_json, 
-  encode_json_to_sav
-} from '../pkg/uesave_wasm.js';
+// 从CDN加载WASM模块
+const WASM_CDN_URL = 'https://makemaze.online/wasm/1750021714445_8u87qbny.wasm';
+const WASM_CDN_JS_URL = 'https://makemaze.online/js/1750023870567_wstc5r0x.js';
+
+// 模拟未加载状态下的函数接口
+let parse_sav_to_json = null;
+let encode_json_to_sav = null;
+let init = null;
 
 // 全局状态
 let wasmInitialized = false;
@@ -26,13 +29,52 @@ export const initializeWasm = async () => {
   // 开始初始化
   initPromise = (async () => {
     try {
-      console.log("🚀 正在初始化 WASM 模块...");
+      console.log("🚀 正在从CDN初始化 WASM 模块...");
       
-      // 调用 wasm-pack 生成的初始化函数
-      await init();
-      
-      wasmInitialized = true;
-      console.log("✅ WASM 模块初始化成功");
+      // 动态导入WASM JS模块
+      try {
+        const wasmModule = await import(/* webpackIgnore: true */ WASM_CDN_JS_URL);
+        init = wasmModule.default;
+        parse_sav_to_json = wasmModule.parse_sav_to_json;
+        encode_json_to_sav = wasmModule.encode_json_to_sav;
+        
+        console.log("JS模块加载成功，正在初始化WASM...");
+        
+        // 初始化WASM模块
+        await init(WASM_CDN_URL);
+        
+        wasmInitialized = true;
+        console.log("✅ WASM 模块初始化成功");
+      } catch (importError) {
+        console.error("无法导入WASM JS模块:", importError);
+        
+        // 尝试使用fetch作为后备方案
+        console.log("尝试使用fetch方法...");
+        const fetchOptions = {
+          credentials: 'same-origin',
+          mode: 'cors',
+        };
+        
+        // 先加载JS
+        const jsResponse = await fetch(WASM_CDN_JS_URL, fetchOptions);
+        if (!jsResponse.ok) {
+          throw new Error(`无法加载WASM JS文件: ${jsResponse.status} ${jsResponse.statusText}`);
+        }
+        
+        // 评估JS模块
+        const jsText = await jsResponse.text();
+        const wasmModule = new Function('return ' + jsText)();
+        
+        init = wasmModule.default;
+        parse_sav_to_json = wasmModule.parse_sav_to_json;
+        encode_json_to_sav = wasmModule.encode_json_to_sav;
+        
+        // 加载WASM二进制
+        await init(WASM_CDN_URL);
+        
+        wasmInitialized = true;
+        console.log("✅ WASM 模块通过fetch初始化成功");
+      }
       
     } catch (error) {
       console.error("❌ WASM 模块初始化失败:", error);
@@ -345,14 +387,7 @@ export const getItemsData = async () => {
       }
     }
     
-    // 由于API端点不存在，直接使用模拟数据
-    console.log('⚠️ API端点不可用，使用模拟数据');
-    const mockData = generateMockItemsData();
-    
-    // 缓存到本地
-    localStorage.setItem('itemsData', JSON.stringify(mockData));
-    
-    return mockData;
+  
   } catch (error) {
     console.error('❌ 获取物品数据失败:', error);
     
@@ -363,93 +398,4 @@ export const getItemsData = async () => {
   }
 };
 
-/**
- * 生成模拟物品数据用于开发测试
- */
-const generateMockItemsData = () => {
-  const categories = ['Outfits', 'Weapons', 'Hair', 'Tints', 'Pictos'];
-  const characters = ['gustave', 'lune', 'maelle', 'monoco', 'sciel', 'verso'];
-  
-  // 定义具体的物品名称
-  const itemNames = {
-    Outfits: {
-      gustave: ['典雅西装', '战斗外套', '贵族礼服', '探险家装备', '休闲便装'],
-      lune: ['星光长裙', '魔法学徒装', '森林守护者', '皇家礼服', '战斗法袍'],
-      maelle: ['猎人外套', '机械师工装', '军团制服', '探险家套装', '华丽礼服'],
-      monoco: ['舞者服装', '夏日长裙', '冬季大衣', '战斗护甲', '皇家服饰'],
-      sciel: ['学者长袍', '实验室外套', '高级西装', '战术装备', '休闲装'],
-      verso: ['暗影斗篷', '刺客外套', '贵族礼服', '战斗护甲', '轻便旅行装']
-    },
-    Weapons: {
-      gustave: ['精钢长剑', '守护者之盾', '复仇之刃', '光明使者', '皇家佩剑'],
-      lune: ['星辰法杖', '魔法书典', '月光权杖', '元素宝珠', '智慧之杖'],
-      maelle: ['精准弓箭', '猎人短刀', '狙击步枪', '双持匕首', '爆破装置'],
-      monoco: ['魔法竖琴', '音乐宝盒', '治愈权杖', '守护之铃', '旋律短笛'],
-      sciel: ['实验装置', '能量手套', '科技眼镜', '数据终端', '机械臂'],
-      verso: ['暗影匕首', '双刃短剑', '毒药瓶', '隐形飞镖', '链钩']
-    },
-    Hair: {
-      gustave: ['整齐短发', '贵族发型', '战士发辫', '休闲发型', '精致卷发'],
-      lune: ['星光长发', '魔法师发髻', '优雅盘发', '森林编发', '华丽卷发'],
-      maelle: ['利落短发', '猎人发型', '军团发型', '实用马尾', '飘逸长发'],
-      monoco: ['舞者发髻', '华丽长发', '精致发饰', '公主卷发', '花朵发饰'],
-      sciel: ['学者发型', '实验家短发', '精英发型', '整洁背头', '时尚发型'],
-      verso: ['神秘长发', '刺客发型', '遮面发型', '暗影发辫', '利落短发']
-    },
-    Tints: {
-      gustave: ['皇家蓝', '贵族金', '战士红', '森林绿', '暗夜黑'],
-      lune: ['星光银', '魔法紫', '月光蓝', '梦幻粉', '神秘黑'],
-      maelle: ['猎人绿', '军团红', '钢铁灰', '沙漠黄', '深海蓝'],
-      monoco: ['舞者粉', '皇家紫', '天空蓝', '阳光黄', '珍珠白'],
-      sciel: ['学者蓝', '科技银', '实验绿', '能量紫', '中性灰'],
-      verso: ['暗影黑', '血色红', '毒药绿', '夜空蓝', '刺客灰']
-    },
-    Pictos: {
-      gustave: ['勇气符文', '荣誉徽章', '守护印记', '皇家纹章', '战士标志'],
-      lune: ['星辰符文', '魔法印记', '月光徽章', '元素标志', '智慧纹章'],
-      maelle: ['猎人标记', '军团徽章', '狙击印记', '探险符文', '战术标志'],
-      monoco: ['和谐符文', '治愈印记', '音乐徽章', '舞者标志', '皇家纹章'],
-      sciel: ['科学符文', '实验印记', '能量标志', '数据徽章', '发明纹章'],
-      verso: ['暗影符文', '刺客印记', '隐匿标志', '毒药徽章', '潜行纹章']
-    }
-  };
-  
-  const mockItems = [];
-  
-  // 为每个角色和分类生成物品
-  characters.forEach(character => {
-    categories.forEach(category => {
-      const names = itemNames[category][character] || [];
-      
-      names.forEach((name, index) => {
-        mockItems.push({
-          name: name,
-          save_key: `${character}_${category.toLowerCase()}_${index + 1}`,
-          character: character,
-          category: category,
-          type: 'int'
-        });
-      });
-    });
-  });
-  
-  // 添加一些共享武器
-  const sharedWeapons = [
-    '传承之剑', '古代神器', '双子武器', '命运之刃', '血脉长剑'
-  ];
-  
-  sharedWeapons.forEach((name, i) => {
-    mockItems.push({
-      name: name,
-      save_key: `shared_weapon_${i + 1}`,
-      character: 'gustave', // 这些武器会在UI中显示为Gustave和Verso共享
-      category: 'Weapons',
-      type: 'int',
-      shared: true
-    });
-  });
-  
-  console.log(`🔧 生成了 ${mockItems.length} 个模拟物品数据`);
-  return mockItems;
-};
 

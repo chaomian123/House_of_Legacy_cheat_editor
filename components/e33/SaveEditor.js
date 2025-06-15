@@ -57,7 +57,8 @@ import {
   updateInventoryItems, 
   findInventoryItem,
   encodeSavFile,
-  downloadFile
+  downloadFile,
+  getWasmStatus
 } from '../../services/wasmService';
 import { loadYaml } from '../../utils/yamlLoader';
 
@@ -80,7 +81,6 @@ const MAIN_CATEGORIES = [
   { id: 'Outfits', name: 'Outfits', icon: '' },
   { id: 'Weapons', name: 'Weapons', icon: '' },
   { id: 'Hair', name: 'Hair', icon: '' },
-  { id: 'Tints', name: 'Tints', icon: '' }
 ];
 
 const SaveEditor = () => {
@@ -95,10 +95,11 @@ const SaveEditor = () => {
   const [gold, setGold] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [wasmReady, setWasmReady] = useState(false);
   const toast = useToast();
 
   // 主题颜色
-  const bgColor = useColorModeValue('black', 'black');
+  const bgColor = useColorModeValue('rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0.6)');
   const borderColor = useColorModeValue('#fcd88a', '#fcd88a');
   const textColor = useColorModeValue('#b4b2b0', '#b4b2b0');
   const highlightColor = useColorModeValue('rgba(252, 216, 138, 0.15)', 'rgba(252, 216, 138, 0.15)');
@@ -423,8 +424,29 @@ const SaveEditor = () => {
     console.log('Inventory items:', inventoryItems);
   }, [tintsItems, getFilteredItems, inventoryItems]);
 
+  // 检查WASM加载状态
+  useEffect(() => {
+    const checkWasmStatus = () => {
+      const status = getWasmStatus();
+      setWasmReady(status.initialized);
+      
+      if (!status.initialized && !status.isInitializing) {
+        // 如果WASM未初始化且不在初始化过程中，可以添加其他逻辑
+        console.log('WASM模块未初始化');
+      }
+    };
+    
+    // 立即检查状态
+    checkWasmStatus();
+    
+    // 设置定时器，定期检查WASM状态
+    const intervalId = setInterval(checkWasmStatus, 1000);
+    
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
-    <Box w="full" bg="black" color="#b4b2b0">
+    <Box w="full" bg="rgba(0, 0, 0, 0.5)" color="#b4b2b0">
       <VStack spacing={6} align="stretch">
         {/* 文件上传区域 */}
         <Box
@@ -448,6 +470,7 @@ const SaveEditor = () => {
               leftIcon={<FaUpload />}
               colorScheme={buttonColorScheme}
               isLoading={isLoading}
+              isDisabled={!wasmReady}
             >
               {t.expedition33?.uploadSave || 'Upload Save'}
             </Button>
@@ -457,6 +480,11 @@ const SaveEditor = () => {
               </Text>
             )}
           </HStack>
+          {!wasmReady && (
+            <Text color="orange.300" fontSize="sm" mt={2}>
+              {locale === 'zh' ? "正在加载模块，请稍候..." : "Loading modules, please wait..."}
+            </Text>
+          )}
         </Box>
 
         <>
@@ -481,7 +509,7 @@ const SaveEditor = () => {
                   min={0}
                   borderColor={borderColor}
                 >
-                  <NumberInputField bg="black" color={textColor} _hover={{ borderColor: accentColor }} _focus={{ borderColor: accentColor }} />
+                  <NumberInputField bg="rgba(0, 0, 0, 0.4)" color={textColor} _hover={{ borderColor: accentColor }} _focus={{ borderColor: accentColor }} />
                   <NumberInputStepper>
                     <NumberIncrementStepper color={accentColor} />
                     <NumberDecrementStepper color={accentColor} />
@@ -517,7 +545,7 @@ const SaveEditor = () => {
                       size="sm"
                       borderColor={borderColor}
                     >
-                      <NumberInputField bg="black" color={textColor} _hover={{ borderColor: accentColor }} _focus={{ borderColor: accentColor }} />
+                      <NumberInputField bg="rgba(0, 0, 0, 0.4)" color={textColor} _hover={{ borderColor: accentColor }} _focus={{ borderColor: accentColor }} />
                       <NumberInputStepper>
                         <NumberIncrementStepper color={accentColor} />
                         <NumberDecrementStepper color={accentColor} />
@@ -551,11 +579,11 @@ const SaveEditor = () => {
                   >
                     Batch Operations
                   </MenuButton>
-                  <MenuList bg="black" borderColor={borderColor}>
-                    <MenuItem onClick={() => handleBatchOperation('setAll')} bg="black" color={textColor} _hover={{ bg: highlightColor }}>
+                  <MenuList bg="rgba(0, 0, 0, 0.4)" borderColor={borderColor}>
+                    <MenuItem onClick={() => handleBatchOperation('setAll')} bg="rgba(0, 0, 0, 0.4)" color={textColor} _hover={{ bg: highlightColor }}>
                       Set All to Owned
                     </MenuItem>
-                    <MenuItem onClick={() => handleBatchOperation('clearAll')} bg="black" color={textColor} _hover={{ bg: highlightColor }}>
+                    <MenuItem onClick={() => handleBatchOperation('clearAll')} bg="rgba(0, 0, 0, 0.4)" color={textColor} _hover={{ bg: highlightColor }}>
                       Clear All
                     </MenuItem>
                   </MenuList>
@@ -573,7 +601,7 @@ const SaveEditor = () => {
                       placeholder="Search items..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      bg="black"
+                      bg="rgba(0, 0, 0, 0.4)"
                       color={textColor}
                       borderColor={borderColor}
                       _hover={{ borderColor: accentColor }}
@@ -587,14 +615,14 @@ const SaveEditor = () => {
                     // placeholder="Select Category" 
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    bg="black"
+                    bg="rgba(0, 0, 0, 0.4)"
                     color={textColor}
                     borderColor={borderColor}
                     _hover={{ borderColor: accentColor }}
                     _focus={{ borderColor: accentColor }}
                     sx={{
                       option: {
-                        bg: "black !important",
+                        bg: "rgba(0, 0, 0, 0.6) !important",
                         color: "#b4b2b0",
                         _hover: {
                           bg: "rgba(252, 216, 138, 0.15) !important"
@@ -619,14 +647,14 @@ const SaveEditor = () => {
                       // placeholder="Select Character"
                       value={selectedCharacter}
                       onChange={(e) => setSelectedCharacter(e.target.value)}
-                      bg="black"
+                      bg="rgba(0, 0, 0, 0.4)"
                       color={textColor}
                       borderColor={borderColor}
                       _hover={{ borderColor: accentColor }}
                       _focus={{ borderColor: accentColor }}
                       sx={{
                         option: {
-                          bg: "black !important",
+                          bg: "rgba(0, 0, 0, 0.6) !important",
                           color: "#b4b2b0",
                           _hover: {
                             bg: "rgba(252, 216, 138, 0.15) !important"
@@ -665,7 +693,7 @@ const SaveEditor = () => {
                       const cardContent = (
                         <Card 
                           key={item.save_key} 
-                          bg={isItemOwned(item.save_key) ? highlightColor : 'black'}
+                          bg={isItemOwned(item.save_key) ? highlightColor : 'rgba(0, 0, 0, 0.5)'}
                           borderColor={isItemOwned(item.save_key) ? accentColor : borderColor}
                           borderWidth="1px"
                           size="sm"
