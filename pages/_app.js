@@ -5,10 +5,12 @@ import LanguageSwitcher from '../components/LanguageSwitcher';
 import Navigation from '../components/Navigation';
 import ThirdPartyScripts from '../components/ThirdPartyScripts';
 import PerformanceMonitor, { runWhenIdle, shouldDelayLoad } from '../lib/performance';
+import { inject } from "@vercel/analytics"
 // 主要 CSS 文件保持同步加载（关键样式）
 import './editor.css';
 
 export default function App({ Component, pageProps }) {
+  inject()
   // 性能监控和延迟加载优化
   useEffect(() => {
     // 启动性能监控

@@ -40,7 +40,7 @@ import { useLocale } from '../lib/useLocale';
 import SEOHead from '../components/SEOHead';
 import JianbingSupport from '../components/hol/JianbingSupport';
 import LikeButton from '../components/hol/LikeButton';
-import { inject } from "@vercel/analytics"
+
 import CryptForm from '../components/hol/CryptForm';
 import SurveyVote from '../components/hol/SurveyVote';
 import FeedbackGroupModal from '../components/hol/FeedbackGroupModal';
@@ -58,7 +58,7 @@ export default function HouseOfLegacy() {
   const { isOpen: isFeedbackOpen, onOpen: onFeedbackOpen, onClose: onFeedbackClose } = useDisclosure();
   const { locale, t } = useLocale();
   const toast = useToast();
-  
+
   // 功能列表折叠状态
   const [isFeatureListOpen, setIsFeatureListOpen] = useState(false);
 
