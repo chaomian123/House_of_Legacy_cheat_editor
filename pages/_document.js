@@ -17,6 +17,9 @@ export default class Document extends NextDocument {
           
           {/* 关键资源预加载 */}
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+
+          {/* Plausible Analytics */}
+          <script defer data-domain="savefile.space" src="https://plausible.io/js/script.js"></script>
         </Head>
         <body>
           <ColorModeScript initialColorMode='light' />
