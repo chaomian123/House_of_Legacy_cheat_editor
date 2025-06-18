@@ -9,6 +9,16 @@ const WASM_CDN_JS_URL = `/api/wasm-proxy?url=${encodeURIComponent(ORIGINAL_JS_UR
 // 本地路径作为备选
 const LOCAL_WASM_JS_URL = '../pkg/uesave_wasm.js';
 
+// localStorage存储键值
+const STORAGE_KEYS = {
+  WASM_BINARY: 'cached_wasm_binary',
+  WASM_JS: 'cached_wasm_js',
+  TIMESTAMP: 'wasm_cache_timestamp',
+};
+
+// 缓存过期时间：1个月（毫秒）
+const CACHE_EXPIRATION = 30 * 24 * 60 * 60 * 1000;
+
 // 模拟未加载状态下的函数接口
 let parse_sav_to_json = null;
 let encode_json_to_sav = null;
@@ -44,6 +54,18 @@ function detectEnvironment() {
       env.fetchSupport = true;
     }
     
+    // 检查localStorage支持
+    env.localStorageSupport = false;
+    if (typeof localStorage !== 'undefined') {
+      try {
+        localStorage.setItem('__test', '1');
+        localStorage.removeItem('__test');
+        env.localStorageSupport = true;
+      } catch (e) {
+        // localStorage可能被禁用或处于隐私模式
+      }
+    }
+    
     // 检查cookie支持
     env.cookieSupport = false;
     if (typeof document !== 'undefined' && document.cookie) {
@@ -67,6 +89,55 @@ function detectEnvironment() {
   } catch (e) {
     console.error('Error detecting environment:', e);
     return { error: e.message };
+  }
+}
+
+/**
+ * 检查localStorage缓存是否过期
+ */
+function isCacheExpired() {
+  try {
+    const timestamp = localStorage.getItem(STORAGE_KEYS.TIMESTAMP);
+    if (!timestamp) return true;
+    
+    const cacheTime = parseInt(timestamp, 10);
+    const currentTime = Date.now();
+    
+    return (currentTime - cacheTime) > CACHE_EXPIRATION;
+  } catch (e) {
+    console.warn('检查缓存过期时发生错误:', e);
+    return true; // 如果出错，视为缓存过期
+  }
+}
+
+/**
+ * 保存WASM到localStorage
+ */
+async function saveToLocalStorage(wasmBinary, jsText) {
+  try {
+    // 保存WASM二进制数据
+    if (wasmBinary) {
+      // 转换Uint8Array为Base64
+      const binary = Array.from(wasmBinary)
+        .map(byte => String.fromCharCode(byte))
+        .join('');
+      const base64 = btoa(binary);
+      localStorage.setItem(STORAGE_KEYS.WASM_BINARY, base64);
+    }
+    
+    // 保存JS模块
+    if (jsText) {
+      localStorage.setItem(STORAGE_KEYS.WASM_JS, jsText);
+    }
+    
+    // 保存当前时间戳
+    localStorage.setItem(STORAGE_KEYS.TIMESTAMP, Date.now().toString());
+    
+    console.log('✅ WASM模块已保存到localStorage缓存');
+    return true;
+  } catch (e) {
+    console.warn('无法保存WASM到localStorage:', e);
+    return false;
   }
 }
 
@@ -103,6 +174,7 @@ export const initializeWasm = async () => {
       
       // 尝试不同的加载方法，直到成功为止
       const loadMethods = [
+        loadFromLocalStorage, // 首先尝试从localStorage加载
         loadFromCdnImport, 
         loadFromCdnFetch, 
         loadFromLocalImport,
@@ -139,6 +211,62 @@ export const initializeWasm = async () => {
   return initPromise;
 };
 
+// 方法0: 从localStorage加载缓存的WASM
+async function loadFromLocalStorage() {
+  try {
+    // 检查环境是否支持localStorage
+    const env = detectEnvironment();
+    if (!env.localStorageSupport) {
+      throw new Error('浏览器不支持localStorage');
+    }
+    
+    // 检查缓存是否过期
+    if (isCacheExpired()) {
+      throw new Error('WASM缓存已过期');
+    }
+    
+    // 从localStorage获取WASM模块
+    const jsText = localStorage.getItem(STORAGE_KEYS.WASM_JS);
+    const wasmBase64 = localStorage.getItem(STORAGE_KEYS.WASM_BINARY);
+    
+    if (!jsText || !wasmBase64) {
+      throw new Error('缓存中没有WASM数据');
+    }
+    
+    console.log("从localStorage加载WASM模块...");
+    
+    // 将JS文本转换为模块
+    const wasmModule = new Function('return ' + jsText)();
+    
+    init = wasmModule.default;
+    parse_sav_to_json = wasmModule.parse_sav_to_json;
+    encode_json_to_sav = wasmModule.encode_json_to_sav;
+    
+    // 将Base64转换回二进制
+    const binaryString = atob(wasmBase64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    
+    // 创建Blob和URL
+    const blob = new Blob([bytes], { type: 'application/wasm' });
+    const wasmUrl = URL.createObjectURL(blob);
+    
+    // 初始化WASM模块
+    await init(wasmUrl);
+    
+    // 用完后释放URL
+    URL.revokeObjectURL(wasmUrl);
+    
+    return true;
+  } catch (error) {
+    console.warn("从localStorage加载WASM失败:", error);
+    throw error;
+  }
+}
+
 // 方法1: 通过动态导入CDN JS模块
 async function loadFromCdnImport() {
   try {
@@ -151,6 +279,23 @@ async function loadFromCdnImport() {
     
     // 初始化WASM模块
     await init(WASM_CDN_URL);
+    
+    // 异步获取JS和WASM并缓存到localStorage
+    try {
+      // 获取JS模块文本
+      const jsResponse = await fetch(WASM_CDN_JS_URL);
+      const jsText = await jsResponse.text();
+      
+      // 获取WASM二进制
+      const wasmResponse = await fetch(WASM_CDN_URL);
+      const wasmBinary = new Uint8Array(await wasmResponse.arrayBuffer());
+      
+      // 保存到localStorage
+      await saveToLocalStorage(wasmBinary, jsText);
+    } catch (cacheError) {
+      console.warn("缓存WASM到localStorage失败:", cacheError);
+      // 继续执行，不影响主流程
+    }
   } catch (error) {
     console.error("通过import加载模块失败:", error);
     throw error;
@@ -171,8 +316,10 @@ async function loadFromCdnFetch() {
     throw new Error(`无法加载WASM JS文件: ${jsResponse.status} ${jsResponse.statusText}`);
   }
   
-  // 评估JS模块
+  // 获取JS文本
   const jsText = await jsResponse.text();
+  
+  // 评估JS模块
   const wasmModule = new Function('return ' + jsText)();
   
   init = wasmModule.default;
@@ -180,7 +327,21 @@ async function loadFromCdnFetch() {
   encode_json_to_sav = wasmModule.encode_json_to_sav;
   
   // 加载WASM二进制
+  const wasmResponse = await fetch(WASM_CDN_URL, fetchOptions);
+  if (!wasmResponse.ok) {
+    throw new Error(`无法加载WASM二进制: ${wasmResponse.status} ${wasmResponse.statusText}`);
+  }
+  
+  const wasmBinary = new Uint8Array(await wasmResponse.arrayBuffer());
   await init(WASM_CDN_URL);
+  
+  // 保存到localStorage
+  try {
+    await saveToLocalStorage(wasmBinary, jsText);
+  } catch (cacheError) {
+    console.warn("缓存WASM到localStorage失败:", cacheError);
+    // 继续执行，不影响主流程
+  }
 }
 
 // 方法3: 从本地加载
@@ -248,6 +409,22 @@ const ensureWasmReady = async () => {
   
   if (!wasmInitialized) {
     throw new Error('WASM 模块未正确初始化');
+  }
+};
+
+/**
+ * 清除WASM缓存
+ */
+export const clearWasmCache = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.WASM_BINARY);
+    localStorage.removeItem(STORAGE_KEYS.WASM_JS);
+    localStorage.removeItem(STORAGE_KEYS.TIMESTAMP);
+    console.log('✅ WASM缓存已清除');
+    return true;
+  } catch (e) {
+    console.warn('清除WASM缓存失败:', e);
+    return false;
   }
 };
 
@@ -438,9 +615,23 @@ export const getWasmStatus = () => {
     initialized: wasmInitialized,
     isInitializing: !!initPromise,
     attempts: loadAttempts,
-    usingFallback: wasmInitialized && parse_sav_to_json.toString().includes('console.warn')
+    usingFallback: wasmInitialized && parse_sav_to_json.toString().includes('console.warn'),
+    cachedInLocalStorage: isCachedInLocalStorage(),
+    cacheExpired: isCachedInLocalStorage() && isCacheExpired()
   };
 };
+
+/**
+ * 检查是否已缓存在localStorage
+ */
+function isCachedInLocalStorage() {
+  try {
+    return !!(localStorage.getItem(STORAGE_KEYS.WASM_JS) && 
+             localStorage.getItem(STORAGE_KEYS.WASM_BINARY));
+  } catch (e) {
+    return false;
+  }
+}
 
 /**
  * 重置 WASM 模块状态
