@@ -83,7 +83,7 @@ const MemberTable = ({
             size="small" 
             onClick={() => onMaxAllAttributes(memberType)}
           >
-            {locale === 'zh' ? '升满全属性' : 'Max All Attributes'}
+            {t.table.maxAllAttributes}
           </Button>
         </Box>
       </Box>

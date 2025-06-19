@@ -19,7 +19,7 @@ export const createTableColumns = (
 
   const baseColumns = [
     {
-      title: locale === 'zh' ? '名字' : 'Name',
+      title: t.table.name,
       dataIndex: 'name',
       key: 'name',
       editable: false,
@@ -103,7 +103,7 @@ export const createTableColumns = (
                 style={{ minWidth: 100 }}
                 getPopupContainer={trigger => trigger.parentElement}
                 dropdownMatchSelectWidth={false}
-                placeholder="选择天赋"
+                placeholder={t.table.selectTalent}
               >
                 {talentOptions.map(option => (
                   <Select.Option key={option.key} value={option.key}>
@@ -118,7 +118,7 @@ export const createTableColumns = (
         }
       },
       {
-        title: locale === 'zh' ? '天赋数值' : 'Talent Value',
+        title: t.table.talentValue,
         dataIndex: 'talent_num',
         key: 'talent_num',
         editable: true,
@@ -137,7 +137,7 @@ export const createTableColumns = (
                 style={{ minWidth: 100 }}
                 getPopupContainer={trigger => trigger.parentElement}
                 dropdownMatchSelectWidth={false}
-                placeholder="选择技能"
+                placeholder={t.table.selectSkill}
               >
                 {skillOptions.map(option => (
                   <Select.Option key={option.key} value={option.key}>
@@ -163,7 +163,7 @@ export const createTableColumns = (
   // 为门客添加薪酬列
   if (memberType === MEMBER_TYPES.GUEST) {
     baseColumns.push({
-      title: locale === 'zh' ? '每月薪酬' : 'Monthly Salary',
+      title: t.table.monthlySalary,
       dataIndex: 'payment',
       key: 'payment',
       editable: true,
@@ -176,7 +176,7 @@ export const createTableColumns = (
 
   // 添加操作列
   baseColumns.push({
-    title: locale === 'zh' ? '操作' : 'Actions',
+    title: t.table.actions,
     dataIndex: 'operation',
     render: (_, record) => {
       const editable = isEditing(record);
@@ -210,7 +210,7 @@ export const createTableColumns = (
               disabled={editingKey !== ''}
               style={{ marginRight: 8 }}
             >
-              {locale === 'zh' ? '解除刑罚' : 'Remove Punishment'}
+              {t.table.removePunishment}
             </Button>
           )}
           {memberType !== MEMBER_TYPES.GUEST && (
@@ -220,7 +220,7 @@ export const createTableColumns = (
               disabled={editingKey !== ''}
               style={{ marginRight: 8 }}
             >
-              {locale === 'zh' ? '升满属性' : 'Max Attributes'}
+              {t.table.maxAttributes}
             </Button>
           )}
           {(memberType === MEMBER_TYPES.FAMILY || memberType === MEMBER_TYPES.SPOUSE) && 
@@ -231,7 +231,7 @@ export const createTableColumns = (
               onClick={() => handlePregnancy(record, memberType)}
               disabled={editingKey !== ''}
             >
-              {locale === 'zh' ? '立即怀孕' : 'Immediate Pregnancy'}
+              {t.table.immediatePregnancy}
             </Button>
           )}
         </span>

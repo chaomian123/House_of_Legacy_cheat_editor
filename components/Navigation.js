@@ -35,7 +35,7 @@ export default function Navigation() {
       width="100%"
     >
       <Link as={NextLink} href="/" {...linkStyle('/')}>
-        {locale === 'zh' ? '首页' : 'Home'}
+        {t.navigation.home}
       </Link>
       
       <Text color="gray.300">|</Text>
@@ -53,7 +53,7 @@ export default function Navigation() {
       <Text color="gray.300">|</Text>
 
       <Link as={NextLink} href="/suggestions" {...linkStyle('/suggestions')}>
-        {locale === 'zh' ? '提建议' : 'Suggestions'}
+        {t.navigation.suggestions}
       </Link>
 
       <Text color="gray.300">|</Text>

@@ -139,7 +139,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     updateAllTableData(updatedRawData);
     
     message.success({
-      content: locale === 'zh' ? '全属性已升满！不要忘记保存到存档文件！' : 'All attributes maxed! Don\'t forget to save to file!',
+      content: locale === 'zh' ? '全属性已升满！不要忘记保存到存档文件！' :
+               locale === 'th' ? 'คุณสมบัติทั้งหมดได้รับการเพิ่มสูงสุดแล้ว! อย่าลืมบันทึกลงไฟล์!' :
+               'All attributes maxed! Don\'t forget to save to file!',
       duration: 3
     });
   };
@@ -152,7 +154,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     updateAllTableData(updatedRawData);
     
     message.success({
-      content: locale === 'zh' ? '全员年龄已设为18岁！不要忘记保存到存档文件！' : 'All ages set to 18! Don\'t forget to save to file!',
+      content: locale === 'zh' ? '全员年龄已设为18岁！不要忘记保存到存档文件！' :
+               locale === 'th' ? 'อายุทุกคนถูกตั้งเป็น 18 ปีแล้ว! อย่าลืมบันทึกลงไฟล์!' :
+               'All ages set to 18! Don\'t forget to save to file!',
       duration: 3
     });
   };
@@ -165,7 +169,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     updateAllTableData(updatedRawData);
     
     message.success({
-      content: locale === 'zh' ? '全员声誉已升满！不要忘记保存到存档文件！' : 'All reputation maxed! Don\'t forget to save to file!',
+      content: locale === 'zh' ? '全员声誉已升满！不要忘记保存到存档文件！' :
+               locale === 'th' ? 'ชื่อเสียงทุกคนได้รับการเพิ่มสูงสุดแล้ว! อย่าลืมบันทึกลงไฟล์!' :
+               'All reputation maxed! Don\'t forget to save to file!',
       duration: 3
     });
   };
@@ -184,7 +190,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     updateAllTableData(rawData);
     
     message.success({
-      content: locale === 'zh' ? `${record.name} 属性已升满！` : `${record.name} attributes maxed!`,
+      content: locale === 'zh' ? `${record.name} 属性已升满！` :
+               locale === 'th' ? `คุณสมบัติของ ${record.name} ได้รับการเพิ่มสูงสุดแล้ว!` :
+               `${record.name} attributes maxed!`,
       duration: 2
     });
   };
@@ -198,7 +206,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
     updateAllTableData(updatedRawData);
     
     message.success({
-      content: locale === 'zh' ? `${record.name} 刑罚已解除！` : `${record.name} punishment removed!`,
+      content: locale === 'zh' ? `${record.name} 刑罚已解除！` :
+               locale === 'th' ? `การลงโทษของ ${record.name} ถูกยกเลิกแล้ว!` :
+               `${record.name} punishment removed!`,
       duration: 2
     });
   };
@@ -402,7 +412,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
                 if (isSaveSuccess) onClose();
               }}
             >
-              {locale === 'zh' ? '保存到存档文件' : 'Save to File'}
+              {locale === 'zh' ? '保存到存档文件' :
+               locale === 'th' ? 'บันทึกลงไฟล์' :
+               'Save to File'}
             </Button>
             <Button
               ml='3'
@@ -412,7 +424,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
               }}
               isDisabled={isLoading}
             >
-              {locale === 'zh' ? '关闭' : 'Close'}
+              {locale === 'zh' ? '关闭' :
+               locale === 'th' ? 'ปิด' :
+               'Close'}
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -423,7 +437,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {locale === 'zh' ? '立即怀孕确认' : 'Immediate Pregnancy Confirmation'}
+            {locale === 'zh' ? '立即怀孕确认' :
+             locale === 'th' ? 'ยืนยันการตั้งครรภ์ทันที' :
+             'Immediate Pregnancy Confirmation'}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -431,20 +447,22 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
               <AlertIcon />
               <Box>
                 <AlertTitle>
-                  {locale === 'zh' ? '警告！' : 'Warning!'}
+                  {locale === 'zh' ? '警告！' :
+                   locale === 'th' ? 'คำเตือน!' :
+                   'Warning!'}
                 </AlertTitle>
                 <AlertDescription>
-                  {locale === 'zh' 
-                    ? '请使用前先备份存档，以防造成无法挽回的影响！' 
-                    : 'Please backup your save file before use to prevent irreversible effects!'
+                  {locale === 'zh' ? '请使用前先备份存档，以防造成无法挽回的影响！' :
+                   locale === 'th' ? 'กรุณาสำรองไฟล์เซฟก่อนใช้งาน เพื่อป้องกันผลกระทบที่ไม่สามารถแก้ไขได้!' :
+                   'Please backup your save file before use to prevent irreversible effects!'
                   }
                 </AlertDescription>
               </Box>
             </Alert>
             <Text>
-              {locale === 'zh' 
-                ? `确定要让 "${pregnancyModal.record?.name}" 立即怀孕吗？` 
-                : `Are you sure you want "${pregnancyModal.record?.name}" to become pregnant immediately?`
+              {locale === 'zh' ? `确定要让 "${pregnancyModal.record?.name}" 立即怀孕吗？` :
+               locale === 'th' ? `คุณแน่ใจหรือไม่ว่าต้องการให้ "${pregnancyModal.record?.name}" ตั้งครรภ์ทันที?` :
+               `Are you sure you want "${pregnancyModal.record?.name}" to become pregnant immediately?`
               }
             </Text>
           </ModalBody>
@@ -454,10 +472,14 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
               mr={3} 
               onClick={confirmPregnancy}
             >
-              {locale === 'zh' ? '确认' : 'Confirm'}
+              {locale === 'zh' ? '确认' :
+               locale === 'th' ? 'ยืนยัน' :
+               'Confirm'}
             </Button>
             <Button onClick={() => setPregnancyModal({ isOpen: false, record: null, type: null })}>
-              {locale === 'zh' ? '取消' : 'Cancel'}
+              {locale === 'zh' ? '取消' :
+               locale === 'th' ? 'ยกเลิก' :
+               'Cancel'}
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -468,7 +490,9 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            {locale === 'zh' ? '一键升满全属性确认' : 'Max All Attributes Confirmation'}
+            {locale === 'zh' ? '一键升满全属性确认' :
+             locale === 'th' ? 'ยืนยันการเพิ่มคุณสมบัติทั้งหมดสูงสุด' :
+             'Max All Attributes Confirmation'}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -476,33 +500,39 @@ export default function Editor({ isLoading, setIsLoading, isOpen, onClose, data,
               <AlertIcon />
               <Box>
                 <AlertTitle>
-                  {locale === 'zh' ? '重要提醒！' : 'Important Warning!'}
+                  {locale === 'zh' ? '重要提醒！' :
+                   locale === 'th' ? 'คำเตือนสำคัญ!' :
+                   'Important Warning!'}
                 </AlertTitle>
                 <AlertDescription>
-                  {locale === 'zh' 
-                    ? '如果列表中包含被贬成员，批量操作可能存在坏档风险！' 
-                    : 'If the list contains demoted members, batch operations may pose a save corruption risk!'
+                  {locale === 'zh' ? '如果列表中包含被贬成员，批量操作可能存在坏档风险！' :
+                   locale === 'th' ? 'หากรายการมีสมาชิกที่ถูกลดตำแหน่ง การดำเนินการแบบกลุ่มอาจมีความเสี่ยงต่อการเสียหายของไฟล์เซฟ!' :
+                   'If the list contains demoted members, batch operations may pose a save corruption risk!'
                   }
                 </AlertDescription>
               </Box>
             </Alert>
             <Text>
-              {locale === 'zh' 
-                ? '确定要对当前列表中的所有成员执行升满全属性操作吗？'
-                : 'Are you sure you want to max all attributes for all members in the current list?'
+              {locale === 'zh' ? '确定要对当前列表中的所有成员执行升满全属性操作吗？' :
+               locale === 'th' ? 'คุณแน่ใจหรือไม่ว่าต้องการเพิ่มคุณสมบัติทั้งหมดสูงสุดสำหรับสมาชิกทั้งหมดในรายการปัจจุบัน?' :
+               'Are you sure you want to max all attributes for all members in the current list?'
               }
             </Text>
           </ModalBody>
           <ModalFooter>
-            <Button 
-              colorScheme="red" 
-              mr={3} 
+            <Button
+              colorScheme="red"
+              mr={3}
               onClick={executeMaxAllAttributes}
             >
-              {locale === 'zh' ? '确认执行' : 'Confirm'}
+              {locale === 'zh' ? '确认执行' :
+               locale === 'th' ? 'ยืนยันดำเนินการ' :
+               'Confirm'}
             </Button>
             <Button onClick={() => setMaxAllAttributesModal({ isOpen: false, type: null })}>
-              {locale === 'zh' ? '取消' : 'Cancel'}
+              {locale === 'zh' ? '取消' :
+               locale === 'th' ? 'ยกเลิก' :
+               'Cancel'}
             </Button>
           </ModalFooter>
         </ModalContent>

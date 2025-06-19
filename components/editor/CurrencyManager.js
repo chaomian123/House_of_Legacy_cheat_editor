@@ -4,14 +4,14 @@ import { useState, useCallback, useMemo } from 'react';
 import { useLocale } from '../../lib/useLocale';
 import { updateCurrencyData } from './dataUtils';
 
-const CurrencyManager = ({ 
-  money, 
-  yuanbao, 
-  onUpdate, 
-  data, 
-  setData 
+const CurrencyManager = ({
+  money,
+  yuanbao,
+  onUpdate,
+  data,
+  setData
 }) => {
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const [isEditing, setIsEditing] = useState(false);
   const [tempMoney, setTempMoney] = useState('');
   const [tempYuanbao, setTempYuanbao] = useState('');
@@ -37,7 +37,7 @@ const CurrencyManager = ({
     setIsEditing(false);
     
     message.success({
-      content: locale === 'zh' ? '货币已保存，不要忘记保存到存档文件！' : 'Currency saved, don\'t forget to save to file!',
+      content: t.currency.currencySaved,
       duration: 3
     });
   }, [data, setData, tempMoney, tempYuanbao, onUpdate, locale]);
@@ -51,17 +51,17 @@ const CurrencyManager = ({
   return useMemo(() => (
     <Box p={4} border="1px" borderColor="gray.200" borderRadius="md" flex="1">
       <Heading size="sm" mb={3}>
-        {locale === 'zh' ? '货币管理' : 'Currency Management'}
+        {t.currency.title}
       </Heading>
       <Box display="flex" gap={4} alignItems="flex-start">
         <Box>
           <Text fontSize="sm" mb={1}>
-            {locale === 'zh' ? '金钱' : 'Money'}
+            {t.currency.money}
           </Text>
           <Input
             value={isEditing ? tempMoney : money}
             onChange={handleMoneyChange}
-            placeholder={locale === 'zh' ? '输入金钱数量' : 'Enter money amount'}
+            placeholder={t.currency.enterMoney}
             style={{ width: '150px' }}
             disabled={!isEditing}
           />
@@ -71,29 +71,29 @@ const CurrencyManager = ({
         </Box>
         <Box>
           <Text fontSize="sm" mb={1}>
-            {locale === 'zh' ? '元宝' : 'Yuanbao'}
+            {t.currency.yuanbao}
           </Text>
           <Input
             value={isEditing ? tempYuanbao : yuanbao}
             onChange={handleYuanbaoChange}
-            placeholder={locale === 'zh' ? '输入元宝数量(最大100000000)' : 'Enter yuanbao amount(max 100000000)'}
+            placeholder={t.currency.enterYuanbao}
             style={{ width: '150px' }}
             disabled={!isEditing}
             max={100000000}
             type="number"
           />
           <Text fontSize="xs" color="gray.500" mt={1}>
-            {locale === 'zh' ? '最多一亿' : 'Max 100 million'}
+            {t.currency.maxAmount}
           </Text>
         </Box>
         <Box mt="25px">
           {isEditing ? (
             <Button type="primary" onClick={saveCurrency}>
-              {locale === 'zh' ? '保存货币' : 'Save Currency'}
+              {t.currency.saveCurrency}
             </Button>
           ) : (
             <Button onClick={editCurrency}>
-              {locale === 'zh' ? '编辑货币' : 'Edit Currency'}
+              {t.currency.editCurrency}
             </Button>
           )}
         </Box>

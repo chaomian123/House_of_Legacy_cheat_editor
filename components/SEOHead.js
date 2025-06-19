@@ -39,8 +39,8 @@ export default function SEOHead({
       <meta property="og:title" content={siteTitle} /> 
       <meta property="og:description" content={siteDescription} />
       <meta property="og:image" content={`https://savefile.space${ogImage}`} />
-      <meta property="og:site_name" content={locale === 'en' ? 'House of Legacy save Editor' : '吾今有世家修改器'} />
-      <meta property="og:locale" content={locale === 'en' ? 'en_US' : 'zh_CN'} />
+      <meta property="og:site_name" content={t.seo.siteName} />
+      <meta property="og:locale" content={t.seo.locale} />
       
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
@@ -70,7 +70,7 @@ export default function SEOHead({
               "@type": "Organization",
               "name": "House of Legacy Editor Team"
             },
-            "inLanguage": locale === 'en' ? 'en-US' : 'zh-CN'
+            "inLanguage": t.seo.locale.replace('_', '-')
           })
         }}
       />

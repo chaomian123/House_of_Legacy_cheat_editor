@@ -64,15 +64,21 @@ export default function HouseOfLegacy() {
 
   return (
     <>
-      <SEOHead 
-        title={locale === 'zh' ? '吾今有世家在线存档修改器 | House of Legacy Save Editor' : 'House of Legacy Save Editor | Free Online Save File Editor'}
-        description={locale === 'zh' 
-          ? '最佳的吾今有世家存档修改器 ，免费在线编辑游戏存档文件。直观查看和修改游戏中角色的各项属性和你的资源' 
-          : 'The best House of Legacy save editor, free online editing of game save files. Intuitively view and modify various attributes of characters in the game and your resources.'
+      <SEOHead
+        title={
+          locale === 'zh' ? '吾今有世家在线存档修改器 | House of Legacy Save Editor' :
+          locale === 'th' ? 'House of Legacy Save Editor | เครื่องมือแก้ไขเซฟเกม' :
+          'House of Legacy Save Editor | Free Online Save File Editor'
         }
-        keywords={locale === 'zh' 
-          ? '吾今有世家存档修改器, 存档编辑器, 游戏修改器, 存档修改工具'
-          : 'House of Legacy, Save Editor, House of Legacy Save Editor, game editor, save file editor, House of Legacy modifier, game save editor, House of Legacy cheat tool'
+        description={
+          locale === 'zh' ? '最佳的吾今有世家存档修改器 ，免费在线编辑游戏存档文件。直观查看和修改游戏中角色的各项属性和你的资源' :
+          locale === 'th' ? 'เครื่องมือแก้ไขเซฟเกม House of Legacy ที่ดีที่สุด แก้ไขไฟล์เซฟเกมออนไลน์ฟรี ดูและแก้ไขคุณสมบัติต่างๆ ของตัวละครในเกมและทรัพยากรของคุณได้อย่างง่ายดาย' :
+          'The best House of Legacy save editor, free online editing of game save files. Intuitively view and modify various attributes of characters in the game and your resources.'
+        }
+        keywords={
+          locale === 'zh' ? '吾今有世家存档修改器, 存档编辑器, 游戏修改器, 存档修改工具' :
+          locale === 'th' ? 'House of Legacy Save Editor, เครื่องมือแก้ไขเกม, เครื่องมือแก้ไขไฟล์เซฟ, House of Legacy modifier, game save editor, House of Legacy cheat tool' :
+          'House of Legacy, Save Editor, House of Legacy Save Editor, game editor, save file editor, House of Legacy modifier, game save editor, House of Legacy cheat tool'
         }
       />
 
@@ -99,6 +105,13 @@ export default function HouseOfLegacy() {
                     House of Legacy Save Editor
                   </Text>
                 </>
+              ) : locale === 'th' ? (
+                <>
+                  House of Legacy Save Editor
+                  <Text as="span" fontSize="lg" color="blue.600" display="block" mt='1'>
+                    เครื่องมือแก้ไขเซฟเกมมืออาชีพ
+                  </Text>
+                </>
               ) : (
                 <>
                   House of Legacy Save Editor
@@ -110,9 +123,9 @@ export default function HouseOfLegacy() {
             </Heading>
             
             <Text textAlign="center" color="gray.600" fontSize="md" mb='3'>
-              {locale === 'zh' 
-                ? '吾今有世家存档编辑器，无需下载，浏览器直接使用，完全免费且安全' 
-                : 'Professional House of Legacy Save Editor tool - No download required, browser-based, completely free and secure'
+              {locale === 'zh' ? '吾今有世家存档编辑器，无需下载，浏览器直接使用，完全免费且安全' :
+               locale === 'th' ? 'เครื่องมือแก้ไข House of Legacy Save Editor มืออาชีพ - ไม่ต้องดาวน์โหลด ใช้งานผ่านเบราว์เซอร์ ฟรีและปลอดภัย 100%' :
+               'Professional House of Legacy Save Editor tool - No download required, browser-based, completely free and secure'
               }
             </Text>
 
@@ -159,7 +172,9 @@ export default function HouseOfLegacy() {
               alignItems="center"
               justifyContent="space-between"
             >
-              {locale === 'zh' ? '吾今有世家 存档编辑功能' : 'House of Legacy Save Editor Features'}
+              {locale === 'zh' ? '吾今有世家 存档编辑功能' :
+               locale === 'th' ? 'ฟีเจอร์ House of Legacy Save Editor' :
+               'House of Legacy Save Editor Features'}
               <Text fontSize="sm" color="gray.500" ml={2}>
                 {isFeatureListOpen ? '▼' : '▶'}
               </Text>
@@ -167,30 +182,42 @@ export default function HouseOfLegacy() {
             
             <Collapse in={isFeatureListOpen} animateOpacity>
               <Text fontSize="sm" color="gray.700" mb='3'>
-                {locale === 'zh'
-                  ? '吾今有世家存档编辑器支持功能：'
-                  : 'House of Legacy Save Editor provides comprehensive save editing features, allowing you to easily modify various game attributes:'
+                {locale === 'zh' ? '吾今有世家存档编辑器支持功能：' :
+                 locale === 'th' ? 'House of Legacy Save Editor มีฟีเจอร์แก้ไขเซฟที่ครอบคลุม ช่วยให้คุณแก้ไขคุณสมบัติต่างๆ ในเกมได้อย่างง่ายดาย:' :
+                 'House of Legacy Save Editor provides comprehensive save editing features, allowing you to easily modify various game attributes:'
                 }
               </Text>
 
               <List spacing={1} fontSize="sm" mb='4'>
                 <ListItem>
-                  • {locale === 'zh' ? '家族成员属性编辑' : 'family member attributes editing'}
+                  • {locale === 'zh' ? '家族成员属性编辑' :
+                     locale === 'th' ? 'แก้ไขคุณสมบัติสมาชิกครอบครัว' :
+                     'family member attributes editing'}
                 </ListItem>
                 <ListItem>
-                  • {locale === 'zh' ? '门客系统修改' : 'guest system modification'}
+                  • {locale === 'zh' ? '门客系统修改' :
+                     locale === 'th' ? 'แก้ไขระบบแขก' :
+                     'guest system modification'}
                 </ListItem>
                 <ListItem>
-                  • {locale === 'zh' ? '妻妾婿属性调整' : 'spouse attributes adjustment'}
+                  • {locale === 'zh' ? '妻妾婿属性调整' :
+                     locale === 'th' ? 'ปรับคุณสมบัติคู่สมรส' :
+                     'spouse attributes adjustment'}
                 </ListItem>
                 <ListItem>
-                  • {locale === 'zh' ? '货币和资源编辑' : 'currency and resources editing'}
+                  • {locale === 'zh' ? '货币和资源编辑' :
+                     locale === 'th' ? 'แก้ไขเงินตราและทรัพยากร' :
+                     'currency and resources editing'}
                 </ListItem>
                 <ListItem>
-                  • {locale === 'zh' ? '技能数值修改' : 'skill values modification'}
+                  • {locale === 'zh' ? '技能数值修改' :
+                     locale === 'th' ? 'แก้ไขค่าทักษะ' :
+                     'skill values modification'}
                 </ListItem>
                 <ListItem>
-                  • {locale === 'zh' ? '怀孕状态编辑' : 'pregnancy status editing'}
+                  • {locale === 'zh' ? '怀孕状态编辑' :
+                     locale === 'th' ? 'แก้ไขสถานะการตั้งครรภ์' :
+                     'pregnancy status editing'}
                 </ListItem>
               </List>
             </Collapse>
@@ -199,12 +226,14 @@ export default function HouseOfLegacy() {
           {/* 存档路径示例 */}
           <Box mb='4'>
             <Heading as="h3" size='sm' mb='2' color="blue.600">
-              {locale === 'zh' ? '吾今有世家 存档文件路径' : 'House of Legacy Save File Path'}
+              {locale === 'zh' ? '吾今有世家 存档文件路径' :
+               locale === 'th' ? 'เส้นทางไฟล์เซฟ House of Legacy' :
+               'House of Legacy Save File Path'}
             </Heading>
             <Text fontSize="sm" mb='2'>
-              {locale === 'zh' 
-                ? '在您的电脑上找到吾今有世家存档文件：'
-                : 'Locate your House of Legacy save file on your computer:'
+              {locale === 'zh' ? '在您的电脑上找到吾今有世家存档文件：' :
+               locale === 'th' ? 'ค้นหาไฟล์เซฟ House of Legacy ในคอมพิวเตอร์ของคุณ:' :
+               'Locate your House of Legacy save file on your computer:'
               }
             </Text>
             <Box 
@@ -230,12 +259,14 @@ export default function HouseOfLegacy() {
           {/* 安全说明 */}
           <Box mb='4'>
             <Heading as="h3" size="sm" mb='2' color="blue.600">
-              {locale === 'zh' ? '安全的吾今有世家存档编辑' : 'Safe House of Legacy Save Editing'}
+              {locale === 'zh' ? '安全的吾今有世家存档编辑' :
+               locale === 'th' ? 'การแก้ไขเซฟ House of Legacy อย่างปลอดภัย' :
+               'Safe House of Legacy Save Editing'}
             </Heading>
             <Text fontSize="sm" color="gray.600">
-              {locale === 'zh' 
-                ? '吾今有世家存档编辑器采用本地处理技术，存档文件不会上传到服务器，确保数据安全和隐私。' 
-                : 'House of Legacy Save Editor uses local processing technology. Your save files are not uploaded to servers, ensuring your House of Legacy game data is completely safe and private.'
+              {locale === 'zh' ? '吾今有世家存档编辑器采用本地处理技术，存档文件不会上传到服务器，确保数据安全和隐私。' :
+               locale === 'th' ? 'House of Legacy Save Editor ใช้เทคโนโลยีการประมวลผลในเครื่อง ไฟล์เซฟของคุณจะไม่ถูกอัปโหลดไปยังเซิร์ฟเวอร์ รับประกันความปลอดภัยและความเป็นส่วนตัวของข้อมูลเกม House of Legacy ของคุณอย่างสมบูรณ์' :
+               'House of Legacy Save Editor uses local processing technology. Your save files are not uploaded to servers, ensuring your House of Legacy game data is completely safe and private.'
               }
             </Text>
           </Box>
